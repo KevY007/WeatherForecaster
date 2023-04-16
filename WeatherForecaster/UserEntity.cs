@@ -14,6 +14,7 @@ namespace WeatherForecaster
     public class User : Entity
     {
         private string Password;
+        private string Email;
         private PrivilegeLevels PrivilegeLevel;
 
         public bool IsCorrectPassword(string p) => Password == p;
@@ -28,17 +29,18 @@ namespace WeatherForecaster
             Global.Users.Remove(this);
         }
 
-        public User(int id, string name, string password) : base(id, name)
+        public User(int id, string name, string email, string password) : base(id, name)
         {
             Password = password;
+            Email = email;
             PrivilegeLevel = PrivilegeLevels.None;
         }
 
-        public User(int id, string name, string password, PrivilegeLevels privileges) : this(id, name, password)
+        public User(int id, string name, string email, string password, PrivilegeLevels privileges) : this(id, email, name, password)
         {
             PrivilegeLevel = privileges;
         }
 
-        public User(int id, string name, string password, int privileges) : this(id, name, password, (PrivilegeLevels)privileges) { }
+        public User(int id, string name, string email, string password, int privileges) : this(id, name, email, password, (PrivilegeLevels)privileges) { }
     }
 }

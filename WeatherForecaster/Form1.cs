@@ -1,5 +1,7 @@
-﻿using DevExpress.DirectX.Common.DirectWrite;
+﻿using DevExpress.Data.Helpers;
+using DevExpress.DirectX.Common.DirectWrite;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,21 +14,41 @@ using System.Windows.Forms;
 
 namespace WeatherForecaster
 {
-    public partial class Form1 : DevExpress.XtraBars.FluentDesignSystem.FluentDesignForm
+    public partial class formMain : DevExpress.XtraBars.FluentDesignSystem.FluentDesignForm
     {
-        public Form1()
+        protected override bool ExtendNavigationControlToFormTitle
+        {
+            get { return false; }
+        }
+
+        public List<IntPtr> defaultControls = new List<IntPtr>();
+
+        public void Clear()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (!defaultControls.Contains(c.Handle)) Controls.Remove(c);
+            }
+        }
+        public formMain()
         {
             InitializeComponent();
+
+            foreach (Control c in this.Controls) defaultControls.Add(c.Handle);
         }
 
-        private void fluentDesignFormContainer1_Click(object sender, EventArgs e)
+        private void formMain_Load(object sender, EventArgs e)
         {
+            btnLoginSignup_Click(sender, e);
 
+            //Global.DefaultInit();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void btnLoginSignup_Click(object sender, EventArgs e)
         {
-            Global.DefaultInit();
+            Clear();
+
+            this.Controls.Add(new LoginControl() { Dock = DockStyle.Fill });
         }
     }
 }
