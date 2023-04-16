@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formMain));
             this.mainMenu = new DevExpress.XtraBars.Navigation.AccordionControl();
+            this.btnLoginSignup = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.fluentDesignFormControl1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl();
             this.fluentFormManager = new DevExpress.XtraBars.FluentDesignSystem.FluentFormDefaultManager(this.components);
-            this.btnLoginSignup = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)(this.mainMenu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fluentDesignFormControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fluentFormManager)).BeginInit();
@@ -53,6 +53,15 @@
             this.mainMenu.Size = new System.Drawing.Size(72, 720);
             this.mainMenu.TabIndex = 1;
             this.mainMenu.ViewType = DevExpress.XtraBars.Navigation.AccordionControlViewType.HamburgerMenu;
+            this.mainMenu.Click += new System.EventHandler(this.mainMenu_Click);
+            // 
+            // btnLoginSignup
+            // 
+            this.btnLoginSignup.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnLoginSignup.ImageOptions.SvgImage")));
+            this.btnLoginSignup.Name = "btnLoginSignup";
+            this.btnLoginSignup.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.btnLoginSignup.Text = "Login / Signup";
+            this.btnLoginSignup.Click += new System.EventHandler(this.btnLoginSignup_Click);
             // 
             // fluentDesignFormControl1
             // 
@@ -68,14 +77,6 @@
             // 
             this.fluentFormManager.Form = this;
             this.fluentFormManager.MaxItemId = 1;
-            // 
-            // btnLoginSignup
-            // 
-            this.btnLoginSignup.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnLoginSignup.ImageOptions.SvgImage")));
-            this.btnLoginSignup.Name = "btnLoginSignup";
-            this.btnLoginSignup.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            this.btnLoginSignup.Text = "Login / Signup";
-            this.btnLoginSignup.Click += new System.EventHandler(this.btnLoginSignup_Click);
             // 
             // formMain
             // 
@@ -99,10 +100,10 @@
         }
 
         #endregion
-        private DevExpress.XtraBars.Navigation.AccordionControl mainMenu;
+        public DevExpress.XtraBars.Navigation.AccordionControl mainMenu;
         private DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl fluentDesignFormControl1;
         private DevExpress.XtraBars.FluentDesignSystem.FluentFormDefaultManager fluentFormManager;
-        private DevExpress.XtraBars.Navigation.AccordionControlElement btnLoginSignup;
+        public DevExpress.XtraBars.Navigation.AccordionControlElement btnLoginSignup;
     }
 }
 

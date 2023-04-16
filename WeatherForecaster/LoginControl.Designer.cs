@@ -108,8 +108,9 @@
             this.btnLogin.Location = new System.Drawing.Point(352, 570);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(580, 67);
-            this.btnLogin.TabIndex = 7;
+            this.btnLogin.TabIndex = 2;
             this.btnLogin.Text = "Login";
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // txtPassword
             // 
@@ -124,7 +125,7 @@
             this.txtPassword.Properties.Padding = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.txtPassword.Properties.UseSystemPasswordChar = true;
             this.txtPassword.Size = new System.Drawing.Size(580, 52);
-            this.txtPassword.TabIndex = 5;
+            this.txtPassword.TabIndex = 1;
             // 
             // txtUsername
             // 
@@ -138,7 +139,7 @@
             this.txtUsername.Properties.MaxLength = 32;
             this.txtUsername.Properties.Padding = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.txtUsername.Size = new System.Drawing.Size(580, 52);
-            this.txtUsername.TabIndex = 3;
+            this.txtUsername.TabIndex = 0;
             // 
             // pictureBox1
             // 

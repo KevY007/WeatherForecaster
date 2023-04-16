@@ -42,13 +42,15 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtConfirmPass = new DevExpress.XtraEditors.TextEdit();
             this.label5 = new System.Windows.Forms.Label();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.tickProvider = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.txtPassword.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUsername.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmail.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtConfirmPass.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tickProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -118,7 +120,7 @@
             this.btnRegister.Location = new System.Drawing.Point(352, 570);
             this.btnRegister.Name = "btnRegister";
             this.btnRegister.Size = new System.Drawing.Size(580, 67);
-            this.btnRegister.TabIndex = 7;
+            this.btnRegister.TabIndex = 4;
             this.btnRegister.Text = "Register";
             this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
             // 
@@ -135,7 +137,7 @@
             this.txtPassword.Properties.Padding = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.txtPassword.Properties.UseSystemPasswordChar = true;
             this.txtPassword.Size = new System.Drawing.Size(280, 42);
-            this.txtPassword.TabIndex = 5;
+            this.txtPassword.TabIndex = 2;
             this.txtPassword.EditValueChanged += new System.EventHandler(this.txtPassword_EditValueChanged);
             // 
             // txtUsername
@@ -150,7 +152,7 @@
             this.txtUsername.Properties.MaxLength = 32;
             this.txtUsername.Properties.Padding = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.txtUsername.Size = new System.Drawing.Size(580, 42);
-            this.txtUsername.TabIndex = 3;
+            this.txtUsername.TabIndex = 0;
             this.txtUsername.EditValueChanged += new System.EventHandler(this.txtUsername_EditValueChanged);
             // 
             // pictureBox1
@@ -175,7 +177,7 @@
             this.txtEmail.Properties.MaxLength = 32;
             this.txtEmail.Properties.Padding = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.txtEmail.Size = new System.Drawing.Size(580, 42);
-            this.txtEmail.TabIndex = 9;
+            this.txtEmail.TabIndex = 1;
             this.txtEmail.EditValueChanged += new System.EventHandler(this.txtEmail_EditValueChanged);
             // 
             // label4
@@ -202,7 +204,7 @@
             this.txtConfirmPass.Properties.Padding = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.txtConfirmPass.Properties.UseSystemPasswordChar = true;
             this.txtConfirmPass.Size = new System.Drawing.Size(284, 42);
-            this.txtConfirmPass.TabIndex = 10;
+            this.txtConfirmPass.TabIndex = 3;
             this.txtConfirmPass.EditValueChanged += new System.EventHandler(this.txtConfirmPass_EditValueChanged);
             // 
             // label5
@@ -216,12 +218,18 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "Confirm Password";
             // 
-            // errorProvider1
+            // errorProvider
             // 
-            this.errorProvider1.BlinkRate = 1000;
-            this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
-            this.errorProvider1.ContainerControl = this;
-            this.errorProvider1.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider1.Icon")));
+            this.errorProvider.BlinkRate = 1000;
+            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider.ContainerControl = this;
+            this.errorProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("errorProvider.Icon")));
+            // 
+            // tickProvider
+            // 
+            this.tickProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.tickProvider.ContainerControl = this;
+            this.tickProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("tickProvider.Icon")));
             // 
             // RegisterControl
             // 
@@ -241,12 +249,14 @@
             this.Controls.Add(this.label1);
             this.Name = "RegisterControl";
             this.Size = new System.Drawing.Size(1285, 721);
+            this.Load += new System.EventHandler(this.RegisterControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtPassword.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUsername.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmail.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtConfirmPass.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tickProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -266,6 +276,7 @@
         private System.Windows.Forms.Label label4;
         private DevExpress.XtraEditors.TextEdit txtConfirmPass;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.ErrorProvider tickProvider;
     }
 }

@@ -50,5 +50,10 @@ namespace WeatherForecaster
 
             this.Controls.Add(new LoginControl() { Dock = DockStyle.Fill });
         }
+
+        private void mainMenu_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
