@@ -7,6 +7,17 @@ using static WeatherForecaster.formMain;
 
 namespace WeatherForecaster
 {
+    public partial class Global
+    {
+        public static double CelsiusToFahrenheit(double celsius)
+        {
+            return ((celsius * 9) / 5) + 32;
+        }
+        public static int CelsiusToFahrenheit(int celsius)
+        {
+            return Convert.ToInt32(((celsius * 9) / 5) + 32);
+        }
+    }
     public interface IEntity
     {
         string GetName();

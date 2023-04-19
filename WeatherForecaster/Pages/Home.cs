@@ -131,8 +131,6 @@ namespace WeatherForecaster.Pages
 
             lblCondition.Text = now.GetCondition();
 
-            lblTemperature.Text = $"{Convert.ToInt32(now.GetTemperature())} °C";
-
             int lowest = Convert.ToInt32(now.GetTemperature());
             int highest = Convert.ToInt32(now.GetTemperature());
 
@@ -142,12 +140,30 @@ namespace WeatherForecaster.Pages
             if (Convert.ToInt32(h2.GetTemperature()) > highest) highest = Convert.ToInt32(h2.GetTemperature());
             if (Convert.ToInt32(h3.GetTemperature()) < highest) highest = Convert.ToInt32(h3.GetTemperature());
 
-            lblLowest.Text = $"{lowest} °C";
-            lblHighest.Text = $"{highest} °C";
+            if (Global.UserHandle.DisplayCelcius)
+            {
+                lblTemperature.Text = $"{Convert.ToInt32(now.GetTemperature())} °C";
 
-            lblHr1Temp.Text = $"{Convert.ToInt32(now.GetTemperature())}°C";
-            lblHr2Temp.Text = $"{Convert.ToInt32(h2.GetTemperature())}°C";
-            lblHr3Temp.Text = $"{Convert.ToInt32(h3.GetTemperature())}°C";
+                lblLowest.Text = $"{lowest} °C";
+                lblHighest.Text = $"{highest} °C";
+
+                lblHr1Temp.Text = $"{Convert.ToInt32(now.GetTemperature())}°C";
+                lblHr2Temp.Text = $"{Convert.ToInt32(h2.GetTemperature())}°C";
+                lblHr3Temp.Text = $"{Convert.ToInt32(h3.GetTemperature())}°C";
+            }
+            else
+            {
+                lblTemperature.Text = $"{Global.CelsiusToFahrenheit(Convert.ToInt32(now.GetTemperature()))} °F";
+
+                lblLowest.Text = $"{Global.CelsiusToFahrenheit(lowest)} °F";
+                lblHighest.Text = $"{Global.CelsiusToFahrenheit(highest)} °F";
+
+                lblHr1Temp.Text = $"{Global.CelsiusToFahrenheit(Convert.ToInt32(now.GetTemperature()))}°F";
+                lblHr2Temp.Text = $"{Global.CelsiusToFahrenheit(Convert.ToInt32(h2.GetTemperature()))}°F";
+                lblHr3Temp.Text = $"{Global.CelsiusToFahrenheit(Convert.ToInt32(h3.GetTemperature()))}°F";
+            }
+
+            
 
             lblHr1Wind.Text = $"{Convert.ToInt32(now.GetWindKPH())} KM/H";
             lblHr2Wind.Text = $"{Convert.ToInt32(h2.GetWindKPH())} KM/H";
