@@ -8,10 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System.Globalization;
-using DevExpress.XtraPrinting.Native.WebClientUIControl;
 
 namespace WeatherForecaster
 {
@@ -22,93 +19,8 @@ namespace WeatherForecaster
         public static List<City> Cities = new List<City>();
         public static List<Weather> WeatherData = new List<Weather>();
 
-        public static string HTTPGet(string uri)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        public static void DefaultInit()
-        {
-            var asia = new Continent("Asia");
-            var na = new Continent("North America");
-            var eu = new Continent("Europe");
-
-            // AS
-
-            var pk = new Country("Pakistan", asia);
-            new City("Karachi", pk);
-            new City("Islamabad", pk);
-            new City("Lahore", pk);
-
-            var ag = new Country("Afghanistan", asia);
-            new City("Kabul", ag);
-            new City("Kandahar", ag);
-
-            var ind = new Country("India", asia);
-            new City("Mumbai", ind);
-            new City("Delhi", ind);
-
-            // NA
-
-            var usa = new Country("United States", na);
-            new City("New York", usa);
-            new City("Houston", usa);
-
-
-            var ca = new Country("Canada", na);
-            new City("Toronto", ca);
-            new City("Montreal", ca);
-
-            // EU
-
-            var uk = new Country(5, "United Kingdom", eu);
-            new City("London", uk);
-            new City("Edinburgh", uk);
-
-            var de = new Country(6, "Germany", eu);
-            new City("Berlin", de);
-            new City("Frankfurt", de);
-
-            foreach (var city in Cities)
-            {
-                dynamic json = JObject.Parse(HTTPGet($"http://api.weatherapi.com/v1/forecast.json?key=6abd91f533ce4b1695b161946232503&q={city.GetName()}&aqi=no&alerts=no&days=7"));
-                
-                // JObject json = JObject.Parse(File.ReadAllText("test.json"));
-                // json["location"]["name"].ToString()
-
-
-                // json.forecast => forecastday[days]
-                foreach (var day in json["forecast"]["forecastday"])
-                {
-                    // json.forecast.forecastday[i] => hour[hours], astro
-                    foreach (var hour in day["hour"])
-                    {
-                        Weather w = new Weather(city);
-                        
-                        w.Timestamp = DateTime.ParseExact(hour["time"].ToString(), "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
-                        w.Temperature = double.Parse(hour["temp_c"].ToString());
-                        w.Humidity = int.Parse(hour["humidity"].ToString());
-                        w.Precipitation = double.Parse(hour["precip_mm"].ToString());
-                        w.Cloud = int.Parse(hour["cloud"].ToString());
-                        w.WindKPH = double.Parse(hour["wind_kph"].ToString());
-                        w.RainChance = int.Parse(hour["chance_of_rain"].ToString());
-                        w.UVIndex = double.Parse(hour["uv"].ToString());
-
-                        w.Contributor = null;
-                    }
-                }
-
-                break;
-            }
-        }
+        public static string WeatherAPIKey = "6abd91f533ce4b1695b161946232503";
     }
 
     public class Weather : Entity
@@ -138,9 +50,6 @@ namespace WeatherForecaster
             Global.WeatherData.Add(this);
         }
         public Weather(object _parent) : this(Global.Cities.Count, _parent) { }
-    
-        
-
         ~Weather()
         {
             Global.WeatherData.Remove(this);

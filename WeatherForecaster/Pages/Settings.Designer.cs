@@ -32,8 +32,14 @@
             this.centigradeSwitch = new DevExpress.XtraEditors.ToggleSwitch();
             this.label1 = new System.Windows.Forms.Label();
             this.separatorControl1 = new DevExpress.XtraEditors.SeparatorControl();
+            this.weatherAPIKey = new DevExpress.XtraEditors.TextEdit();
+            this.label2 = new System.Windows.Forms.Label();
+            this.separatorControl2 = new DevExpress.XtraEditors.SeparatorControl();
+            this.btnFetch = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.centigradeSwitch.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weatherAPIKey.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.separatorControl2)).BeginInit();
             this.SuspendLayout();
             // 
             // labelControl1
@@ -90,12 +96,61 @@
             this.separatorControl1.Size = new System.Drawing.Size(462, 26);
             this.separatorControl1.TabIndex = 3;
             // 
+            // weatherAPIKey
+            // 
+            this.weatherAPIKey.Location = new System.Drawing.Point(677, 302);
+            this.weatherAPIKey.Name = "weatherAPIKey";
+            this.weatherAPIKey.Size = new System.Drawing.Size(149, 26);
+            this.weatherAPIKey.TabIndex = 4;
+            this.weatherAPIKey.EditValueChanged += new System.EventHandler(this.weatherAPIKey_EditValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 14F);
+            this.label2.ForeColor = System.Drawing.Color.Gainsboro;
+            this.label2.Location = new System.Drawing.Point(378, 296);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(220, 32);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "WeatherAPI Key";
+            // 
+            // separatorControl2
+            // 
+            this.separatorControl2.BackColor = System.Drawing.Color.Transparent;
+            this.separatorControl2.LineColor = System.Drawing.Color.Gray;
+            this.separatorControl2.Location = new System.Drawing.Point(374, 334);
+            this.separatorControl2.Name = "separatorControl2";
+            this.separatorControl2.Size = new System.Drawing.Size(462, 26);
+            this.separatorControl2.TabIndex = 6;
+            // 
+            // btnFetch
+            // 
+            this.btnFetch.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnFetch.Appearance.BorderColor = System.Drawing.Color.Transparent;
+            this.btnFetch.Appearance.Options.UseBackColor = true;
+            this.btnFetch.Appearance.Options.UseBorderColor = true;
+            this.btnFetch.AppearanceHovered.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnFetch.AppearanceHovered.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnFetch.AppearanceHovered.Options.UseBackColor = true;
+            this.btnFetch.AppearanceHovered.Options.UseForeColor = true;
+            this.btnFetch.Location = new System.Drawing.Point(839, 304);
+            this.btnFetch.Name = "btnFetch";
+            this.btnFetch.Size = new System.Drawing.Size(87, 23);
+            this.btnFetch.TabIndex = 7;
+            this.btnFetch.Text = "Fetch";
+            this.btnFetch.Click += new System.EventHandler(this.btnFetch_Click);
+            // 
             // Settings
             // 
             this.Appearance.BackColor = System.Drawing.Color.Black;
             this.Appearance.Options.UseBackColor = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnFetch);
+            this.Controls.Add(this.separatorControl2);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.weatherAPIKey);
             this.Controls.Add(this.separatorControl1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.centigradeSwitch);
@@ -105,6 +160,8 @@
             this.Load += new System.EventHandler(this.Settings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.centigradeSwitch.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weatherAPIKey.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.separatorControl2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,5 +173,9 @@
         private DevExpress.XtraEditors.ToggleSwitch centigradeSwitch;
         private System.Windows.Forms.Label label1;
         private DevExpress.XtraEditors.SeparatorControl separatorControl1;
+        private DevExpress.XtraEditors.TextEdit weatherAPIKey;
+        private System.Windows.Forms.Label label2;
+        private DevExpress.XtraEditors.SeparatorControl separatorControl2;
+        private DevExpress.XtraEditors.SimpleButton btnFetch;
     }
 }

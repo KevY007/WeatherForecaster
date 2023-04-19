@@ -60,9 +60,8 @@
             this.mainMenu.LookAndFeel.SkinName = "Office 2019 Black";
             this.mainMenu.LookAndFeel.UseDefaultLookAndFeel = false;
             this.mainMenu.Name = "mainMenu";
-            this.mainMenu.OptionsMinimizing.State = DevExpress.XtraBars.Navigation.AccordionControlState.Minimized;
             this.mainMenu.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Fluent;
-            this.mainMenu.Size = new System.Drawing.Size(72, 720);
+            this.mainMenu.Size = new System.Drawing.Size(375, 720);
             this.mainMenu.TabIndex = 1;
             this.mainMenu.ViewType = DevExpress.XtraBars.Navigation.AccordionControlViewType.HamburgerMenu;
             // 
@@ -85,7 +84,6 @@
             this.btnGroupAccount.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.btnLoginSignup,
             this.btnAccountSettings});
-            this.btnGroupAccount.Expanded = true;
             this.btnGroupAccount.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnGroupAccount.ImageOptions.SvgImage")));
             this.btnGroupAccount.Name = "btnGroupAccount";
             this.btnGroupAccount.Text = "Account";
@@ -112,6 +110,7 @@
             this.btnSelectLocation,
             this.btnAddLocation,
             this.btnRemoveLocation});
+            this.btnGroupLocations.Expanded = true;
             this.btnGroupLocations.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnGroupLocations.ImageOptions.SvgImage")));
             this.btnGroupLocations.Name = "btnGroupLocations";
             this.btnGroupLocations.Text = "Locations";
