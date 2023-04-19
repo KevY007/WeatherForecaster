@@ -45,7 +45,7 @@ namespace WeatherForecaster
 
             Database.Open();
 
-            string query = $"SELECT ID, Username, Email, PrivilegeLevel FROM Users";
+            string query = $"SELECT ID, Username, Email, Celcius, PrivilegeLevel FROM Users";
 
             try
             {
@@ -56,7 +56,7 @@ namespace WeatherForecaster
                 {
                     while (reader.Read())
                     {
-                        var a = new User((int)reader["ID"], (string)reader["Username"], (string)reader["Email"], (byte)reader["PrivilegeLevel"]);
+                        var a = new User((int)reader["ID"], (string)reader["Username"], (string)reader["Email"], (bool)reader["Celcius"], (byte)reader["PrivilegeLevel"]);
                     }
                 }
                 reader.Close();

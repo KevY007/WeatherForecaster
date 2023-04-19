@@ -35,6 +35,21 @@ namespace WeatherForecaster
             InitializeComponent();
 
             foreach (Control c in this.Controls) defaultControls.Add(c.Handle);
+
+            // Hide all the controls before log-in:
+            
+            foreach(var a in mainMenu.Elements)
+            {
+                a.Visible = false; // Groups
+
+                foreach(var b in a.Elements)
+                {
+                    b.Visible = false; // Items/Buttons
+                }
+            }
+
+            btnGroupAccount.Visible = true;
+            btnLoginSignup.Visible = true;
         }
 
         private void formMain_Load(object sender, EventArgs e)
@@ -48,12 +63,44 @@ namespace WeatherForecaster
         {
             Clear();
 
-            this.Controls.Add(new LoginControl() { Dock = DockStyle.Fill });
+            this.Controls.Add(new Pages.Login() { Dock = DockStyle.Fill });
         }
 
-        private void mainMenu_Click(object sender, EventArgs e)
+        public void OnSignupLogin()
         {
+            Clear();
 
+            // Show all the controls after log-in:
+
+            foreach (var a in mainMenu.Elements)
+            {
+                a.Visible = true; // Groups
+
+                foreach (var b in a.Elements)
+                {
+                    b.Visible = true; // Items/Buttons
+                }
+            }
+
+
+            // Now hide specific controls
+            btnLoginSignup.Visible = false;
+
+            btnHome_Click(null, null);
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            Clear();
+
+            this.Controls.Add(new Pages.Home() { Dock = DockStyle.Fill });
+        }
+
+        private void btnAccountSettings_Click(object sender, EventArgs e)
+        {
+            Clear();
+
+            this.Controls.Add(new Pages.Settings() { Dock = DockStyle.Fill });
         }
     }
 }

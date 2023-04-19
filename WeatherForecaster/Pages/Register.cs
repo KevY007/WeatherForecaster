@@ -12,11 +12,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WeatherForecaster
+namespace WeatherForecaster.Pages
 {
-    public partial class RegisterControl : DevExpress.XtraEditors.XtraUserControl
+    public partial class Register : DevExpress.XtraEditors.XtraUserControl
     {
-        public RegisterControl()
+        public Register()
         {
             InitializeComponent();
         }
@@ -25,7 +25,7 @@ namespace WeatherForecaster
         {
             Global.MainForm.Clear();
 
-            Global.MainForm.Controls.Add(new LoginControl() { Dock = DockStyle.Fill });
+            Global.MainForm.Controls.Add(new Login() { Dock = DockStyle.Fill });
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
@@ -52,7 +52,7 @@ namespace WeatherForecaster
                 MessageBox.Show($"Your account has been created!\nAccount ID: {aID}\nUsername: {txtUsername.Text}\nEmail: {txtEmail.Text}\n\nPlease proceed to login now!", "Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnGoLogin_Click(sender, e);
 
-                new User(aID, txtUsername.Text, txtEmail.Text);
+                new User(aID, txtUsername.Text, txtEmail.Text, true);
             }
             catch (SqlException err) 
             {

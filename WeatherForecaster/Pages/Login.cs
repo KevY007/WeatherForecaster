@@ -15,11 +15,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WeatherForecaster
+namespace WeatherForecaster.Pages
 {
-    public partial class LoginControl : DevExpress.XtraEditors.XtraUserControl
+    public partial class Login : DevExpress.XtraEditors.XtraUserControl
     {
-        public LoginControl()
+        public Login()
         {
             InitializeComponent();
         }
@@ -33,7 +33,7 @@ namespace WeatherForecaster
         {
             Global.MainForm.Clear();
 
-            Global.MainForm.Controls.Add(new RegisterControl() { Dock = DockStyle.Fill });
+            Global.MainForm.Controls.Add(new Register() { Dock = DockStyle.Fill });
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -41,6 +41,8 @@ namespace WeatherForecaster
             if (Global.Users.Count(u => u.GetName() == txtUsername.Text) == 0)
             {
                 MessageBox.Show("The account \"" + txtUsername.Text + "\" does not exist!", "Invalid account", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtUsername.Text = "";
+                txtPassword.Text = "";
                 return;
             }
 
@@ -61,6 +63,7 @@ namespace WeatherForecaster
                 if((string)reader["Password"] != Global.ComputeHash(txtPassword.Text, (string)reader["Salt"]))
                 {
                     MessageBox.Show("Incorrect password! Please try again.", "Incorrect password", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtPassword.Text = "";
                     return;
                 }
 
@@ -70,8 +73,7 @@ namespace WeatherForecaster
 
                 MessageBox.Show($"Logged in to account ID {Global.UserHandle.GetId()} successfully.", "Logged In", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                Global.MainForm.Clear();
-                Global.MainForm.btnLoginSignup.Visible = false;
+                Global.MainForm.OnSignupLogin();
             }
             catch (SqlException err)
             {
