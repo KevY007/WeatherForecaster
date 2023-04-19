@@ -24,10 +24,5 @@ namespace WeatherForecaster.Pages
         {
 
         }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }
