@@ -34,6 +34,7 @@ namespace WeatherForecaster
         private float Precipitation; // In mm
         private float UVIndex; // 0.0 - onwards.
         private float WindKPH; // ...
+        private string Condition;
         private DateTime Timestamp; // ...
 
         public User Contributor;
@@ -45,6 +46,7 @@ namespace WeatherForecaster
         public float GetPrecipitation() { return Precipitation; }
         public float GetUVIndex() { return UVIndex; }
         public float GetWindKPH() { return WindKPH; }
+        public string GetCondition() { return Condition; }
         public DateTime GetTimestamp() { return Timestamp; }
         public User GetContributor() { return Contributor; }
 
@@ -52,7 +54,7 @@ namespace WeatherForecaster
 
         public City GetParent() => Parent;
 
-        public Weather(int _id, City _parent, DateTime timestamp, float temp, int cloud, int humidity, int rain, float precip, float uv, float wind, User contributor = null) : base(_id, _id.ToString())
+        public Weather(int _id, City _parent, DateTime timestamp, float temp, int cloud, int humidity, int rain, float precip, float uv, float wind, string condition, User contributor = null) : base(_id, _id.ToString())
         {
             Parent = _parent;
 
@@ -64,12 +66,13 @@ namespace WeatherForecaster
             Precipitation = precip;
             UVIndex = uv;
             WindKPH = wind;
+            Condition = condition;
 
             Contributor = contributor;
 
             Global.WeatherData.Add(this);
         }
-        public Weather(City _parent, DateTime timestamp, float temp, int cloud, int humidity, int rain, float precip, float uv, float wind, User contributor = null) : this(Global.WeatherData.Count, _parent, timestamp, temp, cloud, humidity, rain, precip, uv, wind, contributor) { }
+        public Weather(City _parent, DateTime timestamp, float temp, int cloud, int humidity, int rain, float precip, float uv, float wind, string condition, User contributor = null) : this(Global.WeatherData.Count, _parent, timestamp, temp, cloud, humidity, rain, precip, uv, wind, condition, contributor) { }
         ~Weather()
         {
             Global.WeatherData.Remove(this);

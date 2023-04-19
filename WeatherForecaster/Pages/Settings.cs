@@ -132,11 +132,9 @@ namespace WeatherForecaster.Pages
                         Weather w = new Weather(city, DateTime.ParseExact(hour["time"].ToString(), "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
                             float.Parse(hour["temp_c"].ToString()), int.Parse(hour["cloud"].ToString()), int.Parse(hour["humidity"].ToString()),
                             int.Parse(hour["chance_of_rain"].ToString()), float.Parse(hour["precip_mm"].ToString()), float.Parse(hour["uv"].ToString()),
-                            float.Parse(hour["wind_kph"].ToString()));
-
-                        MessageBox.Show($"{w.GetId()}");
+                            float.Parse(hour["wind_kph"].ToString()), (string)hour["condition"]["text"]);
                         
-                        query += $"({w.GetId()}, {w.GetParent().GetId()}, '{w.GetTimestamp().ToString()}', {w.GetTemperature()}, " +
+                        query += $"({w.GetId()}, {w.GetParent().GetId()}, '{w.GetTimestamp().ToString()}', {w.GetTemperature()}, '{w.GetCondition()}', " +
                             $"{w.GetCloud()}, {w.GetHumidity()}, {w.GetRainChance()}, {w.GetPrecipitation()}, {w.GetUVIndex()}, {w.GetWindKPH()}, -1), ";
 
                         weatherCount++;

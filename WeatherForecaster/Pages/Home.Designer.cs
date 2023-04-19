@@ -40,11 +40,17 @@ namespace WeatherForecaster.Pages
             this.lblDay = new System.Windows.Forms.Label();
             this.lblTemperature = new System.Windows.Forms.Label();
             this.separatorControl1 = new DevExpress.XtraEditors.SeparatorControl();
-            this.lblWeather = new System.Windows.Forms.Label();
+            this.lblCondition = new System.Windows.Forms.Label();
             this.lblLowest = new System.Windows.Forms.Label();
             this.lblHighest = new System.Windows.Forms.Label();
             this.lblLowHighSep = new System.Windows.Forms.Label();
             this.panelMiscInfo = new WeatherForecaster.Controls.RoundedPanel();
+            this.lblHr3Rain = new System.Windows.Forms.Label();
+            this.lblHr2Rain = new System.Windows.Forms.Label();
+            this.lblHr3Wind = new System.Windows.Forms.Label();
+            this.lblHr2Wind = new System.Windows.Forms.Label();
+            this.lblHr3Temp = new System.Windows.Forms.Label();
+            this.lblHr2Temp = new System.Windows.Forms.Label();
             this.svgHr3Rain = new DevExpress.XtraEditors.SvgImageBox();
             this.svgHr3Wind = new DevExpress.XtraEditors.SvgImageBox();
             this.svgHr3 = new DevExpress.XtraEditors.SvgImageBox();
@@ -60,13 +66,7 @@ namespace WeatherForecaster.Pages
             this.lblHr1Temp = new System.Windows.Forms.Label();
             this.svgHr1 = new DevExpress.XtraEditors.SvgImageBox();
             this.lblHr1 = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.lblHr2Temp = new System.Windows.Forms.Label();
-            this.lblHr3Temp = new System.Windows.Forms.Label();
-            this.lblHr2Wind = new System.Windows.Forms.Label();
-            this.lblHr3Wind = new System.Windows.Forms.Label();
-            this.lblHr2Rain = new System.Windows.Forms.Label();
-            this.lblHr3Rain = new System.Windows.Forms.Label();
+            this.weatherIconCollection = new DevExpress.Utils.SvgImageCollection(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).BeginInit();
             this.panelMiscInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.svgHr3Rain)).BeginInit();
@@ -78,6 +78,7 @@ namespace WeatherForecaster.Pages
             ((System.ComponentModel.ISupportInitialize)(this.svgHr1Rain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.svgHr1Wind)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.svgHr1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weatherIconCollection)).BeginInit();
             this.SuspendLayout();
             // 
             // lblLocationName
@@ -127,17 +128,17 @@ namespace WeatherForecaster.Pages
             this.separatorControl1.Size = new System.Drawing.Size(358, 30);
             this.separatorControl1.TabIndex = 3;
             // 
-            // lblWeather
+            // lblCondition
             // 
-            this.lblWeather.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblWeather.Font = new System.Drawing.Font("Rockwell", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWeather.ForeColor = System.Drawing.Color.Gray;
-            this.lblWeather.Location = new System.Drawing.Point(0, 278);
-            this.lblWeather.Name = "lblWeather";
-            this.lblWeather.Size = new System.Drawing.Size(1282, 36);
-            this.lblWeather.TabIndex = 4;
-            this.lblWeather.Text = "Sunny";
-            this.lblWeather.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblCondition.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblCondition.Font = new System.Drawing.Font("Rockwell", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCondition.ForeColor = System.Drawing.Color.Gray;
+            this.lblCondition.Location = new System.Drawing.Point(0, 278);
+            this.lblCondition.Name = "lblCondition";
+            this.lblCondition.Size = new System.Drawing.Size(1282, 36);
+            this.lblCondition.TabIndex = 4;
+            this.lblCondition.Text = "Sunny";
+            this.lblCondition.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblLowest
             // 
@@ -209,6 +210,78 @@ namespace WeatherForecaster.Pages
             this.panelMiscInfo.Size = new System.Drawing.Size(602, 330);
             this.panelMiscInfo.TabIndex = 8;
             this.panelMiscInfo.Thickness = 500F;
+            // 
+            // lblHr3Rain
+            // 
+            this.lblHr3Rain.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblHr3Rain.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHr3Rain.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblHr3Rain.Location = new System.Drawing.Point(479, 296);
+            this.lblHr3Rain.Name = "lblHr3Rain";
+            this.lblHr3Rain.Size = new System.Drawing.Size(108, 24);
+            this.lblHr3Rain.TabIndex = 26;
+            this.lblHr3Rain.Text = "50%";
+            this.lblHr3Rain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblHr2Rain
+            // 
+            this.lblHr2Rain.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblHr2Rain.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHr2Rain.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblHr2Rain.Location = new System.Drawing.Point(237, 296);
+            this.lblHr2Rain.Name = "lblHr2Rain";
+            this.lblHr2Rain.Size = new System.Drawing.Size(108, 24);
+            this.lblHr2Rain.TabIndex = 25;
+            this.lblHr2Rain.Text = "50%";
+            this.lblHr2Rain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblHr3Wind
+            // 
+            this.lblHr3Wind.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblHr3Wind.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHr3Wind.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblHr3Wind.Location = new System.Drawing.Point(474, 205);
+            this.lblHr3Wind.Name = "lblHr3Wind";
+            this.lblHr3Wind.Size = new System.Drawing.Size(122, 22);
+            this.lblHr3Wind.TabIndex = 24;
+            this.lblHr3Wind.Text = "3 KM/H";
+            this.lblHr3Wind.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblHr2Wind
+            // 
+            this.lblHr2Wind.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblHr2Wind.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHr2Wind.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblHr2Wind.Location = new System.Drawing.Point(228, 205);
+            this.lblHr2Wind.Name = "lblHr2Wind";
+            this.lblHr2Wind.Size = new System.Drawing.Size(122, 22);
+            this.lblHr2Wind.TabIndex = 23;
+            this.lblHr2Wind.Text = "3 KM/H";
+            this.lblHr2Wind.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblHr3Temp
+            // 
+            this.lblHr3Temp.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblHr3Temp.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHr3Temp.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblHr3Temp.Location = new System.Drawing.Point(475, 115);
+            this.lblHr3Temp.Name = "lblHr3Temp";
+            this.lblHr3Temp.Size = new System.Drawing.Size(112, 24);
+            this.lblHr3Temp.TabIndex = 22;
+            this.lblHr3Temp.Text = "2°C";
+            this.lblHr3Temp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblHr2Temp
+            // 
+            this.lblHr2Temp.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblHr2Temp.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHr2Temp.ForeColor = System.Drawing.Color.Gainsboro;
+            this.lblHr2Temp.Location = new System.Drawing.Point(233, 115);
+            this.lblHr2Temp.Name = "lblHr2Temp";
+            this.lblHr2Temp.Size = new System.Drawing.Size(112, 24);
+            this.lblHr2Temp.TabIndex = 21;
+            this.lblHr2Temp.Text = "2°C";
+            this.lblHr2Temp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // svgHr3Rain
             // 
@@ -372,83 +445,23 @@ namespace WeatherForecaster.Pages
             this.lblHr1.Text = "Now";
             this.lblHr1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // timer1
+            // weatherIconCollection
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // lblHr2Temp
-            // 
-            this.lblHr2Temp.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblHr2Temp.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHr2Temp.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblHr2Temp.Location = new System.Drawing.Point(233, 115);
-            this.lblHr2Temp.Name = "lblHr2Temp";
-            this.lblHr2Temp.Size = new System.Drawing.Size(112, 24);
-            this.lblHr2Temp.TabIndex = 21;
-            this.lblHr2Temp.Text = "2°C";
-            this.lblHr2Temp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblHr3Temp
-            // 
-            this.lblHr3Temp.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblHr3Temp.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHr3Temp.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblHr3Temp.Location = new System.Drawing.Point(475, 115);
-            this.lblHr3Temp.Name = "lblHr3Temp";
-            this.lblHr3Temp.Size = new System.Drawing.Size(112, 24);
-            this.lblHr3Temp.TabIndex = 22;
-            this.lblHr3Temp.Text = "2°C";
-            this.lblHr3Temp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblHr2Wind
-            // 
-            this.lblHr2Wind.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblHr2Wind.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHr2Wind.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblHr2Wind.Location = new System.Drawing.Point(228, 205);
-            this.lblHr2Wind.Name = "lblHr2Wind";
-            this.lblHr2Wind.Size = new System.Drawing.Size(122, 22);
-            this.lblHr2Wind.TabIndex = 23;
-            this.lblHr2Wind.Text = "3 KM/H";
-            this.lblHr2Wind.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblHr3Wind
-            // 
-            this.lblHr3Wind.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblHr3Wind.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHr3Wind.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblHr3Wind.Location = new System.Drawing.Point(474, 205);
-            this.lblHr3Wind.Name = "lblHr3Wind";
-            this.lblHr3Wind.Size = new System.Drawing.Size(122, 22);
-            this.lblHr3Wind.TabIndex = 24;
-            this.lblHr3Wind.Text = "3 KM/H";
-            this.lblHr3Wind.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblHr2Rain
-            // 
-            this.lblHr2Rain.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblHr2Rain.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHr2Rain.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblHr2Rain.Location = new System.Drawing.Point(237, 296);
-            this.lblHr2Rain.Name = "lblHr2Rain";
-            this.lblHr2Rain.Size = new System.Drawing.Size(108, 24);
-            this.lblHr2Rain.TabIndex = 25;
-            this.lblHr2Rain.Text = "50%";
-            this.lblHr2Rain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblHr3Rain
-            // 
-            this.lblHr3Rain.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.lblHr3Rain.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHr3Rain.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lblHr3Rain.Location = new System.Drawing.Point(479, 296);
-            this.lblHr3Rain.Name = "lblHr3Rain";
-            this.lblHr3Rain.Size = new System.Drawing.Size(108, 24);
-            this.lblHr3Rain.TabIndex = 26;
-            this.lblHr3Rain.Text = "50%";
-            this.lblHr3Rain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.weatherIconCollection.Add("weather_hail", "image://svgimages/icon builder/weather_hail.svg");
+            this.weatherIconCollection.Add("weather_partlycloudyday", "image://svgimages/icon builder/weather_partlycloudyday.svg");
+            this.weatherIconCollection.Add("weather_partlycloudynight", "image://svgimages/icon builder/weather_partlycloudynight.svg");
+            this.weatherIconCollection.Add("weather_rain", "image://svgimages/icon builder/weather_rain.svg");
+            this.weatherIconCollection.Add("weather_rainandhail", "image://svgimages/icon builder/weather_rainandhail.svg");
+            this.weatherIconCollection.Add("weather_rainheavy", "image://svgimages/icon builder/weather_rainheavy.svg");
+            this.weatherIconCollection.Add("weather_rainlight", "image://svgimages/icon builder/weather_rainlight.svg");
+            this.weatherIconCollection.Add("weather_snow", "image://svgimages/icon builder/weather_snow.svg");
+            this.weatherIconCollection.Add("weather_snowfall", "image://svgimages/icon builder/weather_snowfall.svg");
+            this.weatherIconCollection.Add("weather_snowfallheavy", "image://svgimages/icon builder/weather_snowfallheavy.svg");
+            this.weatherIconCollection.Add("weather_snowfalllight", "image://svgimages/icon builder/weather_snowfalllight.svg");
+            this.weatherIconCollection.Add("weather_storm", "image://svgimages/icon builder/weather_storm.svg");
+            this.weatherIconCollection.Add("weather_sunny", "image://svgimages/icon builder/weather_sunny.svg");
+            this.weatherIconCollection.Add("weather_water", "image://svgimages/icon builder/weather_water.svg");
+            this.weatherIconCollection.Add("weather_wind", "image://svgimages/icon builder/weather_wind.svg");
             // 
             // Home
             // 
@@ -462,7 +475,7 @@ namespace WeatherForecaster.Pages
             this.Controls.Add(this.lblLowHighSep);
             this.Controls.Add(this.lblHighest);
             this.Controls.Add(this.lblLowest);
-            this.Controls.Add(this.lblWeather);
+            this.Controls.Add(this.lblCondition);
             this.Controls.Add(this.separatorControl1);
             this.Controls.Add(this.lblTemperature);
             this.Controls.Add(this.lblDay);
@@ -481,6 +494,7 @@ namespace WeatherForecaster.Pages
             ((System.ComponentModel.ISupportInitialize)(this.svgHr1Rain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.svgHr1Wind)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.svgHr1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weatherIconCollection)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -491,7 +505,7 @@ namespace WeatherForecaster.Pages
         private System.Windows.Forms.Label lblDay;
         private System.Windows.Forms.Label lblTemperature;
         private DevExpress.XtraEditors.SeparatorControl separatorControl1;
-        private System.Windows.Forms.Label lblWeather;
+        private System.Windows.Forms.Label lblCondition;
         private System.Windows.Forms.Label lblLowest;
         private System.Windows.Forms.Label lblHighest;
         private System.Windows.Forms.Label lblLowHighSep;
@@ -511,12 +525,12 @@ namespace WeatherForecaster.Pages
         private Label lblHr1Temp;
         private DevExpress.XtraEditors.SvgImageBox svgHr1;
         private Label lblHr1;
-        private Timer timer1;
         private Label lblHr3Rain;
         private Label lblHr2Rain;
         private Label lblHr3Wind;
         private Label lblHr2Wind;
         private Label lblHr3Temp;
         private Label lblHr2Temp;
+        private DevExpress.Utils.SvgImageCollection weatherIconCollection;
     }
 }
