@@ -140,7 +140,7 @@ namespace WeatherForecaster.Pages
             if (Convert.ToInt32(h2.GetTemperature()) > highest) highest = Convert.ToInt32(h2.GetTemperature());
             if (Convert.ToInt32(h3.GetTemperature()) < highest) highest = Convert.ToInt32(h3.GetTemperature());
 
-            if (Global.UserHandle.DisplayCelcius)
+            if (Global.UserHandle.DisplayCelsius)
             {
                 lblTemperature.Text = $"{Convert.ToInt32(now.GetTemperature())} °C";
 

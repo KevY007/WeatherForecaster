@@ -41,13 +41,13 @@ namespace WeatherForecaster.Pages
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            centigradeSwitch.IsOn = Global.UserHandle.DisplayCelcius;
+            centigradeSwitch.IsOn = Global.UserHandle.DisplayCelsius;
             weatherAPIKey.Text = Global.WeatherAPIKey;
         }
 
         private void centigradeSwitch_Toggled(object sender, EventArgs e)
         {
-            Global.UserHandle.DisplayCelcius = centigradeSwitch.IsOn;
+            Global.UserHandle.DisplayCelsius = centigradeSwitch.IsOn;
         }
 
         private void weatherAPIKey_EditValueChanged(object sender, EventArgs e)

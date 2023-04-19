@@ -19,15 +19,15 @@ namespace WeatherForecaster
     {
         private string Email;
         private PrivilegeLevels PrivilegeLevel;
-        private bool Celcius;
+        private bool Celsius;
 
-        public bool DisplayCelcius
+        public bool DisplayCelsius
         {
-            get { return Celcius; }
+            get { return Celsius; }
             set { 
-                Celcius = value;
+                Celsius = value;
 
-                string query = $"UPDATE Users SET Celcius = {Convert.ToInt32(Celcius)} WHERE ID = {GetId()};";
+                string query = $"UPDATE Users SET Celsius = {Convert.ToInt32(Celsius)} WHERE ID = {GetId()};";
 
                 try
                 {
@@ -75,20 +75,20 @@ namespace WeatherForecaster
             Global.Users.Remove(this);
         }
 
-        public User(int id, string name, string email, bool celcius) : base(id, name)
+        public User(int id, string name, string email, bool celsius) : base(id, name)
         {
             Email = email;
             PrivilegeLevel = PrivilegeLevels.None;
 
             Global.Users.Add(this);
-            Celcius = celcius;
+            Celsius = celsius;
         }
 
-        public User(int id, string name, string email, bool celcius, PrivilegeLevels privileges) : this(id, name, email, celcius)
+        public User(int id, string name, string email, bool celsius, PrivilegeLevels privileges) : this(id, name, email, celsius)
         {
             PrivilegeLevel = privileges;
         }
 
-        public User(int id, string name, string email, bool celcius, int privileges) : this(id, name, email, celcius, (PrivilegeLevels)privileges) { }
+        public User(int id, string name, string email, bool celsius, int privileges) : this(id, name, email, celsius, (PrivilegeLevels)privileges) { }
     }
 }

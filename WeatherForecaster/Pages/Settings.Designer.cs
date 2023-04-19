@@ -70,7 +70,7 @@
             this.centigradeSwitch.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.Default;
             this.centigradeSwitch.Properties.LookAndFeel.UseDefaultLookAndFeel = false;
             this.centigradeSwitch.Properties.OffText = "Fahrenheit";
-            this.centigradeSwitch.Properties.OnText = "Celcius";
+            this.centigradeSwitch.Properties.OnText = "Celsius";
             this.centigradeSwitch.Properties.ShowText = false;
             this.centigradeSwitch.Size = new System.Drawing.Size(74, 27);
             this.centigradeSwitch.TabIndex = 1;
