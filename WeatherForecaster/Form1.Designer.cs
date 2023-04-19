@@ -60,8 +60,9 @@
             this.mainMenu.LookAndFeel.SkinName = "Office 2019 Black";
             this.mainMenu.LookAndFeel.UseDefaultLookAndFeel = false;
             this.mainMenu.Name = "mainMenu";
+            this.mainMenu.OptionsMinimizing.State = DevExpress.XtraBars.Navigation.AccordionControlState.Minimized;
             this.mainMenu.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Fluent;
-            this.mainMenu.Size = new System.Drawing.Size(375, 720);
+            this.mainMenu.Size = new System.Drawing.Size(72, 720);
             this.mainMenu.TabIndex = 1;
             this.mainMenu.ViewType = DevExpress.XtraBars.Navigation.AccordionControlViewType.HamburgerMenu;
             // 
