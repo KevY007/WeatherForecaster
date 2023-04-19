@@ -25,31 +25,51 @@ namespace WeatherForecaster
 
     public class Weather : Entity
     {
-        private object Parent;
+        private City Parent;
 
-        public double Temperature; // In centigrade
-        public int Cloud; // 0-100
-        public int Humidity; // 0-100
-        public int RainChance; // 0-100
-        public double Precipitation; // In mm
-        public double UVIndex; // 0.0 - onwards.
-        public double WindKPH; // ...
-        public DateTime Timestamp; // ...
-
+        private float Temperature; // In centigrade
+        private int Cloud; // 0-100
+        private int Humidity; // 0-100
+        private int RainChance; // 0-100
+        private float Precipitation; // In mm
+        private float UVIndex; // 0.0 - onwards.
+        private float WindKPH; // ...
+        private DateTime Timestamp; // ...
 
         public User Contributor;
 
-        public object GetParent() => Parent;
+        public float GetTemperature() { return Temperature; } 
+        public int GetCloud() { return Cloud; }
+        public int GetHumidity() { return Humidity; }
+        public int GetRainChance() { return RainChance; }
+        public float GetPrecipitation() { return Precipitation; }
+        public float GetUVIndex() { return UVIndex; }
+        public float GetWindKPH() { return WindKPH; }
+        public DateTime GetTimestamp() { return Timestamp; }
+        public User GetContributor() { return Contributor; }
 
-        public bool BelongsToCity() => Parent.GetType() == typeof(City);
-        public bool BelongsToCountry() => Parent.GetType() == typeof(Country);
 
-        public Weather(int _id, object _parent) : base(_id, _id.ToString())
+
+        public City GetParent() => Parent;
+
+        public Weather(int _id, City _parent, DateTime timestamp, float temp, int cloud, int humidity, int rain, float precip, float uv, float wind, User contributor = null) : base(_id, _id.ToString())
         {
             Parent = _parent;
+
+            Timestamp = timestamp;
+            Temperature = temp;
+            Cloud = cloud;
+            Humidity = humidity;
+            RainChance = rain;
+            Precipitation = precip;
+            UVIndex = uv;
+            WindKPH = wind;
+
+            Contributor = contributor;
+
             Global.WeatherData.Add(this);
         }
-        public Weather(object _parent) : this(Global.Cities.Count, _parent) { }
+        public Weather(City _parent, DateTime timestamp, float temp, int cloud, int humidity, int rain, float precip, float uv, float wind, User contributor = null) : this(Global.WeatherData.Count, _parent, timestamp, temp, cloud, humidity, rain, precip, uv, wind, contributor) { }
         ~Weather()
         {
             Global.WeatherData.Remove(this);
@@ -71,7 +91,7 @@ namespace WeatherForecaster
 
         ~City()
         {
-            Global.WeatherData.RemoveAll(a => a.BelongsToCity() && a.GetParent() == this);
+            Global.WeatherData.RemoveAll(a => a.GetParent() == this);
 
             Global.Cities.Remove(this);
         }
@@ -92,7 +112,6 @@ namespace WeatherForecaster
 
         ~Country()
         {
-            Global.WeatherData.RemoveAll(a => a.BelongsToCountry() && a.GetParent() == this);
             Global.Cities.RemoveAll(a => a.GetParent() == this);
 
             Global.Countries.Remove(this);

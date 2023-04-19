@@ -1,0 +1,6 @@
+CREATE TABLE [dbo].[Countries]
+(
+	[ID] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Name] VARCHAR(32) NOT NULL UNIQUE,
+	[ParentID] INT NOT NULL
+)

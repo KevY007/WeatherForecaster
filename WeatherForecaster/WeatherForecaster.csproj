@@ -201,7 +201,11 @@
     <None Include="Resources\registerIco.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\Cities.sql" />
+    <Content Include="Database\Continents.sql" />
+    <Content Include="Database\Countries.sql" />
     <Content Include="Database\Users.sql" />
+    <Content Include="Database\WeatherData.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using WeatherForecaster.Properties;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Data.SqlClient;
 
 namespace WeatherForecaster.Pages
 {
@@ -63,8 +64,16 @@ namespace WeatherForecaster.Pages
 
             if (result != DialogResult.Yes && result != DialogResult.No) return;
 
+            if (Global.Cities.Count == 0)
+            {
+                MessageBox.Show("There should be at least one city loaded in the program to load data for!");
+                return;
+            }
+
             int weatherCount = 0;
-            
+            string query = "INSERT INTO WeatherData VALUES ";
+            int rows = 0;
+
             /*var asia = new Continent("Asia");
             var na = new Continent("North America");
             var eu = new Continent("Europe");
@@ -105,6 +114,7 @@ namespace WeatherForecaster.Pages
             new City("Berlin", de);
             new City("Frankfurt", de);*/
 
+
             foreach (var city in Global.Cities)
             {
                 dynamic json = JObject.Parse(HTTPGet($"http://api.weatherapi.com/v1/forecast.json?key={Global.WeatherAPIKey}&q={city.GetName()}&aqi=no&alerts=no&days=3"));
@@ -119,30 +129,38 @@ namespace WeatherForecaster.Pages
                     // json.forecast.forecastday[i] => hour[hours], astro
                     foreach (var hour in day["hour"])
                     {
-                        Weather w = new Weather(city);
+                        Weather w = new Weather(city, DateTime.ParseExact(hour["time"].ToString(), "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
+                            float.Parse(hour["temp_c"].ToString()), int.Parse(hour["cloud"].ToString()), int.Parse(hour["humidity"].ToString()),
+                            int.Parse(hour["chance_of_rain"].ToString()), float.Parse(hour["precip_mm"].ToString()), float.Parse(hour["uv"].ToString()),
+                            float.Parse(hour["wind_kph"].ToString()));
 
-                        w.Timestamp = DateTime.ParseExact(hour["time"].ToString(), "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
-                        w.Temperature = double.Parse(hour["temp_c"].ToString());
-                        w.Humidity = int.Parse(hour["humidity"].ToString());
-                        w.Precipitation = double.Parse(hour["precip_mm"].ToString());
-                        w.Cloud = int.Parse(hour["cloud"].ToString());
-                        w.WindKPH = double.Parse(hour["wind_kph"].ToString());
-                        w.RainChance = int.Parse(hour["chance_of_rain"].ToString());
-                        w.UVIndex = double.Parse(hour["uv"].ToString());
-
-                        w.Contributor = null;
-
-                        if(result == DialogResult.Yes)
-                        {
-
-                        }
+                        MessageBox.Show($"{w.GetId()}");
+                        
+                        query += $"({w.GetId()}, {w.GetParent().GetId()}, '{w.GetTimestamp().ToString()}', {w.GetTemperature()}, " +
+                            $"{w.GetCloud()}, {w.GetHumidity()}, {w.GetRainChance()}, {w.GetPrecipitation()}, {w.GetUVIndex()}, {w.GetWindKPH()}, -1), ";
 
                         weatherCount++;
                     }
                 }
             }
 
-            string fetchStr = "Fetched {weatherCount} weather entries into the local database for the cities: \n\n";
+            query = query.Substring(0, query.Length - 2) + ";";
+
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand(query, Global.Database);
+
+                    rows = cmd.ExecuteNonQuery();
+                }
+                catch (SqlException err)
+                {
+                    MessageBox.Show("An error with the database has occured, please contact a technician!\n\n" + err.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+            string fetchStr = $"Fetched {weatherCount} weather entries into the local memory & {rows} rows inserted to database for the cities: \n\n";
             foreach(var city in Global.Cities)
             {
                 fetchStr += $"{city.GetName()} ({city.GetParent().GetName()})\n";
