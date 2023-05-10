@@ -30,7 +30,7 @@ namespace WeatherForecaster.Pages
 
             dispPriv.Enabled = false;
             btnDelete.Enabled = false;
-            btnManageUsers.Enabled = false;
+            btnUpdateUser.Enabled = false;
         }
 
         private void listUsers_SelectedIndexChanged(object sender, EventArgs e)
