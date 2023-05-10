@@ -105,9 +105,24 @@ namespace WeatherForecaster
 
         private void btnAddLocation_Click(object sender, EventArgs e)
         {
+            if(Global.UserHandle.Privileges != PrivilegeLevels.Admin)
+            {
+                MessageBox.Show("This area is restricted to admins!", "You lack the required privileges", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             Clear();
 
             this.Controls.Add(new Pages.LocationAddRemove() { Dock = DockStyle.Fill });
+        }
+
+        private void btnManageUsers_Click(object sender, EventArgs e)
+        {
+            if (Global.UserHandle.Privileges != PrivilegeLevels.Admin)
+            {
+                MessageBox.Show("This area is restricted to admins!", "You lack the required privileges", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Clear();
         }
     }
 }

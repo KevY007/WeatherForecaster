@@ -80,7 +80,7 @@ namespace WeatherForecaster
                 {
                     while (reader.Read())
                     {
-                        var a = new Continent((int)reader["ID"], (string)reader["Name"]);
+                        Global.Continents.Add(new Continent((int)reader["ID"], (string)reader["Name"]));
                     }
                 }
                 reader.Close();
@@ -102,7 +102,7 @@ namespace WeatherForecaster
                 {
                     while (reader.Read())
                     {
-                        var a = new Country((int)reader["ID"], (string)reader["Name"], Global.Continents.Find(v => v.Id == (int)reader["ParentID"]));
+                        Global.Continents.First(a => a.Id == (int)reader["ParentID"]).AddCountry(new Country((int)reader["ID"], (string)reader["Name"]));
                     }
                 }
                 reader.Close();
@@ -124,7 +124,16 @@ namespace WeatherForecaster
                 {
                     while (reader.Read())
                     {
-                        var a = new City((int)reader["ID"], (string)reader["Name"], Global.Countries.Find(v => v.Id == (int)reader["ParentID"]));
+                        foreach (var c in Global.Continents)
+                        {
+                            foreach (var c2 in c.Countries)
+                            {
+                                if (c2.GetId() == (int)reader["ParentID"])
+                                {
+                                    c2.AddCity(new City((int)reader["ID"], (string)reader["Name"]));
+                                }
+                            }
+                        }
                     }
                 }
                 reader.Close();
@@ -146,9 +155,24 @@ namespace WeatherForecaster
                 {
                     while (reader.Read())
                     {
-                        var a = new Weather((int)reader["ID"], Global.Cities.Find(c => c.Id == (int)reader["ParentID"]), DateTime.ParseExact((string)reader["Timestamp"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
-                            Convert.ToSingle(reader["Temperature"]), (int)reader["Cloud"], (int)reader["Humidity"], (int)reader["RainChance"], Convert.ToSingle(reader["Precipitation"]),
-                            Convert.ToSingle(reader["UVIndex"]), Convert.ToSingle(reader["WindKPH"]), (string)reader["Condition"], (int)reader["ContributorID"] == -1 ? null : Global.Users.Find(b => b.GetId() == (int)reader["ContributorID"]));
+                        var allCities = new List<City>();
+                        var allWeather = new List<Weather>();
+
+                        foreach (var cont in Global.Continents)
+                        {
+                            foreach (var country in cont.Countries)
+                            {
+                                foreach (var city in country.Cities)
+                                {
+                                    if(city.Id == (int)reader["ParentID"])
+                                    {
+                                        city.AddWeather(new Weather((int)reader["ID"], DateTime.ParseExact((string)reader["Timestamp"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
+                                        Convert.ToSingle(reader["Temperature"]), (int)reader["Cloud"], (int)reader["Humidity"], (int)reader["RainChance"], Convert.ToSingle(reader["Precipitation"]),
+                                        Convert.ToSingle(reader["UVIndex"]), Convert.ToSingle(reader["WindKPH"]), (string)reader["Condition"], (int)reader["ContributorID"] == -1 ? null : Global.Users.Find(b => b.GetId() == (int)reader["ContributorID"])));
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 reader.Close();

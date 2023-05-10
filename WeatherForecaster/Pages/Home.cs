@@ -25,7 +25,22 @@ namespace WeatherForecaster.Pages
 
         private void Home_Load(object sender, EventArgs e)
         {
-            if (Global.WeatherData.Count == 0)
+            var allCities = new List<City>();
+            var allWeather = new List<Weather>();
+
+            foreach(var cont in Global.Continents)
+            {
+                foreach (var country in cont.Countries)
+                {
+                    foreach (var city in country.Cities)
+                    {
+                        allCities.Add(city);
+                        allWeather.AddRange(city.WeatherData);
+                    }
+                }
+            }
+
+            if (allWeather.Count == 0)
             {
                 lblLocationName.Text = "No Data";
                 lblDay.Text = "There are no weather entries";
@@ -51,9 +66,9 @@ namespace WeatherForecaster.Pages
             {
                 randHour = rand.Next(0, 21);
 
-                foreach (var a in Global.Cities)
+                foreach (var a in allCities)
                 {
-                    var b = Global.WeatherData.FindAll(x => x.GetParent() == a);
+                    var b = allWeather.FindAll(x => x.GetParent() == a);
 
                     // Yesterday
                     if (b.Count(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(-1).Date) && c.GetTimestamp().Hour == randHour) >= 1 &&

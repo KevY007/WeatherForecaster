@@ -36,6 +36,7 @@
             this.btnGroupAccount = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.btnLoginSignup = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.btnAccountSettings = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.btnManageUsers = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.btnGroupLocations = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.btnSelectLocation = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.btnAddLocation = new DevExpress.XtraBars.Navigation.AccordionControlElement();
@@ -85,7 +86,8 @@
             // 
             this.btnGroupAccount.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.btnLoginSignup,
-            this.btnAccountSettings});
+            this.btnAccountSettings,
+            this.btnManageUsers});
             this.btnGroupAccount.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnGroupAccount.ImageOptions.SvgImage")));
             this.btnGroupAccount.Name = "btnGroupAccount";
             this.btnGroupAccount.Text = "Account";
@@ -106,12 +108,19 @@
             this.btnAccountSettings.Text = "Settings";
             this.btnAccountSettings.Click += new System.EventHandler(this.btnAccountSettings_Click);
             // 
+            // btnManageUsers
+            // 
+            this.btnManageUsers.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnManageUsers.ImageOptions.SvgImage")));
+            this.btnManageUsers.Name = "btnManageUsers";
+            this.btnManageUsers.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.btnManageUsers.Text = "Manage Users";
+            this.btnManageUsers.Click += new System.EventHandler(this.btnManageUsers_Click);
+            // 
             // btnGroupLocations
             // 
             this.btnGroupLocations.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.btnSelectLocation,
             this.btnAddLocation});
-            this.btnGroupLocations.Expanded = true;
             this.btnGroupLocations.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnGroupLocations.ImageOptions.SvgImage")));
             this.btnGroupLocations.Name = "btnGroupLocations";
             this.btnGroupLocations.Text = "Locations";
@@ -192,6 +201,7 @@
         private DevExpress.XtraBars.Navigation.AccordionControlElement btnAccountSettings;
         private DevExpress.XtraBars.Navigation.AccordionControlSeparator accordionControlSeparator1;
         private DevExpress.XtraBars.Navigation.AccordionControlElement btnGroupAnalytics;
+        private DevExpress.XtraBars.Navigation.AccordionControlElement btnManageUsers;
     }
 }
 

@@ -9,24 +9,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
+using DevExpress.XtraRichEdit.Model;
 
 namespace WeatherForecaster
 {
     public static partial class Global
     {
         public static List<Continent> Continents = new List<Continent>();
-        public static List<Country> Countries = new List<Country>();
-        public static List<City> Cities = new List<City>();
-        public static List<Weather> WeatherData = new List<Weather>();
-
 
         public static string WeatherAPIKey = "6abd91f533ce4b1695b161946232503";
     }
 
     public class Weather : Entity
     {
-        private City Parent;
-
         private float Temperature; // In centigrade
         private int Cloud; // 0-100
         private int Humidity; // 0-100
@@ -37,7 +32,7 @@ namespace WeatherForecaster
         private string Condition;
         private DateTime Timestamp; // ...
 
-        public User Contributor;
+        private User Contributor;
 
         public float GetTemperature() { return Temperature; } 
         public int GetCloud() { return Cloud; }
@@ -52,12 +47,23 @@ namespace WeatherForecaster
 
 
 
-        public City GetParent() => Parent;
-
-        public Weather(int _id, City _parent, DateTime timestamp, float temp, int cloud, int humidity, int rain, float precip, float uv, float wind, string condition, User contributor = null) : base(_id, _id.ToString())
+        public City GetParent()
         {
-            Parent = _parent;
+            foreach (var a in Global.Continents)
+            {
+                foreach (var b in a.Countries)
+                {
+                    foreach (var c in b.Cities)
+                    {
+                        if (c.WeatherData.Contains(this)) return c;
+                    }
+                }
+            }
+            return null;
+        }
 
+        public Weather(int _id, DateTime timestamp, float temp, int cloud, int humidity, int rain, float precip, float uv, float wind, string condition, User contributor = null) : base(_id, _id.ToString())
+        {
             Timestamp = timestamp;
             Temperature = temp;
             Cloud = cloud;
@@ -69,71 +75,62 @@ namespace WeatherForecaster
             Condition = condition;
 
             Contributor = contributor;
-
-            Global.WeatherData.Add(this);
-        }
-        public Weather(City _parent, DateTime timestamp, float temp, int cloud, int humidity, int rain, float precip, float uv, float wind, string condition, User contributor = null) : this(Global.WeatherData.Count, _parent, timestamp, temp, cloud, humidity, rain, precip, uv, wind, condition, contributor) { }
-        ~Weather()
-        {
-            Global.WeatherData.Remove(this);
         }
     }
 
     public class City : Entity
     {
-        private Country Parent;
-
-        public Country GetParent() => Parent;
-
-        public City(int _id, string _name, Country _parent) : base(_id, _name)
+        public List<Weather> WeatherData = new List<Weather>();
+        public Country GetParent()
         {
-            Parent = _parent;
-            Global.Cities.Add(this);
+            foreach(var a in Global.Continents)
+            {
+                foreach (var b in a.Countries)
+                {
+                    if(b.Cities.Contains(this)) return b;
+                }
+            }
+            return null;
         }
-        public City(string _name, Country _parent) : this(Global.Cities.Count, _name, _parent) { }
 
-        ~City()
+        public City(int _id, string _name) : base(_id, _name)
         {
-            Global.WeatherData.RemoveAll(a => a.GetParent() == this);
+        }
 
-            Global.Cities.Remove(this);
+        public void AddWeather(Weather c)
+        {
+            WeatherData.Add(c);
         }
     }
 
     public class Country : Entity
     {
-        private Continent Parent;
-
-        public Continent GetParent() => Parent;
-
-        public Country(int _id, string _name, Continent _parent) : base(_id, _name)
+        public List<City> Cities = new List<City>();
+        public Continent GetParent()
         {
-            Parent = _parent;
-            Global.Countries.Add(this);
+            return Global.Continents.First(a => a.Countries.Contains(this));
         }
-        public Country(string _name, Continent _parent) : this(Global.Countries.Count, _name, _parent) { }
 
-        ~Country()
+        public Country(int _id, string _name) : base(_id, _name)
         {
-            Global.Cities.RemoveAll(a => a.GetParent() == this);
+        }
 
-            Global.Countries.Remove(this);
+        public void AddCity(City c)
+        {
+            Cities.Add(c);
         }
     }
 
     public class Continent : Entity
     {
+        public List<Country> Countries = new List<Country>();
         public Continent(int _id, string _name) : base(_id, _name) 
         { 
-            Global.Continents.Add(this); 
         }
-        public Continent(string _name) : this(Global.Continents.Count, _name) { }
 
-        ~Continent()
+        public void AddCountry(Country c)
         {
-            Global.Countries.RemoveAll(a => a.GetParent() == this);
-
-            Global.Continents.Remove(this);
+            Countries.Add(c);
         }
     }
 }

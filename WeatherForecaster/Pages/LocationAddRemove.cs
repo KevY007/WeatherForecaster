@@ -37,6 +37,18 @@ namespace WeatherForecaster.Pages
 
             txtAddName.Text = "";
 
+            var allCountries = new List<Country>();
+            var allCities = new List<City>();
+
+            foreach (var cont in Global.Continents)
+            {
+                allCountries.AddRange(cont.Countries);
+                foreach (var country in cont.Countries)
+                {
+                    allCities.AddRange(country.Cities);
+                }
+            }
+
 
             switch ((string)cmbItemType.SelectedItem)
             {
@@ -52,7 +64,7 @@ namespace WeatherForecaster.Pages
                     listAddParents.Visible = true;
                     lblParents.Visible = true;
 
-                    listRemoveItem.DataSource = Global.Countries;
+                    listRemoveItem.DataSource = allCountries;
                     listRemoveItem.DisplayMember = "Name";
                     listRemoveItem.ValueMember = "Id";
 
@@ -64,11 +76,11 @@ namespace WeatherForecaster.Pages
                     listAddParents.Visible = true;
                     lblParents.Visible = true;
 
-                    listRemoveItem.DataSource = Global.Cities;
+                    listRemoveItem.DataSource = allCities;
                     listRemoveItem.DisplayMember = "Name";
                     listRemoveItem.ValueMember = "Id";
 
-                    listAddParents.DataSource = Global.Countries;
+                    listAddParents.DataSource = allCountries;
                     listAddParents.DisplayMember = "Name";
                     listAddParents.ValueMember = "Id";
                     break;
@@ -91,7 +103,7 @@ namespace WeatherForecaster.Pages
 
                         MessageBox.Show($"Continent {txtAddName.Text} added with ID {aID}!", "Continent Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         
-                        new Continent(aID, txtAddName.Text);
+                        Global.Continents.Add(new Continent(aID, txtAddName.Text));
                     }
                     catch (SqlException err)
                     {
@@ -120,7 +132,7 @@ namespace WeatherForecaster.Pages
 
                         MessageBox.Show($"Country {txtAddName.Text} added with ID {aID}! Parent: {((Continent)listAddParents.SelectedItem).Name}", "Country Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        new Country(aID, txtAddName.Text, (Continent)listAddParents.SelectedItem);
+                        ((Continent)listAddParents.SelectedItem).AddCountry(new Country(aID, txtAddName.Text));
                     }
                     catch (SqlException err)
                     {
@@ -148,7 +160,7 @@ namespace WeatherForecaster.Pages
 
                         MessageBox.Show($"City {txtAddName.Text} added with ID {aID}! Parent: {((Country)listAddParents.SelectedItem).Name}", "City Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        new City(aID, txtAddName.Text, (Country)listAddParents.SelectedItem);
+                        ((Country)listAddParents.SelectedItem).AddCity(new City(aID, txtAddName.Text));
                     }
                     catch (SqlException err)
                     {
@@ -234,7 +246,7 @@ namespace WeatherForecaster.Pages
 
                         names = names + "\n" + d.GetName();
 
-                        Global.Countries.Remove(d);
+                        ((Country)d).GetParent().Countries.Remove(d);
                     }
                     catch (SqlException err)
                     {
@@ -259,7 +271,7 @@ namespace WeatherForecaster.Pages
 
                         names = names + "\n" + d.GetName();
 
-                        Global.Cities.Remove(d);
+                        ((City)d).GetParent().Cities.Remove(d);
                     }
                     catch (SqlException err)
                     {
