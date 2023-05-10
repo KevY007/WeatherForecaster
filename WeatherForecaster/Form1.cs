@@ -102,5 +102,12 @@ namespace WeatherForecaster
 
             this.Controls.Add(new Pages.Settings() { Dock = DockStyle.Fill });
         }
+
+        private void btnAddLocation_Click(object sender, EventArgs e)
+        {
+            Clear();
+
+            this.Controls.Add(new Pages.LocationAddRemove() { Dock = DockStyle.Fill });
+        }
     }
 }

@@ -71,7 +71,7 @@ namespace WeatherForecaster.Pages
             }
 
             int weatherCount = 0;
-            string query = "INSERT INTO WeatherData VALUES ";
+            string query = "SET IDENTITY_INSERT WeatherData ON; INSERT INTO WeatherData (ID, ParentID,Timestamp, Temperature, Condition, Cloud, Humidity, RainChance, Precipitation, UVIndex, WindKPH, ContributorID) VALUES ";
             int rows = 0;
 
             /*var asia = new Continent("Asia");
@@ -134,7 +134,7 @@ namespace WeatherForecaster.Pages
                             int.Parse(hour["chance_of_rain"].ToString()), float.Parse(hour["precip_mm"].ToString()), float.Parse(hour["uv"].ToString()),
                             float.Parse(hour["wind_kph"].ToString()), (string)hour["condition"]["text"]);
                         
-                        query += $"({w.GetId()}, {w.GetParent().GetId()}, '{w.GetTimestamp().ToString()}', {w.GetTemperature()}, '{w.GetCondition()}', " +
+                        query += $"({w.GetId()}, {w.GetParent().GetId()}, '{w.GetTimestamp().ToString("yyyy-MM-dd HH:mm")}', {w.GetTemperature()}, '{w.GetCondition()}', " +
                             $"{w.GetCloud()}, {w.GetHumidity()}, {w.GetRainChance()}, {w.GetPrecipitation()}, {w.GetUVIndex()}, {w.GetWindKPH()}, -1), ";
 
                         weatherCount++;
@@ -142,9 +142,9 @@ namespace WeatherForecaster.Pages
                 }
             }
 
-            query = query.Substring(0, query.Length - 2) + ";";
+            query = query.Substring(0, query.Length - 2) + "; SET IDENTITY_INSERT WeatherData OFF;";
 
-            if (result == DialogResult.OK)
+            if (result == DialogResult.Yes)
             {
                 try
                 {

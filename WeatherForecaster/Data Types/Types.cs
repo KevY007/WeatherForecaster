@@ -33,8 +33,8 @@ namespace WeatherForecaster
 
     public abstract class Entity : IEntity
     {
-        private string Name;
-        private int Id;
+        public string Name { get; }
+        public int Id { get; }
 
         public string GetName() => Name;
         public int GetId() => Id;

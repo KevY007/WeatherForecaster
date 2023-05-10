@@ -3,6 +3,7 @@ using DevExpress.UserSkins;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -61,10 +62,100 @@ namespace WeatherForecaster
                 }
                 reader.Close();
             }
-            catch (SqlException err)
+            catch (SqlException)
             {
                 MessageBox.Show("The database is not set-up correctly! Please ensure all tables are created.");
                 //MessageBox.Show("An error with the database has occured, please contact a technician!\n\n" + err.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            query = $"SELECT ID, Name FROM Continents";
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand(query, Global.Database);
+
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var a = new Continent((int)reader["ID"], (string)reader["Name"]);
+                    }
+                }
+                reader.Close();
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("The database is not set-up correctly! Please ensure all tables are created.");
+                return;
+            }
+
+            query = $"SELECT ID, Name, ParentID FROM Countries";
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand(query, Global.Database);
+
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var a = new Country((int)reader["ID"], (string)reader["Name"], Global.Continents.Find(v => v.Id == (int)reader["ParentID"]));
+                    }
+                }
+                reader.Close();
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("The database is not set-up correctly! Please ensure all tables are created.");
+                return;
+            }
+
+            query = $"SELECT ID, Name, ParentID FROM Cities";
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand(query, Global.Database);
+
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var a = new City((int)reader["ID"], (string)reader["Name"], Global.Countries.Find(v => v.Id == (int)reader["ParentID"]));
+                    }
+                }
+                reader.Close();
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("The database is not set-up correctly! Please ensure all tables are created.");
+                return;
+            }
+
+            query = $"SELECT * FROM WeatherData";
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand(query, Global.Database);
+
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        var a = new Weather((int)reader["ID"], Global.Cities.Find(c => c.Id == (int)reader["ParentID"]), DateTime.ParseExact((string)reader["Timestamp"], "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
+                            Convert.ToSingle(reader["Temperature"]), (int)reader["Cloud"], (int)reader["Humidity"], (int)reader["RainChance"], Convert.ToSingle(reader["Precipitation"]),
+                            Convert.ToSingle(reader["UVIndex"]), Convert.ToSingle(reader["WindKPH"]), (string)reader["Condition"], (int)reader["ContributorID"] == -1 ? null : Global.Users.Find(b => b.GetId() == (int)reader["ContributorID"]));
+                    }
+                }
+                reader.Close();
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("The database is not set-up correctly! Please ensure all tables are created.");
                 return;
             }
 

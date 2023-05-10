@@ -57,36 +57,36 @@ namespace WeatherForecaster.Pages
 
                     // Yesterday
                     if (b.Count(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(-1).Date) && c.GetTimestamp().Hour == randHour) >= 1 &&
-                        b.Count(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(-1).Date) && c.GetTimestamp().Hour == randHour + 1) >= 1 &&
-                        b.Count(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(-1).Date) && c.GetTimestamp().Hour == randHour + 2) >= 1)
+                        b.Count(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(-1).Date) && c.GetTimestamp().Hour == randHour + 2) >= 1 &&
+                        b.Count(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(-1).Date) && c.GetTimestamp().Hour == randHour + 4) >= 1)
                     {
                         var list = b.FindAll(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(-1).Date)
-                            && (c.GetTimestamp().Hour == randHour || c.GetTimestamp().Hour == randHour + 1 ||
-                            c.GetTimestamp().Hour == randHour + 2));
+                            && (c.GetTimestamp().Hour == randHour || c.GetTimestamp().Hour == randHour + 2 ||
+                            c.GetTimestamp().Hour == randHour + 4));
 
                         data.Add(new Tuple<City, List<Weather>>(a, list));
                     }
 
                     // Today
                     if (b.Count(c => (c.GetTimestamp().Date == DateTime.Now.Date) && c.GetTimestamp().Hour == randHour) >= 1 &&
-                        b.Count(c => (c.GetTimestamp().Date == DateTime.Now.Date) && c.GetTimestamp().Hour == randHour + 1) >= 1 &&
-                        b.Count(c => (c.GetTimestamp().Date == DateTime.Now.Date) && c.GetTimestamp().Hour == randHour + 2) >= 1)
+                        b.Count(c => (c.GetTimestamp().Date == DateTime.Now.Date) && c.GetTimestamp().Hour == randHour + 2) >= 1 &&
+                        b.Count(c => (c.GetTimestamp().Date == DateTime.Now.Date) && c.GetTimestamp().Hour == randHour + 4) >= 1)
                     {
                         var list = b.FindAll(c => (c.GetTimestamp().Date == DateTime.Now.Date)
-                            && (c.GetTimestamp().Hour == randHour || c.GetTimestamp().Hour == randHour + 1 ||
-                            c.GetTimestamp().Hour == randHour + 2));
+                            && (c.GetTimestamp().Hour == randHour || c.GetTimestamp().Hour == randHour + 2 ||
+                            c.GetTimestamp().Hour == randHour + 4));
 
                         data.Add(new Tuple<City, List<Weather>>(a, list));
                     }
 
                     // Tomorrow
                     if (b.Count(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(1).Date) && c.GetTimestamp().Hour == randHour) >= 1 &&
-                        b.Count(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(1).Date) && c.GetTimestamp().Hour == randHour + 1) >= 1 &&
-                        b.Count(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(1).Date) && c.GetTimestamp().Hour == randHour + 2) >= 1)
+                        b.Count(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(1).Date) && c.GetTimestamp().Hour == randHour + 2) >= 1 &&
+                        b.Count(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(1).Date) && c.GetTimestamp().Hour == randHour + 4) >= 1)
                     {
                         var list = b.FindAll(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(1).Date)
-                            && (c.GetTimestamp().Hour == randHour || c.GetTimestamp().Hour == randHour + 1 ||
-                            c.GetTimestamp().Hour == randHour + 2));
+                            && (c.GetTimestamp().Hour == randHour || c.GetTimestamp().Hour == randHour + 2 ||
+                            c.GetTimestamp().Hour == randHour + 4));
 
                         data.Add(new Tuple<City, List<Weather>>(a, list));
                     }
@@ -122,30 +122,30 @@ namespace WeatherForecaster.Pages
             else if (selected.Item2[0].GetTimestamp().Date == DateTime.Now.Date) lblDay.Text = "Today";
 
             var now = selected.Item2.Find(a => a.GetTimestamp().Hour == randHour);
-            var h2 = selected.Item2.Find(a => a.GetTimestamp().Hour == randHour + 1);
-            var h3 = selected.Item2.Find(a => a.GetTimestamp().Hour == randHour + 2);
+            var h2 = selected.Item2.Find(a => a.GetTimestamp().Hour == randHour + 2);
+            var h3 = selected.Item2.Find(a => a.GetTimestamp().Hour == randHour + 4);
 
             lblHr1.Text = randHour != DateTime.Now.Hour ? $"{randHour}:00" : "Now";
-            lblHr2.Text = randHour+1 != DateTime.Now.Hour ? $"{randHour + 1}:00" : "Now";
-            lblHr3.Text = randHour+2 != DateTime.Now.Hour ? $"{randHour + 2}:00" : "Now";
+            lblHr2.Text = randHour+2 != DateTime.Now.Hour ? $"{randHour + 2}:00" : "Now";
+            lblHr3.Text = randHour+4 != DateTime.Now.Hour ? $"{randHour + 4}:00" : "Now";
 
             lblCondition.Text = now.GetCondition();
 
-            int lowest = Convert.ToInt32(now.GetTemperature());
-            int highest = Convert.ToInt32(now.GetTemperature());
+            float lowest = now.GetTemperature();
+            float highest = now.GetTemperature();
 
-            if (Convert.ToInt32(h2.GetTemperature()) < lowest) lowest = Convert.ToInt32(h2.GetTemperature());
-            if (Convert.ToInt32(h3.GetTemperature()) < lowest) lowest = Convert.ToInt32(h3.GetTemperature());
+            if (h2.GetTemperature() < lowest) lowest = h2.GetTemperature();
+            if (h3.GetTemperature() < lowest) lowest = h3.GetTemperature();
 
-            if (Convert.ToInt32(h2.GetTemperature()) > highest) highest = Convert.ToInt32(h2.GetTemperature());
-            if (Convert.ToInt32(h3.GetTemperature()) < highest) highest = Convert.ToInt32(h3.GetTemperature());
+            if (h2.GetTemperature() > highest) highest = h2.GetTemperature();
+            if (h3.GetTemperature() > highest) highest = h3.GetTemperature();
 
             if (Global.UserHandle.DisplayCelsius)
             {
                 lblTemperature.Text = $"{Convert.ToInt32(now.GetTemperature())} °C";
 
-                lblLowest.Text = $"{lowest} °C";
-                lblHighest.Text = $"{highest} °C";
+                lblLowest.Text = $"{Convert.ToInt32(lowest)} °C";
+                lblHighest.Text = $"{Convert.ToInt32(highest)} °C";
 
                 lblHr1Temp.Text = $"{Convert.ToInt32(now.GetTemperature())}°C";
                 lblHr2Temp.Text = $"{Convert.ToInt32(h2.GetTemperature())}°C";
@@ -155,8 +155,8 @@ namespace WeatherForecaster.Pages
             {
                 lblTemperature.Text = $"{Global.CelsiusToFahrenheit(Convert.ToInt32(now.GetTemperature()))} °F";
 
-                lblLowest.Text = $"{Global.CelsiusToFahrenheit(lowest)} °F";
-                lblHighest.Text = $"{Global.CelsiusToFahrenheit(highest)} °F";
+                lblLowest.Text = $"{Convert.ToInt32(Global.CelsiusToFahrenheit(lowest))} °F";
+                lblHighest.Text = $"{Convert.ToInt32(Global.CelsiusToFahrenheit(highest))} °F";
 
                 lblHr1Temp.Text = $"{Global.CelsiusToFahrenheit(Convert.ToInt32(now.GetTemperature()))}°F";
                 lblHr2Temp.Text = $"{Global.CelsiusToFahrenheit(Convert.ToInt32(h2.GetTemperature()))}°F";
