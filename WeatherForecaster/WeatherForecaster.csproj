@@ -130,6 +130,12 @@
     <Compile Include="Pages\LocationAddRemove.Designer.cs">
       <DependentUpon>LocationAddRemove.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ManageUsers.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\ManageUsers.Designer.cs">
+      <DependentUpon>ManageUsers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Register.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -161,6 +167,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\LocationAddRemove.resx">
       <DependentUpon>LocationAddRemove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\ManageUsers.resx">
+      <DependentUpon>ManageUsers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\Register.resx">
       <DependentUpon>Register.cs</DependentUpon>

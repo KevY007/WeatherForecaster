@@ -45,6 +45,8 @@ namespace WeatherForecaster
             }
         }
 
+        public string GetEmail() => Email;
+
         public PrivilegeLevels Privileges
         {
             get { return PrivilegeLevel; }

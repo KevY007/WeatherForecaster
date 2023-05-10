@@ -123,6 +123,8 @@ namespace WeatherForecaster
                 return;
             }
             Clear();
+
+            this.Controls.Add(new Pages.ManageUsers() { Dock = DockStyle.Fill });
         }
     }
 }
