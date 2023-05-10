@@ -20,6 +20,15 @@ namespace WeatherForecaster
         public static string WeatherAPIKey = "6abd91f533ce4b1695b161946232503";
     }
 
+    public class Location : Entity
+    {
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
+
+        public Location(int id, string name) : base(id, name) { }
+
+    }
+
     public class Weather : Entity
     {
         private float Temperature; // In centigrade
@@ -78,7 +87,7 @@ namespace WeatherForecaster
         }
     }
 
-    public class City : Entity
+    public class City : Location
     {
         public List<Weather> WeatherData = new List<Weather>();
         public Country GetParent()
@@ -93,8 +102,10 @@ namespace WeatherForecaster
             return null;
         }
 
-        public City(int _id, string _name) : base(_id, _name)
+        public City(int _id, string _name, float lat = 0.0f, float lon = 0.0f) : base(_id, _name)
         {
+            Latitude = lat;
+            Longitude = lon;
         }
 
         public void AddWeather(Weather c)
@@ -103,7 +114,7 @@ namespace WeatherForecaster
         }
     }
 
-    public class Country : Entity
+    public class Country : Location
     {
         public List<City> Cities = new List<City>();
         public Continent GetParent()
@@ -111,8 +122,10 @@ namespace WeatherForecaster
             return Global.Continents.First(a => a.Countries.Contains(this));
         }
 
-        public Country(int _id, string _name) : base(_id, _name)
+        public Country(int _id, string _name, float lat = 0.0f, float lon = 0.0f) : base(_id, _name)
         {
+            Latitude = lat;
+            Longitude = lon;
         }
 
         public void AddCity(City c)
@@ -121,11 +134,13 @@ namespace WeatherForecaster
         }
     }
 
-    public class Continent : Entity
+    public class Continent : Location
     {
         public List<Country> Countries = new List<Country>();
-        public Continent(int _id, string _name) : base(_id, _name) 
-        { 
+        public Continent(int _id, string _name, float lat = 0.0f, float lon = 0.0f) : base(_id, _name) 
+        {
+            Latitude = lat;
+            Longitude = lon;
         }
 
         public void AddCountry(Country c)

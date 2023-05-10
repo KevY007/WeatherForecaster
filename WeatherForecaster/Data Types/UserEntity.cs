@@ -72,11 +72,6 @@ namespace WeatherForecaster
             }
         }
 
-        ~User()
-        {
-            Global.Users.Remove(this);
-        }
-
         public User(int id, string name, string email, bool celsius) : base(id, name)
         {
             Email = email;
