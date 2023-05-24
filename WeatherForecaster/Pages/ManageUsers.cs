@@ -22,6 +22,8 @@ namespace WeatherForecaster.Pages
 
         private void ManageUsers_Load(object sender, EventArgs e)
         {
+            listUsers.DataSource = new List<User>();
+
             listUsers.DataSource = Global.Users;
             listUsers.ValueMember = "Id";
             listUsers.DisplayMember = "Name";

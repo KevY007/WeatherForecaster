@@ -44,6 +44,7 @@ namespace WeatherForecaster.Pages
             this.lblLowest = new System.Windows.Forms.Label();
             this.lblHighest = new System.Windows.Forms.Label();
             this.lblLowHighSep = new System.Windows.Forms.Label();
+            this.weatherIconCollection = new DevExpress.Utils.SvgImageCollection(this.components);
             this.panelMiscInfo = new WeatherForecaster.Controls.RoundedPanel();
             this.lblHr3Rain = new System.Windows.Forms.Label();
             this.lblHr2Rain = new System.Windows.Forms.Label();
@@ -66,8 +67,8 @@ namespace WeatherForecaster.Pages
             this.lblHr1Temp = new System.Windows.Forms.Label();
             this.svgHr1 = new DevExpress.XtraEditors.SvgImageBox();
             this.lblHr1 = new System.Windows.Forms.Label();
-            this.weatherIconCollection = new DevExpress.Utils.SvgImageCollection(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weatherIconCollection)).BeginInit();
             this.panelMiscInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.svgHr3Rain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.svgHr3Wind)).BeginInit();
@@ -78,7 +79,6 @@ namespace WeatherForecaster.Pages
             ((System.ComponentModel.ISupportInitialize)(this.svgHr1Rain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.svgHr1Wind)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.svgHr1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weatherIconCollection)).BeginInit();
             this.SuspendLayout();
             // 
             // lblLocationName
@@ -178,6 +178,24 @@ namespace WeatherForecaster.Pages
             this.lblLowHighSep.TabIndex = 7;
             this.lblLowHighSep.Text = "/";
             this.lblLowHighSep.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weatherIconCollection
+            // 
+            this.weatherIconCollection.Add("weather_hail", "image://svgimages/icon builder/weather_hail.svg");
+            this.weatherIconCollection.Add("weather_partlycloudyday", "image://svgimages/icon builder/weather_partlycloudyday.svg");
+            this.weatherIconCollection.Add("weather_partlycloudynight", "image://svgimages/icon builder/weather_partlycloudynight.svg");
+            this.weatherIconCollection.Add("weather_rain", "image://svgimages/icon builder/weather_rain.svg");
+            this.weatherIconCollection.Add("weather_rainandhail", "image://svgimages/icon builder/weather_rainandhail.svg");
+            this.weatherIconCollection.Add("weather_rainheavy", "image://svgimages/icon builder/weather_rainheavy.svg");
+            this.weatherIconCollection.Add("weather_rainlight", "image://svgimages/icon builder/weather_rainlight.svg");
+            this.weatherIconCollection.Add("weather_snow", "image://svgimages/icon builder/weather_snow.svg");
+            this.weatherIconCollection.Add("weather_snowfall", "image://svgimages/icon builder/weather_snowfall.svg");
+            this.weatherIconCollection.Add("weather_snowfallheavy", "image://svgimages/icon builder/weather_snowfallheavy.svg");
+            this.weatherIconCollection.Add("weather_snowfalllight", "image://svgimages/icon builder/weather_snowfalllight.svg");
+            this.weatherIconCollection.Add("weather_storm", "image://svgimages/icon builder/weather_storm.svg");
+            this.weatherIconCollection.Add("weather_sunny", "image://svgimages/icon builder/weather_sunny.svg");
+            this.weatherIconCollection.Add("weather_water", "image://svgimages/icon builder/weather_water.svg");
+            this.weatherIconCollection.Add("weather_wind", "image://svgimages/icon builder/weather_wind.svg");
             // 
             // panelMiscInfo
             // 
@@ -445,24 +463,6 @@ namespace WeatherForecaster.Pages
             this.lblHr1.Text = "Now";
             this.lblHr1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // weatherIconCollection
-            // 
-            this.weatherIconCollection.Add("weather_hail", "image://svgimages/icon builder/weather_hail.svg");
-            this.weatherIconCollection.Add("weather_partlycloudyday", "image://svgimages/icon builder/weather_partlycloudyday.svg");
-            this.weatherIconCollection.Add("weather_partlycloudynight", "image://svgimages/icon builder/weather_partlycloudynight.svg");
-            this.weatherIconCollection.Add("weather_rain", "image://svgimages/icon builder/weather_rain.svg");
-            this.weatherIconCollection.Add("weather_rainandhail", "image://svgimages/icon builder/weather_rainandhail.svg");
-            this.weatherIconCollection.Add("weather_rainheavy", "image://svgimages/icon builder/weather_rainheavy.svg");
-            this.weatherIconCollection.Add("weather_rainlight", "image://svgimages/icon builder/weather_rainlight.svg");
-            this.weatherIconCollection.Add("weather_snow", "image://svgimages/icon builder/weather_snow.svg");
-            this.weatherIconCollection.Add("weather_snowfall", "image://svgimages/icon builder/weather_snowfall.svg");
-            this.weatherIconCollection.Add("weather_snowfallheavy", "image://svgimages/icon builder/weather_snowfallheavy.svg");
-            this.weatherIconCollection.Add("weather_snowfalllight", "image://svgimages/icon builder/weather_snowfalllight.svg");
-            this.weatherIconCollection.Add("weather_storm", "image://svgimages/icon builder/weather_storm.svg");
-            this.weatherIconCollection.Add("weather_sunny", "image://svgimages/icon builder/weather_sunny.svg");
-            this.weatherIconCollection.Add("weather_water", "image://svgimages/icon builder/weather_water.svg");
-            this.weatherIconCollection.Add("weather_wind", "image://svgimages/icon builder/weather_wind.svg");
-            // 
             // Home
             // 
             this.Appearance.BackColor = System.Drawing.Color.Black;
@@ -484,6 +484,7 @@ namespace WeatherForecaster.Pages
             this.Size = new System.Drawing.Size(1285, 721);
             this.Load += new System.EventHandler(this.Home_Load);
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.weatherIconCollection)).EndInit();
             this.panelMiscInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.svgHr3Rain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.svgHr3Wind)).EndInit();
@@ -494,7 +495,6 @@ namespace WeatherForecaster.Pages
             ((System.ComponentModel.ISupportInitialize)(this.svgHr1Rain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.svgHr1Wind)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.svgHr1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.weatherIconCollection)).EndInit();
             this.ResumeLayout(false);
 
         }
