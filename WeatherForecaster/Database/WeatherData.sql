@@ -5,7 +5,7 @@ CREATE TABLE [dbo].[WeatherData]
 	[ContributorID] INT NOT NULL DEFAULT -1,
 	[Timestamp] VARCHAR(64) NOT NULL,
     [Temperature] FLOAT NOT NULL,
-	[Condition] VARCHAR(24) NOT NULL,
+	[Condition] VARCHAR(48) NOT NULL,
 	[Cloud] INT NOT NULL,
 	[Humidity] INT NOT NULL,
 	[RainChance] INT NOT NULL,

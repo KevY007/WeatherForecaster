@@ -46,10 +46,7 @@ namespace WeatherForecaster.Pages
                 return;
             }
 
-            string salt = Global.GenerateSalt();
-            string hashed = Global.ComputeHash(txtPassword.Text, salt);
-
-            string query = $"SELECT ID, Password, Salt, PrivilegeLevel FROM Users WHERE Username = '{txtUsername.Text}'";
+            string query = $"SELECT ID, Password, PrivilegeLevel FROM Users WHERE Username = '{txtUsername.Text}'";
 
             try
             {
@@ -60,7 +57,7 @@ namespace WeatherForecaster.Pages
 
                 reader.Read();
 
-                if((string)reader["Password"] != Global.ComputeHash(txtPassword.Text, (string)reader["Salt"]))
+                if((string)reader["Password"] != txtPassword.Text)
                 {
                     MessageBox.Show("Incorrect password! Please try again.", "Incorrect password", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtPassword.Text = "";

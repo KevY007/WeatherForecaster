@@ -37,12 +37,9 @@ namespace WeatherForecaster.Pages
                 return;
             }
 
-            string salt = Global.GenerateSalt();
-            string hashed = Global.ComputeHash(txtPassword.Text, salt);
-
             string query = $"INSERT INTO Users " +
-                $"(Username, Email, Password, Salt) OUTPUT INSERTED.ID " +
-                $"VALUES ('{txtUsername.Text}', '{txtEmail.Text}', '{hashed}', '{salt}');";
+                $"(Username, Email, Password) OUTPUT INSERTED.ID " +
+                $"VALUES ('{txtUsername.Text}', '{txtEmail.Text}', '{txtPassword.Text}');";
 
             try { 
                 SqlCommand cmd = new SqlCommand(query, Global.Database);

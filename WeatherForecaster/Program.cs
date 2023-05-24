@@ -20,19 +20,6 @@ namespace WeatherForecaster
         public static formMain MainForm = null;
         public static SqlConnection Database = null;
 
-        public static string GenerateSalt()
-        {
-            var bytes = new byte[128 / 8];
-            var rng = new RNGCryptoServiceProvider();
-            rng.GetBytes(bytes);
-            return Convert.ToBase64String(bytes);
-        }
-        public static string ComputeHash(string str, string salt)
-        {
-            var byteResult = new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(str), Encoding.UTF8.GetBytes(salt), 10000);
-            return Convert.ToBase64String(byteResult.GetBytes(24));
-        }
-
         [STAThread]
         static void Main()
         {
