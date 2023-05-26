@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
 using DevExpress.XtraRichEdit.Model;
+using DevExpress.Data.Filtering.Helpers;
 
 namespace WeatherForecaster
 {
@@ -54,7 +55,10 @@ namespace WeatherForecaster
         public DateTime GetTimestamp() { return Timestamp; }
         public User GetContributor() { return Contributor; }
 
-
+        public override string GetName()
+        {
+            return Id.ToString();
+        }
 
         public City GetParent()
         {

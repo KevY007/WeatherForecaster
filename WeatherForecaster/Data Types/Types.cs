@@ -42,8 +42,8 @@ namespace WeatherForecaster
         [Range(1, 1000)]
         public int Id { get; protected set; }
 
-        public string GetName() => Name;
-        public int GetId() => Id;
+        public virtual string GetName() => Name;
+        public virtual int GetId() => Id;
 
         public Entity(int _id, string _name)
         {
