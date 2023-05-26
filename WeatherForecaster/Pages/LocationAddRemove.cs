@@ -4,6 +4,7 @@ using DevExpress.XtraEditors;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -29,10 +30,10 @@ namespace WeatherForecaster.Pages
         private void cmbLocationType_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Clear lists:
-            listAddParents.DataSource = new string[] { };
+            cmbSetParent.DataSource = new string[] { };
             listRemoveItem.DataSource = new string[] { };
 
-            listAddParents.Visible = false;
+            cmbSetParent.Visible = false;
             lblParents.Visible = false;
 
             txtAddName.Text = "";
@@ -53,7 +54,7 @@ namespace WeatherForecaster.Pages
             switch ((string)cmbItemType.SelectedItem)
             {
                 case "Continent":
-                    listAddParents.Visible = false;
+                    cmbSetParent.Visible = false;
                     lblParents.Visible = false;
 
                     listRemoveItem.DataSource = Global.Continents;
@@ -61,28 +62,28 @@ namespace WeatherForecaster.Pages
                     listRemoveItem.ValueMember = "Id";
                     break;
                 case "Country":
-                    listAddParents.Visible = true;
+                    cmbSetParent.Visible = true;
                     lblParents.Visible = true;
 
                     listRemoveItem.DataSource = allCountries;
                     listRemoveItem.DisplayMember = "Name";
                     listRemoveItem.ValueMember = "Id";
 
-                    listAddParents.DataSource = Global.Continents;
-                    listAddParents.DisplayMember = "Name";
-                    listAddParents.ValueMember = "Id";
+                    cmbSetParent.DataSource = Global.Continents;
+                    cmbSetParent.DisplayMember = "Name";
+                    cmbSetParent.ValueMember = "Id";
                     break;
                 case "City":
-                    listAddParents.Visible = true;
+                    cmbSetParent.Visible = true;
                     lblParents.Visible = true;
 
                     listRemoveItem.DataSource = allCities;
                     listRemoveItem.DisplayMember = "Name";
                     listRemoveItem.ValueMember = "Id";
 
-                    listAddParents.DataSource = allCountries;
-                    listAddParents.DisplayMember = "Name";
-                    listAddParents.ValueMember = "Id";
+                    cmbSetParent.DataSource = allCountries;
+                    cmbSetParent.DisplayMember = "Name";
+                    cmbSetParent.ValueMember = "Id";
                     break;
             }
 
@@ -116,12 +117,12 @@ namespace WeatherForecaster.Pages
                     break;
 
                 case "Country":
-                    if (listAddParents.SelectedValue == null)
+                    if (cmbSetParent.SelectedValue == null)
                     {
                         MessageBox.Show("You haven't selected the continent this country belongs to!", "Incorrect relationship!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    int parentId = (int)listAddParents.SelectedValue;
+                    int parentId = (int)cmbSetParent.SelectedValue;
 
                     query = $"INSERT INTO Countries (Name, ParentID) OUTPUT INSERTED.ID VALUES ('{txtAddName.Text}', {parentId});";
                     try
@@ -130,9 +131,9 @@ namespace WeatherForecaster.Pages
 
                         int aID = (int)cmd.ExecuteScalar();
 
-                        MessageBox.Show($"Country {txtAddName.Text} added with ID {aID}! Parent: {((Continent)listAddParents.SelectedItem).Name}", "Country Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"Country {txtAddName.Text} added with ID {aID}! Parent: {((Continent)cmbSetParent.SelectedItem).Name}", "Country Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        ((Continent)listAddParents.SelectedItem).AddCountry(new Country(aID, txtAddName.Text));
+                        ((Continent)cmbSetParent.SelectedItem).AddCountry(new Country(aID, txtAddName.Text));
                     }
                     catch (SqlException err)
                     {
@@ -145,22 +146,22 @@ namespace WeatherForecaster.Pages
                     
                     break;
                 case "City":
-                    if (listAddParents.SelectedValue == null)
+                    if (cmbSetParent.SelectedValue == null)
                     {
                         MessageBox.Show("You haven't selected the country this city belongs to!", "Incorrect relationship!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
 
-                    query = $"INSERT INTO Cities (Name, ParentID) OUTPUT INSERTED.ID VALUES ('{txtAddName.Text}', {(int)listAddParents.SelectedValue});";
+                    query = $"INSERT INTO Cities (Name, ParentID) OUTPUT INSERTED.ID VALUES ('{txtAddName.Text}', {(int)cmbSetParent.SelectedValue});";
                     try
                     {
                         SqlCommand cmd = new SqlCommand(query, Global.Database);
 
                         int aID = (int)cmd.ExecuteScalar();
 
-                        MessageBox.Show($"City {txtAddName.Text} added with ID {aID}! Parent: {((Country)listAddParents.SelectedItem).Name}", "City Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"City {txtAddName.Text} added with ID {aID}! Parent: {((Country)cmbSetParent.SelectedItem).Name}", "City Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        ((Country)listAddParents.SelectedItem).AddCity(new City(aID, txtAddName.Text));
+                        ((Country)cmbSetParent.SelectedItem).AddCity(new City(aID, txtAddName.Text));
                     }
                     catch (SqlException err)
                     {

@@ -1,8 +1,10 @@
 ﻿using DevExpress.Drawing.Internal.Fonts.Interop;
 using DevExpress.XtraEditors;
+using DevExpress.XtraReports.Templates;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -30,8 +32,15 @@ namespace WeatherForecaster.Pages
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            if(txtUsername.Text.Length < 3 || (txtEmail.Text.Length < 3 || !txtEmail.Text.Contains("@")) || txtPassword.Text.Length < 3 || 
-             (txtConfirmPass.Text != txtPassword.Text && txtPassword.Text.Length >= 3))
+            User user = new User(1, txtUsername.Text, txtEmail.Text, true);
+            user.Password = txtPassword.Text;
+
+            ValidationContext context = new ValidationContext(user, null, null);
+
+           
+            List<ValidationResult> validationResults = new List<ValidationResult>();
+            bool valid = Validator.TryValidateObject(user, context, validationResults, true);
+            if (!valid || txtConfirmPass.Text != txtPassword.Text)
             {
                 MessageBox.Show("Please resolve all errors!\nHover over the error icon for more.");
                 return;
@@ -39,14 +48,14 @@ namespace WeatherForecaster.Pages
 
             string query = $"INSERT INTO Users " +
                 $"(Username, Email, Password) OUTPUT INSERTED.ID " +
-                $"VALUES ('{txtUsername.Text}', '{txtEmail.Text}', '{txtPassword.Text}');";
+                $"VALUES ('{user.Name}', '{user.Email}', '{user.Password}');";
 
             try { 
                 SqlCommand cmd = new SqlCommand(query, Global.Database);
 
                 int aID = (int)cmd.ExecuteScalar();
 
-                MessageBox.Show($"Your account has been created!\nAccount ID: {aID}\nUsername: {txtUsername.Text}\nEmail: {txtEmail.Text}\n\nPlease proceed to login now!", "Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Your account has been created!\nAccount ID: {aID}\nUsername: {user.Name}\nEmail: {user.Email}\n\nPlease proceed to login now!", "Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnGoLogin_Click(sender, e);
 
                 new User(aID, txtUsername.Text, txtEmail.Text, true);
@@ -55,7 +64,7 @@ namespace WeatherForecaster.Pages
             {
                 if (err.Message.Contains("Violation of UNIQUE KEY"))
                 {
-                    MessageBox.Show("An account with the name \"" + txtUsername.Text + "\" already exists!\nTry another name.", "Username already exists!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("An account with the name \"" + user.Name + "\" already exists!\nTry another name.", "Username already exists!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else MessageBox.Show("An error with the database has occured, please contact a technician!\n\n" + err.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -65,9 +74,19 @@ namespace WeatherForecaster.Pages
         {
             errorProvider.SetError(txtUsername, "");
             tickProvider.SetError(txtUsername, "");
-            if (txtUsername.Text.Length < 3)
+
+            User user = new User(1, txtUsername.Text, "email@gmail.com", true);
+            user.Password = "correctpassword";
+            ValidationContext context = new ValidationContext(user, null, null);
+
+            if (user != null)
             {
-                errorProvider.SetError(txtUsername, "Username cannot be smaller than 3 characters");
+                List<ValidationResult> validationResults = new List<ValidationResult>();
+                bool valid = Validator.TryValidateObject(user, context, validationResults, true);
+                if (!valid)
+                {
+                    errorProvider.SetError(txtUsername, validationResults[0].ErrorMessage);
+                }
             }
 
             if (errorProvider.GetError(txtUsername) == "") tickProvider.SetError(txtUsername, "Username is valid");
@@ -77,9 +96,19 @@ namespace WeatherForecaster.Pages
         {
             errorProvider.SetError(txtEmail, "");
             tickProvider.SetError(txtEmail, "");
-            if (txtEmail.Text.Length < 3 || !txtEmail.Text.Contains("@"))
+
+            User user = new User(1, "username", txtEmail.Text, true);
+            user.Password = "correctpassword";
+            ValidationContext context = new ValidationContext(user, null, null);
+
+            if (user != null)
             {
-                errorProvider.SetError(txtEmail, "Invalid email");
+                List<ValidationResult> validationResults = new List<ValidationResult>();
+                bool valid = Validator.TryValidateObject(user, context, validationResults, true);
+                if (!valid)
+                {
+                    errorProvider.SetError(txtEmail, validationResults[0].ErrorMessage);
+                }
             }
 
             if (errorProvider.GetError(txtEmail) == "") tickProvider.SetError(txtEmail, "Email is valid");
@@ -89,15 +118,26 @@ namespace WeatherForecaster.Pages
         {
             errorProvider.SetError(txtConfirmPass, "");
             tickProvider.SetError(txtConfirmPass, "");
-            if (txtPassword.Text.Length < 3)
-            {
-                errorProvider.SetError(txtConfirmPass, "Password should be more than 3 characters");
-            }
 
+            User user = new User(1, "username", "email@gmail.com", true);
+            user.Password = txtPassword.Text;
+            ValidationContext context = new ValidationContext(user, null, null);
 
-            if (txtConfirmPass.Text != txtPassword.Text && txtPassword.Text.Length >= 3)
+            if (user != null)
             {
-                errorProvider.SetError(txtConfirmPass, "Passwords do not match!");
+                List<ValidationResult> validationResults = new List<ValidationResult>();
+                bool valid = Validator.TryValidateObject(user, context, validationResults, true);
+                if (!valid)
+                {
+                    errorProvider.SetError(txtConfirmPass, validationResults[0].ErrorMessage);
+                }
+                else
+                {
+                    if (txtConfirmPass.Text != txtPassword.Text)
+                    {
+                        errorProvider.SetError(txtConfirmPass, "Passwords do not match!");
+                    }
+                }
             }
 
             if (errorProvider.GetError(txtConfirmPass) == "") tickProvider.SetError(txtConfirmPass, "Password matches");

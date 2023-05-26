@@ -37,6 +37,7 @@
             this.btnRegister = new DevExpress.XtraEditors.SimpleButton();
             this.txtPassword = new DevExpress.XtraEditors.TextEdit();
             this.txtUsername = new DevExpress.XtraEditors.TextEdit();
+            this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.txtEmail = new DevExpress.XtraEditors.TextEdit();
             this.label4 = new System.Windows.Forms.Label();
@@ -46,6 +47,7 @@
             this.tickProvider = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.txtPassword.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUsername.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmail.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtConfirmPass.Properties)).BeginInit();
@@ -139,10 +141,12 @@
             this.txtPassword.Properties.UseSystemPasswordChar = true;
             this.txtPassword.Size = new System.Drawing.Size(280, 42);
             this.txtPassword.TabIndex = 2;
+            this.txtPassword.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.userBindingSource, "Password", true));
             this.txtPassword.EditValueChanged += new System.EventHandler(this.txtPassword_EditValueChanged);
             // 
             // txtUsername
             // 
+            this.txtUsername.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.userBindingSource, "Name", true));
             this.txtUsername.EnterMoveNextControl = true;
             this.txtUsername.Location = new System.Drawing.Point(352, 302);
             this.txtUsername.Name = "txtUsername";
@@ -157,6 +161,10 @@
             this.txtUsername.TabIndex = 0;
             this.txtUsername.EditValueChanged += new System.EventHandler(this.txtUsername_EditValueChanged);
             // 
+            // userBindingSource
+            // 
+            this.userBindingSource.DataSource = typeof(WeatherForecaster.User);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::WeatherForecaster.Properties.Resources.registerIco;
@@ -169,6 +177,7 @@
             // 
             // txtEmail
             // 
+            this.txtEmail.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.userBindingSource, "Email", true));
             this.txtEmail.EnterMoveNextControl = true;
             this.txtEmail.Location = new System.Drawing.Point(352, 403);
             this.txtEmail.Name = "txtEmail";
@@ -235,7 +244,7 @@
             this.tickProvider.ContainerControl = this;
             this.tickProvider.Icon = ((System.Drawing.Icon)(resources.GetObject("tickProvider.Icon")));
             // 
-            // RegisterControl
+            // Register
             // 
             this.Appearance.BackColor = System.Drawing.Color.Black;
             this.Appearance.ForeColor = System.Drawing.Color.Gainsboro;
@@ -243,6 +252,7 @@
             this.Appearance.Options.UseForeColor = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtConfirmPass);
             this.Controls.Add(this.txtEmail);
@@ -251,15 +261,15 @@
             this.Controls.Add(this.btnGoLogin);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
-            this.Name = "RegisterControl";
-            this.Size = new System.Drawing.Size(1285, 721);
+            this.Name = "Register";
+            this.Size = new System.Drawing.Size(1314, 726);
             this.Load += new System.EventHandler(this.RegisterControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtPassword.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUsername.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEmail.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtConfirmPass.Properties)).EndInit();
@@ -286,5 +296,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.ErrorProvider tickProvider;
+        private System.Windows.Forms.BindingSource userBindingSource;
     }
 }

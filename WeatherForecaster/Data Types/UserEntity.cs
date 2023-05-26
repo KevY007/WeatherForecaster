@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ComponentModel.DataAnnotations;
 
 namespace WeatherForecaster
 {
@@ -17,8 +18,23 @@ namespace WeatherForecaster
 
     public class User : Entity
     {
-        private string Email;
+        private string _Email;
+
+        [Required]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
+        [Display(Name = "Email")]
+        public string Email { get { return _Email; } set { _Email = value; } }
+
+
+        private string _Password;
+        [Required]
+        [MinLength(3, ErrorMessage = "Password is too small")]
+        [MaxLength(32, ErrorMessage = "Password is too long")]
+        public string Password { get { return _Password; } set { _Password = value; } }
+
+
         private PrivilegeLevels PrivilegeLevel;
+
         private bool Celsius;
 
         public bool DisplayCelsius

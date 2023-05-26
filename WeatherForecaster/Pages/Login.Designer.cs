@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -36,9 +37,11 @@
             this.txtPassword = new DevExpress.XtraEditors.TextEdit();
             this.txtUsername = new DevExpress.XtraEditors.TextEdit();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.txtPassword.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUsername.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -127,6 +130,7 @@
             this.txtPassword.Properties.UseSystemPasswordChar = true;
             this.txtPassword.Size = new System.Drawing.Size(580, 52);
             this.txtPassword.TabIndex = 1;
+            this.txtPassword.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.userBindingSource, "Password", true));
             // 
             // txtUsername
             // 
@@ -142,6 +146,7 @@
             this.txtUsername.Properties.Padding = new System.Windows.Forms.Padding(0, 0, 0, 12);
             this.txtUsername.Size = new System.Drawing.Size(580, 52);
             this.txtUsername.TabIndex = 0;
+            this.txtUsername.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.userBindingSource, "Name", true));
             // 
             // pictureBox1
             // 
@@ -153,7 +158,11 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
-            // LoginControl
+            // userBindingSource
+            // 
+            this.userBindingSource.DataSource = typeof(WeatherForecaster.User);
+            // 
+            // Login
             // 
             this.Appearance.BackColor = System.Drawing.Color.Black;
             this.Appearance.ForeColor = System.Drawing.Color.Gainsboro;
@@ -169,12 +178,13 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
-            this.Name = "LoginControl";
-            this.Size = new System.Drawing.Size(1285, 721);
+            this.Name = "Login";
+            this.Size = new System.Drawing.Size(1294, 726);
             this.Load += new System.EventHandler(this.LoginControl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtPassword.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUsername.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,5 +200,6 @@
         private System.Windows.Forms.Label label3;
         private DevExpress.XtraEditors.LabelControl btnGoSignup;
         private DevExpress.XtraEditors.SimpleButton btnLogin;
+        private System.Windows.Forms.BindingSource userBindingSource;
     }
 }

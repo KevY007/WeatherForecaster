@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,12 @@ namespace WeatherForecaster
 
     public abstract class Entity : IEntity
     {
-        public string Name { get; protected set;  }
+        [Required]
+        [MinLength(3, ErrorMessage = "Name is too small")]
+        public string Name { get; protected set; }
+
+        [Required]
+        [Range(1, 1000)]
         public int Id { get; protected set; }
 
         public string GetName() => Name;

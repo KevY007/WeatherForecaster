@@ -28,16 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.cmbItemType = new System.Windows.Forms.ComboBox();
             this.lblItemType = new System.Windows.Forms.Label();
             this.lblAddName = new System.Windows.Forms.Label();
-            this.txtAddName = new System.Windows.Forms.TextBox();
+            this.txtAddName = new DevExpress.XtraEditors.TextEdit();
             this.lblParents = new System.Windows.Forms.Label();
             this.btnAdd = new DevExpress.XtraEditors.SimpleButton();
-            this.listAddParents = new System.Windows.Forms.ListBox();
+            this.cmbSetParent = new System.Windows.Forms.ComboBox();
             this.listRemoveItem = new System.Windows.Forms.ListBox();
             this.lblRemove = new System.Windows.Forms.Label();
             this.btnRemove = new DevExpress.XtraEditors.SimpleButton();
+            this.entityBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.entityBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // cmbItemType
@@ -79,6 +82,7 @@
             this.txtAddName.Name = "txtAddName";
             this.txtAddName.Size = new System.Drawing.Size(178, 27);
             this.txtAddName.TabIndex = 3;
+            this.txtAddName.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.entityBindingSource, "Name", true));
             // 
             // lblParents
             // 
@@ -109,14 +113,14 @@
             this.btnAdd.Text = "Add";
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // listAddParents
+            // cmbSetParent
             // 
-            this.listAddParents.FormattingEnabled = true;
-            this.listAddParents.ItemHeight = 19;
-            this.listAddParents.Location = new System.Drawing.Point(254, 413);
-            this.listAddParents.Name = "listAddParents";
-            this.listAddParents.Size = new System.Drawing.Size(178, 118);
-            this.listAddParents.TabIndex = 9;
+            this.cmbSetParent.FormattingEnabled = true;
+            this.cmbSetParent.ItemHeight = 19;
+            this.cmbSetParent.Location = new System.Drawing.Point(254, 413);
+            this.cmbSetParent.Name = "cmbSetParent";
+            this.cmbSetParent.Size = new System.Drawing.Size(178, 27);
+            this.cmbSetParent.TabIndex = 9;
             // 
             // listRemoveItem
             // 
@@ -157,6 +161,10 @@
             this.btnRemove.Text = "Remove";
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
+            // entityBindingSource
+            // 
+            this.entityBindingSource.DataSource = typeof(WeatherForecaster.Entity);
+            // 
             // LocationAddRemove
             // 
             this.Appearance.BackColor = System.Drawing.Color.Black;
@@ -166,7 +174,7 @@
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.listRemoveItem);
             this.Controls.Add(this.lblRemove);
-            this.Controls.Add(this.listAddParents);
+            this.Controls.Add(this.cmbSetParent);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.lblParents);
             this.Controls.Add(this.txtAddName);
@@ -176,6 +184,7 @@
             this.Name = "LocationAddRemove";
             this.Size = new System.Drawing.Size(1285, 721);
             this.Load += new System.EventHandler(this.LocationAddRemove_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.entityBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,12 +195,13 @@
         private System.Windows.Forms.ComboBox cmbItemType;
         private System.Windows.Forms.Label lblItemType;
         private System.Windows.Forms.Label lblAddName;
-        private System.Windows.Forms.TextBox txtAddName;
+        private DevExpress.XtraEditors.TextEdit txtAddName;
         private System.Windows.Forms.Label lblParents;
         private DevExpress.XtraEditors.SimpleButton btnAdd;
-        private System.Windows.Forms.ListBox listAddParents;
+        private System.Windows.Forms.ComboBox cmbSetParent;
         private System.Windows.Forms.ListBox listRemoveItem;
         private System.Windows.Forms.Label lblRemove;
         private DevExpress.XtraEditors.SimpleButton btnRemove;
+        private System.Windows.Forms.BindingSource entityBindingSource;
     }
 }

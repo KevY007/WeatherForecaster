@@ -6,6 +6,7 @@ using DevExpress.XtraPrinting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -38,6 +39,20 @@ namespace WeatherForecaster.Pages
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            User user = new User(1, txtUsername.Text, "email@gmail.com", true);
+            user.Password = txtPassword.Text;
+
+            ValidationContext context = new ValidationContext(user, null, null);
+
+            List<ValidationResult> validationResults = new List<ValidationResult>();
+            bool valid = Validator.TryValidateObject(user, context, validationResults, true);
+            if (!valid)
+            {
+                MessageBox.Show("Please input valid credentials.");
+                return;
+            }
+
+
             if (Global.Users.Count(u => u.GetName() == txtUsername.Text) == 0)
             {
                 MessageBox.Show("The account \"" + txtUsername.Text + "\" does not exist!", "Invalid account", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -52,9 +67,16 @@ namespace WeatherForecaster.Pages
             {
                 SqlCommand cmd = new SqlCommand(query, Global.Database);
 
-            
                 var reader = cmd.ExecuteReader();
-
+                
+                if(!reader.HasRows)
+                {
+                    MessageBox.Show("The account \"" + txtUsername.Text + "\" does not exist!", "Invalid account", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtUsername.Text = "";
+                    txtPassword.Text = "";
+                    reader.Close();
+                    return;
+                }
                 reader.Read();
 
                 if((string)reader["Password"] != txtPassword.Text)
