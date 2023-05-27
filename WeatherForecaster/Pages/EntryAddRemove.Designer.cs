@@ -387,7 +387,7 @@
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.viewer);
             this.Name = "EntryAddRemove";
-            this.Size = new System.Drawing.Size(1294, 870);
+            this.Size = new System.Drawing.Size(1285, 721);
             this.Load += new System.EventHandler(this.EntryAddRemove_Load);
             ((System.ComponentModel.ISupportInitialize)(this.weatherBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cloudTextEdit)).EndInit();
