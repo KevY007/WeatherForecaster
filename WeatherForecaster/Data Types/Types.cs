@@ -12,7 +12,7 @@ namespace WeatherForecaster
     {
         public static double CelsiusToFahrenheit(double celsius)
         {
-            return ((celsius * 9) / 5) + 32;
+            return Math.Round(((celsius * 9) / 5) + 32, 1);
         }
         public static int CelsiusToFahrenheit(int celsius)
         {
@@ -39,7 +39,7 @@ namespace WeatherForecaster
         public string Name { get; protected set; }
 
         [Required]
-        [Range(1, 1000)]
+        [Range(0, 1000)]
         public int Id { get; protected set; }
 
         public virtual string GetName() => Name;

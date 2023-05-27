@@ -57,33 +57,45 @@ namespace WeatherForecaster.Pages
                     cmbSetParent.Visible = false;
                     lblParents.Visible = false;
 
-                    listRemoveItem.DataSource = Global.Continents;
-                    listRemoveItem.DisplayMember = "Name";
-                    listRemoveItem.ValueMember = "Id";
+                    try // In case it's empty (the lists so it ignores the exception)
+                    {
+                        listRemoveItem.DataSource = Global.Continents;
+                        listRemoveItem.DisplayMember = "Name";
+                        listRemoveItem.ValueMember = "Id";
+                    }
+                    catch { }
                     break;
                 case "Country":
                     cmbSetParent.Visible = true;
                     lblParents.Visible = true;
 
-                    listRemoveItem.DataSource = allCountries;
-                    listRemoveItem.DisplayMember = "Name";
-                    listRemoveItem.ValueMember = "Id";
+                    try // In case it's empty (the lists so it ignores the exception)
+                    {
+                        listRemoveItem.DataSource = allCountries;
+                        listRemoveItem.DisplayMember = "Name";
+                        listRemoveItem.ValueMember = "Id";
 
-                    cmbSetParent.DataSource = Global.Continents;
-                    cmbSetParent.DisplayMember = "Name";
-                    cmbSetParent.ValueMember = "Id";
+                        cmbSetParent.DataSource = Global.Continents;
+                        cmbSetParent.DisplayMember = "Name";
+                        cmbSetParent.ValueMember = "Id";
+                    }
+                    catch { }
                     break;
                 case "City":
                     cmbSetParent.Visible = true;
                     lblParents.Visible = true;
 
-                    listRemoveItem.DataSource = allCities;
-                    listRemoveItem.DisplayMember = "Name";
-                    listRemoveItem.ValueMember = "Id";
+                    try // In case it's empty (the lists so it ignores the exception)
+                    {
+                        listRemoveItem.DataSource = allCities;
+                        listRemoveItem.DisplayMember = "Name";
+                        listRemoveItem.ValueMember = "Id";
 
-                    cmbSetParent.DataSource = allCountries;
-                    cmbSetParent.DisplayMember = "Name";
-                    cmbSetParent.ValueMember = "Id";
+                        cmbSetParent.DataSource = allCountries;
+                        cmbSetParent.DisplayMember = "Name";
+                        cmbSetParent.ValueMember = "Id";
+                    }
+                    catch { }
                     break;
             }
 

@@ -3,5 +3,6 @@ DevExpress.XtraEditors.TextEdit, DevExpress.XtraEditors.v22.2, Version=22.2.3.0,
 DevExpress.XtraTreeList.TreeList, DevExpress.XtraTreeList.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
 DevExpress.XtraReports.UserDesigner.XRDesignDockManager, DevExpress.XtraReports.v22.2.Extensions, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
 DevExpress.XtraCharts.ChartControl, DevExpress.XtraCharts.v22.2.UI, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.XtraGrid.GridControl, DevExpress.XtraGrid.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
 DevExpress.XtraReports.UserDesigner.XRDesignBarManager, DevExpress.XtraReports.v22.2.Extensions, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
 DevExpress.XtraLayout.LayoutControl, DevExpress.XtraLayout.v22.2, Version=22.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a

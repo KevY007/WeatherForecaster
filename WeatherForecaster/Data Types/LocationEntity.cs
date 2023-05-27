@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Globalization;
 using DevExpress.XtraRichEdit.Model;
 using DevExpress.Data.Filtering.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace WeatherForecaster
 {
@@ -21,10 +22,16 @@ namespace WeatherForecaster
         public static string WeatherAPIKey = "6abd91f533ce4b1695b161946232503";
     }
 
-    public class Location : Entity
+    public abstract class Location : Entity
     {
         public float Latitude { get; set; }
         public float Longitude { get; set; }
+
+        public abstract float GetAverageTemperature();
+        public abstract object GetChild(int id);
+        public abstract object GetChild(string name);
+        public abstract object GetChildOfChild(int id);
+        public abstract object GetChildOfChild(string name);
 
         public Location(int id, string name) : base(id, name) { }
 
@@ -32,15 +39,39 @@ namespace WeatherForecaster
 
     public class Weather : Entity
     {
-        private float Temperature; // In centigrade
-        private int Cloud; // 0-100
-        private int Humidity; // 0-100
-        private int RainChance; // 0-100
-        private float Precipitation; // In mm
-        private float UVIndex; // 0.0 - onwards.
-        private float WindKPH; // ...
-        private string Condition;
-        private DateTime Timestamp; // ...
+        [Required]
+        [Range(-273.15, 100)]
+        public float Temperature { get; private set; } // In centigrade
+
+        [Required]
+        [Range(0, 100)]
+        public int Cloud { get; private set; } // 0-100
+
+        [Required]
+        [Range(0, 100)]
+        public int Humidity { get; private set; } // 0-100
+
+        [Required]
+        [Range(0, 100)] 
+        public int RainChance { get; private set; } // 0-100
+
+        [Required]
+        public float Precipitation { get; private set; } // In mm
+
+        [Required]
+        [Range(0.0, 10.0)]
+        public float UVIndex { get; private set; } // 0.0 - onwards.
+
+        [Required]
+        public float WindKPH { get; private set; } // ...
+
+        [Required]
+        [MinLength(5)]
+        public string Condition { get; private set; }
+
+        [Required]
+        public DateTime Timestamp { get; private set; } // ...
+
 
         private User Contributor;
 
@@ -112,6 +143,36 @@ namespace WeatherForecaster
             Longitude = lon;
         }
 
+        public override object GetChild(int id)
+        {
+            return WeatherData.First(c => c.Id == id);
+        }
+        public override object GetChild(string name)
+        {
+            return WeatherData.First(c => c.Name == name);
+        }
+
+        public override object GetChildOfChild(int id)
+        {
+            return null;
+        }
+        public override object GetChildOfChild(string name)
+        {
+            return null;
+        }
+
+        public override float GetAverageTemperature()
+        {
+            List<float> temperatures = new List<float>();
+
+            foreach (var c3 in WeatherData)
+            {
+                temperatures.Add(c3.Temperature);
+            }
+
+            return temperatures.Average();
+        }
+
         public void AddWeather(Weather c)
         {
             WeatherData.Add(c);
@@ -132,6 +193,52 @@ namespace WeatherForecaster
             Longitude = lon;
         }
 
+        public override object GetChild(int id)
+        {
+            return Cities.First(c => c.Id == id);
+        }
+        public override object GetChild(string name)
+        {
+            return Cities.First(c => c.Name == name);
+        }
+
+        public override object GetChildOfChild(int id)
+        {
+            foreach (var c in Cities)
+            {
+                if (c.WeatherData.First(d => d.Id == id) != null)
+                {
+                    return c.WeatherData.First(d => d.Id == id);
+                }
+            }
+            return null;
+        }
+        public override object GetChildOfChild(string name)
+        {
+            foreach (var c in Cities)
+            {
+                if (c.WeatherData.First(d => d.Name == name) != null)
+                {
+                    return c.WeatherData.First(d => d.Name == name);
+                }
+            }
+            return null;
+        }
+
+        public override float GetAverageTemperature()
+        {
+            List<float> temperatures = new List<float>();
+            foreach (var c2 in Cities)
+            {
+                foreach (var c3 in c2.WeatherData)
+                {
+                    temperatures.Add(c3.Temperature);
+                }
+            }
+
+            return temperatures.Average();
+        }
+
         public void AddCity(City c)
         {
             Cities.Add(c);
@@ -145,6 +252,55 @@ namespace WeatherForecaster
         {
             Latitude = lat;
             Longitude = lon;
+        }
+
+        public override object GetChild(int id)
+        {
+            return Countries.First(c => c.Id == id);
+        }
+        public override object GetChild(string name)
+        {
+            return Countries.First(c => c.Name == name);
+        }
+
+        public override object GetChildOfChild(int id)
+        {
+            foreach(var c in Countries)
+            {
+                if(c.Cities.First(d => d.Id == id) != null)
+                {
+                    return c.Cities.First(d => d.Id == id);
+                }
+            }
+            return null;
+        }
+        public override object GetChildOfChild(string name)
+        {
+            foreach (var c in Countries)
+            {
+                if (c.Cities.First(d => d.Name == name) != null)
+                {
+                    return c.Cities.First(d => d.Name == name);
+                }
+            }
+            return null;
+        }
+
+        public override float GetAverageTemperature()
+        {
+            List<float> temperatures = new List<float>();
+            foreach (var c in Countries)
+            {
+                foreach(var c2 in c.Cities)
+                {
+                    foreach(var c3 in c2.WeatherData)
+                    {
+                        temperatures.Add(c3.Temperature);
+                    }
+                }
+            }
+
+            return temperatures.Average();
         }
 
         public void AddCountry(Country c)

@@ -159,11 +159,11 @@
     <Compile Include="Pages\Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ViewAndManage.cs">
+    <Compile Include="Pages\EntryAddRemove.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Pages\ViewAndManage.Designer.cs">
-      <DependentUpon>ViewAndManage.cs</DependentUpon>
+    <Compile Include="Pages\EntryAddRemove.Designer.cs">
+      <DependentUpon>EntryAddRemove.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -172,6 +172,9 @@
     <Compile Include="Data Types\LocationEntity.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\EntryAddRemove.resx">
+      <DependentUpon>EntryAddRemove.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
@@ -191,9 +194,6 @@
     <EmbeddedResource Include="Pages\Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\ViewAndManage.resx">
-      <DependentUpon>ViewAndManage.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -209,6 +209,7 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Entity.datasource" />
     <None Include="Properties\DataSources\User.datasource" />
+    <None Include="Properties\DataSources\Weather.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

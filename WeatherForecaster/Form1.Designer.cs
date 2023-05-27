@@ -38,7 +38,7 @@
             this.btnAccountSettings = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.btnManageUsers = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.btnGroupLocations = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            this.btnViewAndManage = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.btnEntryAddRemove = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.btnAddLocation = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.btnGroupAnalytics = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.fluentDesignFormControl1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl();
@@ -62,8 +62,9 @@
             this.mainMenu.LookAndFeel.SkinName = "Office 2019 Black";
             this.mainMenu.LookAndFeel.UseDefaultLookAndFeel = false;
             this.mainMenu.Name = "mainMenu";
+            this.mainMenu.OptionsMinimizing.State = DevExpress.XtraBars.Navigation.AccordionControlState.Minimized;
             this.mainMenu.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Fluent;
-            this.mainMenu.Size = new System.Drawing.Size(375, 720);
+            this.mainMenu.Size = new System.Drawing.Size(72, 720);
             this.mainMenu.TabIndex = 1;
             this.mainMenu.ViewType = DevExpress.XtraBars.Navigation.AccordionControlViewType.HamburgerMenu;
             // 
@@ -118,33 +119,31 @@
             // btnGroupLocations
             // 
             this.btnGroupLocations.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
-            this.btnViewAndManage,
+            this.btnEntryAddRemove,
             this.btnAddLocation});
-            this.btnGroupLocations.Expanded = true;
             this.btnGroupLocations.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnGroupLocations.ImageOptions.SvgImage")));
             this.btnGroupLocations.Name = "btnGroupLocations";
             this.btnGroupLocations.Text = "Locations";
             // 
-            // btnViewAndManage
+            // btnEntryAddRemove
             // 
-            this.btnViewAndManage.Expanded = true;
-            this.btnViewAndManage.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnViewAndManage.ImageOptions.SvgImage")));
-            this.btnViewAndManage.Name = "btnViewAndManage";
-            this.btnViewAndManage.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            this.btnViewAndManage.Text = "View & Manage";
-            this.btnViewAndManage.Click += new System.EventHandler(this.btnSelectLocation_Click);
+            this.btnEntryAddRemove.Expanded = true;
+            this.btnEntryAddRemove.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnEntryAddRemove.ImageOptions.SvgImage")));
+            this.btnEntryAddRemove.Name = "btnEntryAddRemove";
+            this.btnEntryAddRemove.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.btnEntryAddRemove.Text = "Entries: Add / Remove";
+            this.btnEntryAddRemove.Click += new System.EventHandler(this.btnSelectLocation_Click);
             // 
             // btnAddLocation
             // 
             this.btnAddLocation.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnAddLocation.ImageOptions.SvgImage")));
             this.btnAddLocation.Name = "btnAddLocation";
             this.btnAddLocation.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            this.btnAddLocation.Text = "Add / Remove";
+            this.btnAddLocation.Text = "Locations: Add / Remove";
             this.btnAddLocation.Click += new System.EventHandler(this.btnAddLocation_Click);
             // 
             // btnGroupAnalytics
             // 
-            this.btnGroupAnalytics.Expanded = true;
             this.btnGroupAnalytics.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnGroupAnalytics.ImageOptions.SvgImage")));
             this.btnGroupAnalytics.Name = "btnGroupAnalytics";
             this.btnGroupAnalytics.Text = "Analytics";
@@ -196,7 +195,7 @@
         private DevExpress.XtraBars.FluentDesignSystem.FluentFormDefaultManager fluentFormManager;
         public DevExpress.XtraBars.Navigation.AccordionControlElement btnHome;
         public DevExpress.XtraBars.Navigation.AccordionControlElement btnLoginSignup;
-        public DevExpress.XtraBars.Navigation.AccordionControlElement btnViewAndManage;
+        public DevExpress.XtraBars.Navigation.AccordionControlElement btnEntryAddRemove;
         public DevExpress.XtraBars.Navigation.AccordionControlElement btnGroupAccount;
         public DevExpress.XtraBars.Navigation.AccordionControlElement btnGroupLocations;
         public DevExpress.XtraBars.Navigation.AccordionControlElement btnAddLocation;

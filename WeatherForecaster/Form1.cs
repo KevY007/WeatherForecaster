@@ -131,7 +131,7 @@ namespace WeatherForecaster
         {
             Clear();
 
-            this.Controls.Add(new Pages.ViewAndManage() { Dock = DockStyle.Fill });
+            this.Controls.Add(new Pages.EntryAddRemove() { Dock = DockStyle.Fill });
         }
     }
 }
