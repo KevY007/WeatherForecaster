@@ -123,6 +123,18 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Analytics.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\Analytics.Designer.cs">
+      <DependentUpon>Analytics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FormAnalytics.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pages\FormAnalytics.Designer.cs">
+      <DependentUpon>FormAnalytics.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Home.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -167,14 +179,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Data Types\Types.cs" />
-    <Compile Include="Data Types\UserEntity.cs" />
-    <Compile Include="Data Types\LocationEntity.cs" />
+    <Compile Include="Classes\Types.cs" />
+    <Compile Include="Classes\UserEntity.cs" />
+    <Compile Include="Classes\LocationEntity.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Analytics.resx">
+      <DependentUpon>Analytics.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Pages\EntryAddRemove.resx">
       <DependentUpon>EntryAddRemove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\FormAnalytics.resx">
+      <DependentUpon>FormAnalytics.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\Home.resx">
       <DependentUpon>Home.cs</DependentUpon>

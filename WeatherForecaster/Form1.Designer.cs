@@ -147,6 +147,7 @@
             this.btnGroupAnalytics.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnGroupAnalytics.ImageOptions.SvgImage")));
             this.btnGroupAnalytics.Name = "btnGroupAnalytics";
             this.btnGroupAnalytics.Text = "Analytics";
+            this.btnGroupAnalytics.Click += new System.EventHandler(this.btnGroupAnalytics_Click);
             // 
             // fluentDesignFormControl1
             // 

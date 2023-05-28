@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Windows.Forms;
+using WeatherForecaster.Pages;
 
 namespace WeatherForecaster
 {
@@ -25,6 +26,12 @@ namespace WeatherForecaster
 
         public void Clear()
         {
+            if(Analytics.Instance != null)
+            {
+                Analytics.Instance.Hide();
+                Analytics.Instance.Dispose();
+                Analytics.Instance = null;
+            }
             foreach (Control c in this.Controls)
             {
                 if (!defaultControls.Contains(c.Handle)) Controls.Remove(c);
@@ -132,6 +139,13 @@ namespace WeatherForecaster
             Clear();
 
             this.Controls.Add(new Pages.EntryAddRemove() { Dock = DockStyle.Fill });
+        }
+
+        private void btnGroupAnalytics_Click(object sender, EventArgs e)
+        {
+            Clear();
+
+            this.Controls.Add(new Pages.Analytics() { Dock = DockStyle.Fill });
         }
     }
 }
