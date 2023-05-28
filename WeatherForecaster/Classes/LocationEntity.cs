@@ -88,7 +88,8 @@ namespace WeatherForecaster
 
         public override string GetName()
         {
-            return Id.ToString();
+            City p = GetParent();
+            return $"{(p != null ? $"{p.Name}, {p.GetParent().Name}" : "null")} - {GetTimestamp().ToString("yyyy-MM-dd HH:mm")} {(Global.UserHandle.DisplayCelsius == true ? ($"{GetTemperature()}°C") : ($"{Global.CelsiusToFahrenheit(GetTemperature())}°F"))} ({Id.ToString()})";
         }
 
         public City GetParent()

@@ -1,4 +1,6 @@
-﻿namespace WeatherForecaster.Pages
+﻿using WeatherForecaster;
+
+namespace WeatherForecaster.Pages
 {
     partial class EntryAddRemove
     {

@@ -140,8 +140,7 @@ namespace WeatherForecaster
 
             this.Controls.Add(new Pages.EntryAddRemove() { Dock = DockStyle.Fill });
         }
-
-        private void btnGroupAnalytics_Click(object sender, EventArgs e)
+        private void btnAnalytics_Click(object sender, EventArgs e)
         {
             Clear();
 

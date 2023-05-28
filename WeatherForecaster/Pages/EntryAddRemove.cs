@@ -25,6 +25,12 @@ namespace WeatherForecaster.Pages
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
+            if (Global.UserHandle.Privileges < PrivilegeLevels.Contributor)
+            {
+                MessageBox.Show("This button is restricted to contributors and admins!", "You lack the required privileges", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             List<int> toRemove = new List<int>();
 
             foreach (TreeNode continent in viewer.Nodes)
@@ -149,7 +155,7 @@ namespace WeatherForecaster.Pages
                 return;
             }
 
-            if (Global.UserHandle.Privileges != PrivilegeLevels.Contributor)
+            if (Global.UserHandle.Privileges < PrivilegeLevels.Contributor)
             {
                 MessageBox.Show("This button is restricted to contributors and admins!", "You lack the required privileges", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -195,8 +201,16 @@ namespace WeatherForecaster.Pages
                 SqlCommand cmd = new SqlCommand(query, Global.Database);
                 int aID = (int)cmd.ExecuteScalar();
 
-                ((City)Global.Continents.First(a => a.GetId() == continentId).GetChildOfChild(parentId)).AddWeather(new Weather(aID, timestampDateTimePicker.Value, Convert.ToSingle(temperatureSpinEdit.Value), int.Parse(cloudTextEdit.Text), Convert.ToInt32(humidityNumericUpDown.Value),
-                Convert.ToInt32(rainChanceNumericUpDown.Value), Convert.ToSingle(precipitationSpinEdit.Value), Convert.ToSingle(uVIndexSpinEdit.Value), Convert.ToSingle(windKPHSpinEdit.Value), conditionTextEdit.Text, Global.UserHandle));
+                wd = new Weather(aID, timestampDateTimePicker.Value, Convert.ToSingle(temperatureSpinEdit.Value), int.Parse(cloudTextEdit.Text), Convert.ToInt32(humidityNumericUpDown.Value),
+                Convert.ToInt32(rainChanceNumericUpDown.Value), Convert.ToSingle(precipitationSpinEdit.Value), Convert.ToSingle(uVIndexSpinEdit.Value), Convert.ToSingle(windKPHSpinEdit.Value), conditionTextEdit.Text, Global.UserHandle);
+
+                ((City)Global.Continents.First(a => a.GetId() == continentId).GetChildOfChild(parentId)).AddWeather(wd);
+
+                TreeNode nwd = viewer.SelectedNode.Nodes.Add($"{wd.GetTimestamp()} " +
+                               $"{(Global.UserHandle.DisplayCelsius == true ? ($"{wd.GetTemperature()}°C") : ($"{Global.CelsiusToFahrenheit(wd.GetTemperature())}°F"))} " +
+                               $"(ID: {wd.Id})");
+
+                nwd.ToolTipText = $"Contributor: {(wd.GetContributor() != null ? wd.GetContributor().Name : "N/A")}" + Environment.NewLine + $"Humid: {wd.GetHumidity()}% | Rain: {wd.GetRainChance()}% | Wind: {wd.GetWindKPH()} KM/H" + Environment.NewLine + $"UV: {wd.GetUVIndex()} | Precipitation: {wd.GetPrecipitation()}mm | Cloud: {wd.GetCloud()}%";
             }
             catch (SqlException err)
             {

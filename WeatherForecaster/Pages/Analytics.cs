@@ -1,19 +1,22 @@
 ﻿using DevExpress.Charts.Native;
 using DevExpress.XtraCharts;
 using DevExpress.XtraEditors;
+using DevExpress.XtraRichEdit.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WeatherForecaster;
 
 namespace WeatherForecaster.Pages
 {
-
     public partial class Analytics : DevExpress.XtraEditors.XtraUserControl
     {
         public static FormAnalytics Instance { get; set; }
@@ -24,6 +27,8 @@ namespace WeatherForecaster.Pages
 
         private void Analytics_Load(object sender, EventArgs e)
         {
+            listClass.DataSource = new List<TypeString>();
+
             if (Instance == null)
             {
                 Instance = new FormAnalytics();
@@ -31,20 +36,33 @@ namespace WeatherForecaster.Pages
             }
 
 
-            List<Weather> weatherData = new List<Weather>();
+            List<Weather> ents = new List<Weather>();
+            List<Country> countries = new List<Country>();
+            List<City> cities = new List<City>();
             foreach(var c1 in Global.Continents)
             {
                 foreach(var c2 in c1.Countries)
                 {
+                    countries.Add(c2);
                     foreach(var c3 in c2.Cities)
                     {
-                        weatherData = c3.WeatherData;
-                        break;
+                        cities.Add(c3);
+                        ents.AddRange(c3.WeatherData);
                     }
-                    break;
                 }
-                break;
             }
+
+            List<TypeString> list = new List<TypeString>();
+            list.Add(new TypeString("Continents", typeof(Continent), Global.Continents));
+            list.Add(new TypeString("Countries", typeof(Country), countries));
+            list.Add(new TypeString("Cities", typeof(City), cities));
+            list.Add(new TypeString("Weather Entries", typeof(Weather), ents));
+
+            listClass.DataSource = list;
+            listClass.DisplayMember = "Display";
+            listClass.ValueMember = "Value";
+
+
 
             // Create a line series.
             Series series1 = new Series("Series 1", ViewType.Line);
@@ -82,5 +100,42 @@ namespace WeatherForecaster.Pages
             Instance.chartControl1.Titles[0].Text = "Line Chart";
 
         }
+
+        private void listClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listMember.DataSource = new List<string>();
+            listSubMember.DataSource = new List<string>();
+    
+            TypeString item = (TypeString)listClass.SelectedItem;
+
+            List<string> members = new List<string>();
+            foreach(dynamic a in item.Items)
+            {
+                members.Add((string)a.Name);
+            }
+
+            listMember.DataSource = members;
+        }
     }
+
+    public class TypeString
+    {
+        public string Display { get; set; }
+        public Type Value { get; set; }
+        public dynamic Items { get; set; }
+
+        public TypeString(string o, Type v)
+        {
+            Display = o;
+            Value = v;
+            Items = new List<object>();
+        }
+        public TypeString(string o, Type v, object i)
+        {
+            Display = o;
+            Value = v;
+            Items = i;
+        }
+    }
+
 }

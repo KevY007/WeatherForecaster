@@ -34,15 +34,17 @@ namespace WeatherForecaster
 
     public abstract class Entity : IEntity
     {
+        private string _Name;
+
         [Required]
         [MinLength(3, ErrorMessage = "Name is too small")]
-        public string Name { get; protected set; }
+        public string Name { get { return GetName(); } protected set { this._Name = value; } }
 
         [Required]
         [Range(0, 1000)]
         public int Id { get; protected set; }
 
-        public virtual string GetName() => Name;
+        public virtual string GetName() => _Name;
         public virtual int GetId() => Id;
 
         public Entity(int _id, string _name)
