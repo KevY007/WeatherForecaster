@@ -37,6 +37,8 @@
             this.btnMap = new DevExpress.XtraEditors.SimpleButton();
             this.btnReset = new DevExpress.XtraEditors.SimpleButton();
             this.swapAxes = new System.Windows.Forms.CheckBox();
+            this.cmbViewType = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listContainer
@@ -154,6 +156,25 @@
             this.swapAxes.UseVisualStyleBackColor = true;
             this.swapAxes.CheckedChanged += new System.EventHandler(this.swapAxis_CheckedChanged);
             // 
+            // cmbViewType
+            // 
+            this.cmbViewType.FormattingEnabled = true;
+            this.cmbViewType.Location = new System.Drawing.Point(1062, 539);
+            this.cmbViewType.Name = "cmbViewType";
+            this.cmbViewType.Size = new System.Drawing.Size(193, 27);
+            this.cmbViewType.TabIndex = 20;
+            this.cmbViewType.SelectedIndexChanged += new System.EventHandler(this.cmbViewType_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(1096, 489);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(134, 26);
+            this.label4.TabIndex = 21;
+            this.label4.Text = "View Type:";
+            // 
             // Analytics
             // 
             this.Appearance.BackColor = System.Drawing.Color.Black;
@@ -162,6 +183,8 @@
             this.Appearance.Options.UseForeColor = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.cmbViewType);
             this.Controls.Add(this.swapAxes);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnMap);
@@ -190,5 +213,7 @@
         private DevExpress.XtraEditors.SimpleButton btnMap;
         private DevExpress.XtraEditors.SimpleButton btnReset;
         private System.Windows.Forms.CheckBox swapAxes;
+        private System.Windows.Forms.ComboBox cmbViewType;
+        private System.Windows.Forms.Label label4;
     }
 }

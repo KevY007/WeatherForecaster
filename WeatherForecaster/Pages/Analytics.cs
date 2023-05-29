@@ -35,6 +35,18 @@ namespace WeatherForecaster.Pages
 
             btnReset_Click(null, null);
 
+            cmbViewType.DataSource = null;
+
+            List<cViewType> cViewTypes = new List<cViewType>();
+            
+            foreach (ViewType enumValue in Enum.GetValues(typeof(ViewType)))
+            {
+                cViewTypes.Add(new cViewType(enumValue.ToString(), enumValue));
+            }
+
+            cmbViewType.DataSource = cViewTypes;
+            cmbViewType.ValueMember = "vType";
+            cmbViewType.DisplayMember = "vName";
 
             List<Weather> ents = new List<Weather>();
             List<Country> countries = new List<Country>();
@@ -180,11 +192,19 @@ namespace WeatherForecaster.Pages
                 }
             }
 
-            Instance.chartControl1.DataSource = dataSource;
+            try
+            {
+                Instance.chartControl1.DataSource = dataSource;
 
-            swapAxis_CheckedChanged(null, null);
 
-            Instance.chartControl1.SeriesTemplate.ValueDataMembers.AddRange("Value");
+                swapAxis_CheckedChanged(null, null);
+
+                Instance.chartControl1.SeriesTemplate.ValueDataMembers.AddRange("Value");
+                //Instance.chartControl1.SeriesTemplate.ChangeView(ViewType.Waterfall)
+
+                Instance.chartControl1.Titles.Clear();
+            }
+            catch { MessageBox.Show("An error has occured. The view or data might be incompatible!"); }
         }
 
         private void swapAxis_CheckedChanged(object sender, EventArgs e)
@@ -195,14 +215,34 @@ namespace WeatherForecaster.Pages
                 {
                     Instance.chartControl1.SeriesTemplate.SeriesDataMember = "Timestamp";
                     Instance.chartControl1.SeriesTemplate.ArgumentDataMember = "Series";
+                    Instance.chartControl1.SeriesTemplate.ArgumentScaleType = ScaleType.Auto;
                 }
                 else
                 {
                     Instance.chartControl1.SeriesTemplate.SeriesDataMember = "Series";
                     Instance.chartControl1.SeriesTemplate.ArgumentDataMember = "Timestamp";
+                    Instance.chartControl1.SeriesTemplate.ArgumentScaleType = ScaleType.DateTime;
+                    Instance.chartControl1.SeriesTemplate.TimeSpanSummaryOptions.MeasureUnit = TimeSpanMeasureUnit.Hour;
+                    Instance.chartControl1.SeriesTemplate.DateTimeSummaryOptions.MeasureUnit = DateTimeMeasureUnit.Hour;
                 }
             } catch { }
         }
+
+        private void cmbViewType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbViewType.SelectedItem == null) return;
+
+            var selection = (cViewType)cmbViewType.SelectedItem;
+            if(Instance != null) Instance.chartControl1.SeriesTemplate.ChangeView(selection.vType);
+        }
+    }
+
+    public class cViewType
+    {
+        public ViewType vType { get; set; }
+        public string vName { get; set; }
+
+        public cViewType(string n, ViewType v) { vType = v; vName = n; }
     }
 
     public class WeatherProcessor : Weather

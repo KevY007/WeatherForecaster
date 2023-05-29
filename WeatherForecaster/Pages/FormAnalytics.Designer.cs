@@ -39,7 +39,7 @@
             this.chartControl1.Location = new System.Drawing.Point(0, 0);
             this.chartControl1.Name = "chartControl1";
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[0];
-            this.chartControl1.Size = new System.Drawing.Size(1221, 668);
+            this.chartControl1.Size = new System.Drawing.Size(1832, 818);
             this.chartControl1.TabIndex = 0;
             // 
             // FormAnalytics
@@ -50,7 +50,7 @@
             this.Appearance.Options.UseForeColor = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1221, 668);
+            this.ClientSize = new System.Drawing.Size(1832, 818);
             this.Controls.Add(this.chartControl1);
             this.FormBorderEffect = DevExpress.XtraEditors.FormBorderEffect.Shadow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
