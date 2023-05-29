@@ -28,36 +28,63 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listClass = new System.Windows.Forms.ListBox();
+            this.listContainer = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.listMember = new System.Windows.Forms.ListBox();
+            this.listEntries = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.listSubMember = new System.Windows.Forms.ListBox();
+            this.listMember = new System.Windows.Forms.ListBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.btnMap = new DevExpress.XtraEditors.SimpleButton();
+            this.btnReset = new DevExpress.XtraEditors.SimpleButton();
+            this.swapAxes = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // listClass
+            // listContainer
             // 
-            this.listClass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.listClass.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listClass.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.listClass.FormattingEnabled = true;
-            this.listClass.ItemHeight = 19;
-            this.listClass.Location = new System.Drawing.Point(87, 83);
-            this.listClass.Name = "listClass";
-            this.listClass.Size = new System.Drawing.Size(343, 344);
-            this.listClass.TabIndex = 12;
-            this.listClass.SelectedIndexChanged += new System.EventHandler(this.listClass_SelectedIndexChanged);
+            this.listContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.listContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listContainer.ForeColor = System.Drawing.SystemColors.InactiveBorder;
+            this.listContainer.FormattingEnabled = true;
+            this.listContainer.ItemHeight = 19;
+            this.listContainer.Location = new System.Drawing.Point(87, 83);
+            this.listContainer.Name = "listContainer";
+            this.listContainer.Size = new System.Drawing.Size(343, 344);
+            this.listContainer.TabIndex = 12;
+            this.listContainer.SelectedIndexChanged += new System.EventHandler(this.listClass_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(214, 38);
+            this.label1.Location = new System.Drawing.Point(177, 38);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 26);
+            this.label1.Size = new System.Drawing.Size(128, 26);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Class:";
+            this.label1.Text = "Container:";
+            // 
+            // listEntries
+            // 
+            this.listEntries.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.listEntries.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listEntries.ForeColor = System.Drawing.SystemColors.InactiveBorder;
+            this.listEntries.FormattingEnabled = true;
+            this.listEntries.HorizontalScrollbar = true;
+            this.listEntries.ItemHeight = 19;
+            this.listEntries.Location = new System.Drawing.Point(469, 83);
+            this.listEntries.Name = "listEntries";
+            this.listEntries.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listEntries.Size = new System.Drawing.Size(414, 344);
+            this.listEntries.TabIndex = 14;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(603, 38);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(98, 26);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Entries:";
             // 
             // listMember
             // 
@@ -65,44 +92,67 @@
             this.listMember.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listMember.ForeColor = System.Drawing.SystemColors.InactiveBorder;
             this.listMember.FormattingEnabled = true;
-            this.listMember.HorizontalScrollbar = true;
             this.listMember.ItemHeight = 19;
-            this.listMember.Location = new System.Drawing.Point(469, 83);
+            this.listMember.Location = new System.Drawing.Point(922, 83);
             this.listMember.Name = "listMember";
-            this.listMember.Size = new System.Drawing.Size(414, 344);
-            this.listMember.TabIndex = 14;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(610, 38);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(111, 26);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Member:";
-            // 
-            // listSubMember
-            // 
-            this.listSubMember.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
-            this.listSubMember.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listSubMember.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.listSubMember.FormattingEnabled = true;
-            this.listSubMember.ItemHeight = 19;
-            this.listSubMember.Location = new System.Drawing.Point(922, 83);
-            this.listSubMember.Name = "listSubMember";
-            this.listSubMember.Size = new System.Drawing.Size(343, 344);
-            this.listSubMember.TabIndex = 16;
+            this.listMember.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listMember.Size = new System.Drawing.Size(343, 344);
+            this.listMember.TabIndex = 16;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Verdana", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(999, 38);
+            this.label3.Location = new System.Drawing.Point(1011, 38);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(164, 26);
+            this.label3.Size = new System.Drawing.Size(111, 26);
             this.label3.TabIndex = 15;
-            this.label3.Text = "Sub-Member:";
+            this.label3.Text = "Member:";
+            // 
+            // btnMap
+            // 
+            this.btnMap.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnMap.Appearance.BorderColor = System.Drawing.Color.Transparent;
+            this.btnMap.Appearance.Options.UseBackColor = true;
+            this.btnMap.Appearance.Options.UseBorderColor = true;
+            this.btnMap.AppearanceHovered.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnMap.AppearanceHovered.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnMap.AppearanceHovered.Options.UseBackColor = true;
+            this.btnMap.AppearanceHovered.Options.UseForeColor = true;
+            this.btnMap.Location = new System.Drawing.Point(469, 539);
+            this.btnMap.Name = "btnMap";
+            this.btnMap.Size = new System.Drawing.Size(284, 44);
+            this.btnMap.TabIndex = 17;
+            this.btnMap.Text = "Map Selection";
+            this.btnMap.Click += new System.EventHandler(this.btnMap_Click);
+            // 
+            // btnReset
+            // 
+            this.btnReset.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnReset.Appearance.BorderColor = System.Drawing.Color.Transparent;
+            this.btnReset.Appearance.Options.UseBackColor = true;
+            this.btnReset.Appearance.Options.UseBorderColor = true;
+            this.btnReset.AppearanceHovered.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnReset.AppearanceHovered.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnReset.AppearanceHovered.Options.UseBackColor = true;
+            this.btnReset.AppearanceHovered.Options.UseForeColor = true;
+            this.btnReset.Location = new System.Drawing.Point(87, 539);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(343, 44);
+            this.btnReset.TabIndex = 18;
+            this.btnReset.Text = "Reset Chart";
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // swapAxes
+            // 
+            this.swapAxes.AutoSize = true;
+            this.swapAxes.Location = new System.Drawing.Point(785, 551);
+            this.swapAxes.Name = "swapAxes";
+            this.swapAxes.Size = new System.Drawing.Size(112, 23);
+            this.swapAxes.TabIndex = 19;
+            this.swapAxes.Text = "Swap Axes";
+            this.swapAxes.UseVisualStyleBackColor = true;
+            this.swapAxes.CheckedChanged += new System.EventHandler(this.swapAxis_CheckedChanged);
             // 
             // Analytics
             // 
@@ -112,11 +162,14 @@
             this.Appearance.Options.UseForeColor = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.listSubMember);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.swapAxes);
+            this.Controls.Add(this.btnReset);
+            this.Controls.Add(this.btnMap);
             this.Controls.Add(this.listMember);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.listEntries);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.listClass);
+            this.Controls.Add(this.listContainer);
             this.Controls.Add(this.label1);
             this.Name = "Analytics";
             this.Size = new System.Drawing.Size(1294, 726);
@@ -128,11 +181,14 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox listClass;
+        private System.Windows.Forms.ListBox listContainer;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListBox listMember;
+        private System.Windows.Forms.ListBox listEntries;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox listSubMember;
+        private System.Windows.Forms.ListBox listMember;
         private System.Windows.Forms.Label label3;
+        private DevExpress.XtraEditors.SimpleButton btnMap;
+        private DevExpress.XtraEditors.SimpleButton btnReset;
+        private System.Windows.Forms.CheckBox swapAxes;
     }
 }

@@ -40,9 +40,9 @@
             this.btnGroupLocations = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.btnEntryAddRemove = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.btnAddLocation = new DevExpress.XtraBars.Navigation.AccordionControlElement();
+            this.btnAnalytics = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.fluentDesignFormControl1 = new DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl();
             this.fluentFormManager = new DevExpress.XtraBars.FluentDesignSystem.FluentFormDefaultManager(this.components);
-            this.btnAnalytics = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             ((System.ComponentModel.ISupportInitialize)(this.mainMenu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fluentDesignFormControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fluentFormManager)).BeginInit();
@@ -62,8 +62,9 @@
             this.mainMenu.LookAndFeel.SkinName = "Office 2019 Black";
             this.mainMenu.LookAndFeel.UseDefaultLookAndFeel = false;
             this.mainMenu.Name = "mainMenu";
+            this.mainMenu.OptionsMinimizing.State = DevExpress.XtraBars.Navigation.AccordionControlState.Minimized;
             this.mainMenu.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Fluent;
-            this.mainMenu.Size = new System.Drawing.Size(375, 720);
+            this.mainMenu.Size = new System.Drawing.Size(72, 720);
             this.mainMenu.TabIndex = 1;
             this.mainMenu.ViewType = DevExpress.XtraBars.Navigation.AccordionControlViewType.HamburgerMenu;
             // 
@@ -141,6 +142,14 @@
             this.btnAddLocation.Text = "Locations: Add / Remove";
             this.btnAddLocation.Click += new System.EventHandler(this.btnAddLocation_Click);
             // 
+            // btnAnalytics
+            // 
+            this.btnAnalytics.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnAnalytics.ImageOptions.SvgImage")));
+            this.btnAnalytics.Name = "btnAnalytics";
+            this.btnAnalytics.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
+            this.btnAnalytics.Text = "Analytics";
+            this.btnAnalytics.Click += new System.EventHandler(this.btnAnalytics_Click);
+            // 
             // fluentDesignFormControl1
             // 
             this.fluentDesignFormControl1.FluentDesignForm = this;
@@ -155,14 +164,6 @@
             // 
             this.fluentFormManager.Form = this;
             this.fluentFormManager.MaxItemId = 1;
-            // 
-            // btnAnalytics
-            // 
-            this.btnAnalytics.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnAnalytics.ImageOptions.SvgImage")));
-            this.btnAnalytics.Name = "btnAnalytics";
-            this.btnAnalytics.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
-            this.btnAnalytics.Text = "Analytics";
-            this.btnAnalytics.Click += new System.EventHandler(this.btnAnalytics_Click);
             // 
             // formMain
             // 

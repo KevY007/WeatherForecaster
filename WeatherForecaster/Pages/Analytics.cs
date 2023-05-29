@@ -1,5 +1,8 @@
 ﻿using DevExpress.Charts.Native;
+using DevExpress.CodeParser;
+using DevExpress.Diagram.Core.Shapes;
 using DevExpress.XtraCharts;
+using DevExpress.XtraCharts.Native;
 using DevExpress.XtraEditors;
 using DevExpress.XtraRichEdit.Model;
 using System;
@@ -8,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -27,18 +31,15 @@ namespace WeatherForecaster.Pages
 
         private void Analytics_Load(object sender, EventArgs e)
         {
-            listClass.DataSource = new List<TypeString>();
+            listContainer.DataSource = new List<TypeString>();
 
-            if (Instance == null)
-            {
-                Instance = new FormAnalytics();
-                Instance.Show();
-            }
+            btnReset_Click(null, null);
 
 
             List<Weather> ents = new List<Weather>();
             List<Country> countries = new List<Country>();
             List<City> cities = new List<City>();
+
             foreach(var c1 in Global.Continents)
             {
                 foreach(var c2 in c1.Countries)
@@ -53,89 +54,179 @@ namespace WeatherForecaster.Pages
             }
 
             List<TypeString> list = new List<TypeString>();
-            list.Add(new TypeString("Continents", typeof(Continent), Global.Continents));
-            list.Add(new TypeString("Countries", typeof(Country), countries));
-            list.Add(new TypeString("Cities", typeof(City), cities));
-            list.Add(new TypeString("Weather Entries", typeof(Weather), ents));
+            list.Add(new TypeString("All", ents));
 
-            listClass.DataSource = list;
-            listClass.DisplayMember = "Display";
-            listClass.ValueMember = "Value";
+            foreach (var cont in Global.Continents)
+            {
+                var contList = new List<Weather>();
+                list.Add(new TypeString(cont.Name, contList));
 
+                foreach (var country in cont.Countries)
+                {
+                    var countryList = new List<Weather>();
+                    list.Add(new TypeString("    " + country.Name, countryList));
 
+                    foreach (var city in country.Cities)
+                    {
+                        list.Add(new TypeString("        " + city.Name, city.WeatherData));
 
-            // Create a line series.
-            Series series1 = new Series("Series 1", ViewType.Line);
+                        countryList.AddRange(city.WeatherData);
+                        contList.AddRange(city.WeatherData);
+                    }
 
-            // Add points to it.
-            series1.Points.Add(new SeriesPoint(1, 2));
-            series1.Points.Add(new SeriesPoint(2, 12));
-            series1.Points.Add(new SeriesPoint(3, 14));
-            series1.Points.Add(new SeriesPoint(4, 17));
+                    list.First(i => i.Display == "    " + country.Name).Items = countryList;
+                }
+                list.First(i => i.Display == cont.Name).Items = contList;
+            }
 
-            // Add the series to the chart.
-            Instance.chartControl1.Series.Add(series1);
+            list.First(i => i.Display == "All").Items = ents;
 
-            // Set the numerical argument scale types for the series,
-            // as it is qualitative, by default.
-            series1.ArgumentScaleType = ScaleType.Numerical;
-
-            // Access the view-type-specific options of the series.
-            ((LineSeriesView)series1.View).MarkerVisibility = DevExpress.Utils.DefaultBoolean.True;
-            ((LineSeriesView)series1.View).LineMarkerOptions.Size = 20;
-            ((LineSeriesView)series1.View).LineMarkerOptions.Kind = MarkerKind.Triangle;
-            ((LineSeriesView)series1.View).LineStyle.DashStyle = DashStyle.Dash;
-
-            // Access the view-type-specific options of the series.
-            ((XYDiagram)Instance.chartControl1.Diagram).AxisY.Interlaced = true;
-            ((XYDiagram)Instance.chartControl1.Diagram).AxisY.InterlacedColor = Color.FromArgb(20, 60, 60, 60);
-            ((XYDiagram)Instance.chartControl1.Diagram).AxisX.NumericScaleOptions.AutoGrid = false;
-            ((XYDiagram)Instance.chartControl1.Diagram).AxisX.NumericScaleOptions.GridSpacing = 1;
-
-            // Hide the legend (if necessary).
-            Instance.chartControl1.Legend.Visibility = DevExpress.Utils.DefaultBoolean.False;
-
-            // Add a title to the chart (if necessary).
-            Instance.chartControl1.Titles.Add(new ChartTitle());
-            Instance.chartControl1.Titles[0].Text = "Line Chart";
-
+            listContainer.DataSource = list;
+            listContainer.DisplayMember = "Display";
+            listContainer.ValueMember = null;
         }
 
         private void listClass_SelectedIndexChanged(object sender, EventArgs e)
         {
+            listEntries.DataSource = new List<string>();
             listMember.DataSource = new List<string>();
-            listSubMember.DataSource = new List<string>();
     
-            TypeString item = (TypeString)listClass.SelectedItem;
+            TypeString item = (TypeString)listContainer.SelectedItem;
 
             List<string> members = new List<string>();
+            members.Add("All");
+
             foreach(dynamic a in item.Items)
             {
                 members.Add((string)a.Name);
             }
 
-            listMember.DataSource = members;
+            listEntries.DataSource = members;
+
+            List<string> properties = new List<string>();
+            properties.Add("All");
+
+            foreach (PropertyInfo prop in typeof(Weather).GetProperties())
+                properties.Add(prop.Name);
+            
+            properties.RemoveAll(s => s == "Timestamp" || s == "Condition" || s == "Name" || s == "Id");
+
+            listEntries.DataSource = members;
+            listMember.DataSource = properties;
         }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            if (Instance != null)
+            {
+                Instance.Hide();
+                Instance.Dispose();
+                Instance = null;
+            }
+            Instance = new FormAnalytics();
+            Instance.Show();
+
+            swapAxes.Checked = false;
+        }
+
+        private void btnMap_Click(object sender, EventArgs e)
+        {
+            TypeString selected = (TypeString)listContainer.SelectedItem;
+
+            List<WeatherProcessor> dataSource = new List<WeatherProcessor>();
+
+            List<string> properties = new List<string>();
+
+            if (listMember.SelectedItems.Count > 1 || listMember.SelectedItems.Contains("All"))
+            {
+                if (listMember.SelectedItems.Contains("All")) {
+                    properties.AddRange(((List<string>)listMember.DataSource).Where(s => s != "All").ToArray());
+                }
+                else
+                {
+                    foreach (string s in listMember.SelectedItems) properties.Add(s);
+                }
+            }
+            else
+            {
+                properties.Add((string)listMember.SelectedItems[0]);
+            }
+
+            if (listEntries.SelectedItems.Count > 1 || listEntries.SelectedItems.Contains("All"))
+            {
+                for (int i = 0; i < selected.Items.Count; i++)
+                {
+                    if (!listEntries.SelectedItems.Contains("All") && !listEntries.SelectedItems.Contains(selected.Items[i].Name)) continue;
+
+                    foreach (var prop in properties)
+                    {
+                        double FixedValue = Math.Round(Convert.ToDouble(typeof(Weather).GetProperty(prop).GetValue(selected.Items[i])), 1);
+                        dataSource.Add(new WeatherProcessor(selected.Items[i]) { Series = selected.Items[i].Name + " - " + prop, Value = FixedValue });
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < selected.Items.Count; i++)
+                {
+                    if (selected.Items[i].Name == (string)listEntries.SelectedItems[0])
+                    {
+                        foreach (var prop in properties)
+                        {
+                            double FixedValue = Math.Round(Convert.ToDouble(typeof(Weather).GetProperty(prop).GetValue(selected.Items[i])), 1);
+                            dataSource.Add(new WeatherProcessor(selected.Items[i]) { Series = prop, Value = FixedValue });
+                        }
+                    }
+                }
+            }
+
+            Instance.chartControl1.DataSource = dataSource;
+
+            swapAxis_CheckedChanged(null, null);
+
+            Instance.chartControl1.SeriesTemplate.ValueDataMembers.AddRange("Value");
+        }
+
+        private void swapAxis_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (swapAxes.Checked)
+                {
+                    Instance.chartControl1.SeriesTemplate.SeriesDataMember = "Timestamp";
+                    Instance.chartControl1.SeriesTemplate.ArgumentDataMember = "Series";
+                }
+                else
+                {
+                    Instance.chartControl1.SeriesTemplate.SeriesDataMember = "Series";
+                    Instance.chartControl1.SeriesTemplate.ArgumentDataMember = "Timestamp";
+                }
+            } catch { }
+        }
+    }
+
+    public class WeatherProcessor : Weather
+    {
+        public string Series { get; set; }
+        public double Value { get; set; }
+
+        public WeatherProcessor(Weather copy) : base(copy) { }
     }
 
     public class TypeString
     {
         public string Display { get; set; }
-        public Type Value { get; set; }
-        public dynamic Items { get; set; }
+        public List<Weather> Items { get; set; }
 
-        public TypeString(string o, Type v)
+        public TypeString(string o)
         {
             Display = o;
-            Value = v;
-            Items = new List<object>();
+            Items = new List<Weather>();
         }
-        public TypeString(string o, Type v, object i)
+        public TypeString(string o, List<Weather> i)
         {
             Display = o;
-            Value = v;
             Items = i;
         }
     }
-
 }

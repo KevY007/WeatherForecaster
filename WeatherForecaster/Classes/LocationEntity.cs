@@ -12,6 +12,8 @@ using System.Globalization;
 using DevExpress.XtraRichEdit.Model;
 using DevExpress.Data.Filtering.Helpers;
 using System.ComponentModel.DataAnnotations;
+using DevExpress.Charts.Native;
+using DevExpress.XtraSpellChecker;
 
 namespace WeatherForecaster
 {
@@ -120,6 +122,11 @@ namespace WeatherForecaster
             Condition = condition;
 
             Contributor = contributor;
+        }
+
+        public Weather(Weather copy) : this(copy.Id, copy.Timestamp, copy.Temperature, copy.Cloud, copy.Humidity, copy.RainChance, copy.Precipitation, copy.UVIndex, copy.WindKPH, copy.Condition, copy.Contributor)
+        {
+
         }
     }
 

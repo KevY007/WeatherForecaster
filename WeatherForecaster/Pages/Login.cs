@@ -83,6 +83,7 @@ namespace WeatherForecaster.Pages
                 {
                     MessageBox.Show("Incorrect password! Please try again.", "Incorrect password", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtPassword.Text = "";
+                    reader.Close();
                     return;
                 }
 
