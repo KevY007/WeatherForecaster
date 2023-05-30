@@ -226,14 +226,17 @@ namespace WeatherForecaster.Pages
 
                 Instance.chartControl1.Titles.Clear();
             }
-            catch { MessageBox.Show("An error has occured. The view or data might be incompatible!"); }
+            catch { 
+                MessageBox.Show("An error has occured. The view or data might be incompatible!");
+                btnReset_Click(null, null);
+            }
         }
 
         private void swapAxis_CheckedChanged(object sender, EventArgs e)
         {
             try
             {
-                if (swapAxes.Checked)
+                if (!swapAxes.Checked)
                 {
                     Instance.chartControl1.SeriesTemplate.SeriesDataMember = "Timestamp";
                     Instance.chartControl1.SeriesTemplate.ArgumentDataMember = "Series";
@@ -243,7 +246,11 @@ namespace WeatherForecaster.Pages
                     Instance.chartControl1.SeriesTemplate.SeriesDataMember = "Series";
                     Instance.chartControl1.SeriesTemplate.ArgumentDataMember = "Timestamp";
                 }
-            } catch { }
+            } catch 
+            {
+                MessageBox.Show("An error has occured. The view or data might be incompatible!");
+                btnReset_Click(null, null);
+            }
         }
 
         private void cmbViewType_SelectedIndexChanged(object sender, EventArgs e)
@@ -251,7 +258,15 @@ namespace WeatherForecaster.Pages
             if (cmbViewType.SelectedItem == null) return;
 
             var selection = (cViewType)cmbViewType.SelectedItem;
-            if(Instance != null) Instance.chartControl1.SeriesTemplate.ChangeView(selection.vType);
+            try
+            {
+                if (Instance != null) Instance.chartControl1.SeriesTemplate.ChangeView(selection.vType);
+            }
+            catch {
+                Instance.chartControl1.SeriesTemplate.ChangeView(selection.vType);
+                MessageBox.Show("An error has occured. The view or data might be incompatible!");
+                btnReset_Click(null, null);
+            }
         }
     }
 
