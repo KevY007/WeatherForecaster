@@ -23,7 +23,11 @@ namespace WeatherForecaster.Pages
 {
     public partial class Analytics : DevExpress.XtraEditors.XtraUserControl
     {
+        /// <summary>
+        /// The form containing the chartControl.
+        /// </summary>
         public static FormAnalytics Instance { get; set; }
+
         public Analytics()
         {
             InitializeComponent();
