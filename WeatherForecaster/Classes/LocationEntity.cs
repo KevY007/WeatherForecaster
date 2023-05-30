@@ -321,7 +321,7 @@ namespace WeatherForecaster
                 temperatures.Add(c3.Temperature);
             }
 
-            return temperatures.Average();
+            return ((temperatures.Count == 0) ? 0.0f : temperatures.Average());
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace WeatherForecaster
                 }
             }
 
-            return temperatures.Average();
+            return ((temperatures.Count == 0) ? 0.0f : temperatures.Average());
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace WeatherForecaster
                 }
             }
 
-            return temperatures.Average();
+            return ((temperatures.Count == 0) ? 0.0f : temperatures.Average());
         }
 
         /// <summary>
