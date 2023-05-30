@@ -37,8 +37,10 @@ namespace WeatherForecaster.Pages
 
             cmbViewType.DataSource = null;
 
+            // Create the List of ViewTypes class to use as DataSource.
             List<cViewType> cViewTypes = new List<cViewType>();
             
+            // Get and map all possible values.
             foreach (ViewType enumValue in Enum.GetValues(typeof(ViewType)))
             {
                 cViewTypes.Add(new cViewType(enumValue.ToString(), enumValue));
@@ -47,6 +49,8 @@ namespace WeatherForecaster.Pages
             cmbViewType.DataSource = cViewTypes;
             cmbViewType.ValueMember = "vType";
             cmbViewType.DisplayMember = "vName";
+
+            ///////////////////////////////////////////////////////
 
             List<Weather> ents = new List<Weather>();
             List<Country> countries = new List<Country>();
@@ -65,8 +69,12 @@ namespace WeatherForecaster.Pages
                 }
             }
 
+            ///////////////////////////////////////////////////////
+
+            // Initialize the TypeString list.
+            // A TypeString class is being used to map names to lists.
             List<TypeString> list = new List<TypeString>();
-            list.Add(new TypeString("All", ents));
+            list.Add(new TypeString("All", ents)); // Add an "All" item in the list to select all items.
 
             foreach (var cont in Global.Continents)
             {
@@ -76,7 +84,8 @@ namespace WeatherForecaster.Pages
                 foreach (var country in cont.Countries)
                 {
                     var countryList = new List<Weather>();
-                    list.Add(new TypeString("    " + country.Name, countryList));
+                    list.Add(new TypeString("    " + country.Name, countryList)); 
+                    // Empty spaces to make the items more organized and simulate a tree without using a tree.
 
                     foreach (var city in country.Cities)
                     {
@@ -86,6 +95,7 @@ namespace WeatherForecaster.Pages
                         contList.AddRange(city.WeatherData);
                     }
 
+                    // Re-assign the list without removing/re-adding it from/to the list so the list item doesn't lose it's position in the list.
                     list.First(i => i.Display == "    " + country.Name).Items = countryList;
                 }
                 list.First(i => i.Display == cont.Name).Items = contList;
@@ -103,6 +113,8 @@ namespace WeatherForecaster.Pages
             listEntries.DataSource = new List<string>();
             listMember.DataSource = new List<string>();
     
+            // Start parsing the TypeString from the selected item:
+
             TypeString item = (TypeString)listContainer.SelectedItem;
 
             List<string> members = new List<string>();
@@ -113,15 +125,16 @@ namespace WeatherForecaster.Pages
                 members.Add((string)a.Name);
             }
 
-            listEntries.DataSource = members;
+            // Dynamically get all properties of Weather to reduce hard-coding:
 
             List<string> properties = new List<string>();
             properties.Add("All");
-
+            
             foreach (PropertyInfo prop in typeof(Weather).GetProperties())
                 properties.Add(prop.Name);
             
-            properties.RemoveAll(s => s == "Timestamp" || s == "Condition" || s == "Name" || s == "Id");
+
+            properties.RemoveAll(s => s == "Timestamp" || s == "Condition" || s == "Name" || s == "Id"); // Remove incompatible known properties
 
             listEntries.DataSource = members;
             listMember.DataSource = properties;
@@ -145,13 +158,15 @@ namespace WeatherForecaster.Pages
         {
             TypeString selected = (TypeString)listContainer.SelectedItem;
 
+            // We will use the WeatherProcessor as an extended class from Weather so we can use it as DataSource.
+            // This effectively allows us to add Display and Value members without reconstructing/changing the base Weather class.
             List<WeatherProcessor> dataSource = new List<WeatherProcessor>();
 
             List<string> properties = new List<string>();
 
-            if (listMember.SelectedItems.Count > 1 || listMember.SelectedItems.Contains("All"))
+            if (listMember.SelectedItems.Count > 1 || listMember.SelectedItems.Contains("All")) // Multiple properties selected?
             {
-                if (listMember.SelectedItems.Contains("All")) {
+                if (listMember.SelectedItems.Contains("All")) { // All properties selected?
                     properties.AddRange(((List<string>)listMember.DataSource).Where(s => s != "All").ToArray());
                 }
                 else
@@ -159,12 +174,12 @@ namespace WeatherForecaster.Pages
                     foreach (string s in listMember.SelectedItems) properties.Add(s);
                 }
             }
-            else
+            else // Only one parent selected
             {
                 properties.Add((string)listMember.SelectedItems[0]);
             }
 
-            if (listEntries.SelectedItems.Count > 1 || listEntries.SelectedItems.Contains("All"))
+            if (listEntries.SelectedItems.Count > 1 || listEntries.SelectedItems.Contains("All")) // Multiple entries being compared?
             {
                 for (int i = 0; i < selected.Items.Count; i++)
                 {
@@ -172,7 +187,12 @@ namespace WeatherForecaster.Pages
 
                     foreach (var prop in properties)
                     {
+                        // All the properties are converted into double for the following reason:
+                        // DevExpress chart doesn't support using dynamic or object data types as ValueMembers.
+                        // I tried everything, dynamically casting, using Convert.ToType even, nothing worked. The datatype has to be specified at runtime.
                         double FixedValue = Math.Round(Convert.ToDouble(typeof(Weather).GetProperty(prop).GetValue(selected.Items[i])), 1);
+                        
+                        // Using the power of our extendeed class WeatherProcessor to dynamically set Series and Value member according to the selections:
                         dataSource.Add(new WeatherProcessor(selected.Items[i]) { Series = selected.Items[i].Name + " - " + prop, Value = FixedValue });
                     }
                 }
@@ -192,15 +212,13 @@ namespace WeatherForecaster.Pages
                 }
             }
 
-            try
+            try // Try block because this code tends to break a lot when switching view types etc.
             {
                 Instance.chartControl1.DataSource = dataSource;
 
-
-                swapAxis_CheckedChanged(null, null);
+                swapAxis_CheckedChanged(null, null); // Trigger an axis update.
 
                 Instance.chartControl1.SeriesTemplate.ValueDataMembers.AddRange("Value");
-                //Instance.chartControl1.SeriesTemplate.ChangeView(ViewType.Waterfall)
 
                 Instance.chartControl1.Titles.Clear();
             }
@@ -237,36 +255,84 @@ namespace WeatherForecaster.Pages
         }
     }
 
+    /// <summary>
+    /// Eessentially used to map the enum ViewType in a DataSource by having value member and display member properties.
+    /// </summary>
     public class cViewType
     {
+        /// <summary>
+        /// The ViewType value of this instance. Usually a ValueMember.
+        /// </summary>
         public ViewType vType { get; set; }
+        /// <summary>
+        /// The Name of this instance. Usually a DisplayMember.
+        /// </summary>
         public string vName { get; set; }
 
-        public cViewType(string n, ViewType v) { vType = v; vName = n; }
+        /// <summary>
+        /// Creates an instance of cViewType.
+        /// </summary>
+        /// <param name="displayname">The display name of the ViewType.</param>
+        /// <param name="viewtype">The value of the ViewType.</param>
+        public cViewType(string displayname, ViewType viewtype) { vType = viewtype; vName = displayname; }
     }
 
+    /// <summary>
+    /// A derived class to use Weather as DataSource.
+    /// </summary>
     public class WeatherProcessor : Weather
     {
+        /// <summary>
+        /// The Display Member property.
+        /// </summary>
         public string Series { get; set; }
+
+        /// <summary>
+        /// The Value Member property.
+        /// </summary>
         public double Value { get; set; }
 
+        /// <summary>
+        /// Copy constructor to base off of an existing weather instance.
+        /// </summary>
+        /// <param name="copy">The instance of Weather to copy.</param>
         public WeatherProcessor(Weather copy) : base(copy) { }
     }
 
+    /// <summary>
+    /// A class to map DisplayMember and a List as value for using as a DataSource.
+    /// </summary>
     public class TypeString
     {
+        /// <summary>
+        /// The display member.
+        /// </summary>
         public string Display { get; set; }
+
+        /// <summary>
+        /// The value member (List)
+        /// </summary>
         public List<Weather> Items { get; set; }
 
-        public TypeString(string o)
+        /// <summary>
+        /// Creates and initializes a TypeString with empty list.
+        /// </summary>
+        /// <param name="name">The display name.</param>
+        public TypeString(string name)
         {
-            Display = o;
+            Display = name;
             Items = new List<Weather>();
         }
-        public TypeString(string o, List<Weather> i)
+
+        /// <summary>
+        /// Creates and initializes a TypeString with list items copied from another.
+        /// </summary>
+        /// <param name="name">The display name.</param>
+        /// <param name="list">The list to copy off.</param>
+        public TypeString(string name, List<Weather> list)
         {
-            Display = o;
-            Items = i;
+            Display = name;
+            Items = list;
         }
     }
 }

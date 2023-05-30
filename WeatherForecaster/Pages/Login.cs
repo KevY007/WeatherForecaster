@@ -27,7 +27,7 @@ namespace WeatherForecaster.Pages
 
         private void LoginControl_Load(object sender, EventArgs e)
         {
-
+            // Check out the Register form first to understand the code better.z
         }
 
         private void btnGoSignup_Click(object sender, EventArgs e)

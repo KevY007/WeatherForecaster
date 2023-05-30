@@ -24,6 +24,7 @@ namespace WeatherForecaster.Pages
 
         private void LocationAddRemove_Load(object sender, EventArgs e)
         {
+            // What items are available to add.
             cmbItemType.DataSource = new string[] { "Continent", "Country", "City" };
         }
 
@@ -33,6 +34,7 @@ namespace WeatherForecaster.Pages
             cmbSetParent.DataSource = new string[] { };
             listRemoveItem.DataSource = new string[] { };
 
+            // Parents tab shouldn't be visible because our default selection is Continent (requires no parent).
             cmbSetParent.Visible = false;
             lblParents.Visible = false;
 
@@ -222,7 +224,7 @@ namespace WeatherForecaster.Pages
                         cmd = new SqlCommand(query, Global.Database);
                         rows += cmd.ExecuteNonQuery();
 
-                        // Now us
+                        // Now delete the Continent:
                         query = $"DELETE FROM Continents WHERE ID = {d.GetId()};";
                         cmd = new SqlCommand(query, Global.Database);
                         rows += cmd.ExecuteNonQuery();
@@ -252,7 +254,7 @@ namespace WeatherForecaster.Pages
                         cmd = new SqlCommand(query, Global.Database);
                         rows += cmd.ExecuteNonQuery();
 
-                        // Now us:
+                        // Now the Country:
                         query = $"DELETE FROM Countries WHERE ID = {d.GetId()}";
                         cmd = new SqlCommand(query, Global.Database);
                         rows += cmd.ExecuteNonQuery();
@@ -277,7 +279,7 @@ namespace WeatherForecaster.Pages
                         SqlCommand cmd = new SqlCommand(query, Global.Database);
                         rows += cmd.ExecuteNonQuery();
 
-                        // Now us:
+                        // Now delete the City:
                         query = $"DELETE FROM Cities WHERE ID = {d.GetId()}";
                         cmd = new SqlCommand(query, Global.Database);
                         rows += cmd.ExecuteNonQuery();
@@ -294,6 +296,8 @@ namespace WeatherForecaster.Pages
             }
 
             MessageBox.Show($"The following entries have been deleted: ({rows} rows affected)\n\n{names}", "Data Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
+            // Invoke selection changed so it can refresh:
             cmbLocationType_SelectedIndexChanged(sender, e);
         }
     }

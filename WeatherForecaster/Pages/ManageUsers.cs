@@ -22,12 +22,14 @@ namespace WeatherForecaster.Pages
 
         private void ManageUsers_Load(object sender, EventArgs e)
         {
+            // Assign it to an empty list because sometimes lists and comboboxes don't update without changing datasource twice.
             listUsers.DataSource = new List<User>();
 
             listUsers.DataSource = Global.Users;
             listUsers.ValueMember = "Id";
             listUsers.DisplayMember = "Name";
 
+            // Get all PrivilegeLevels rather than manually specifying them one by one.
             dispPriv.DataSource = Enum.GetNames(typeof(PrivilegeLevels));
 
             dispPriv.Enabled = false;
@@ -49,12 +51,15 @@ namespace WeatherForecaster.Pages
             }
 
             User user = (User)listUsers.SelectedItem;
+
+
             dispEmail.Text = user.GetEmail();
             dispId.Text = $"{user.GetId()}";
             btnDelete.Enabled = true;
             btnUpdateUser.Enabled = true;
             dispPriv.Enabled = true;
 
+            // Find all entries by that specific user for displaying purposes.
             int entries = 0;
             foreach(var a in Global.Continents)
             {
@@ -69,6 +74,7 @@ namespace WeatherForecaster.Pages
 
             dispEntries.Text = $"{entries}";
 
+            // Change the current selected privilege level according to what they are.
             if (user.Privileges == PrivilegeLevels.Contributor)
             {
                 dispPriv.SelectedItem = "Contributor";

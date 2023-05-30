@@ -33,6 +33,8 @@ namespace WeatherForecaster.Pages
 
             List<int> toRemove = new List<int>();
 
+            // Simulate the tree population method to get the nodes to remove.
+
             foreach (TreeNode continent in viewer.Nodes)
             {
                 foreach (TreeNode country in continent.Nodes)
@@ -45,11 +47,11 @@ namespace WeatherForecaster.Pages
                             if(nwd.Checked && nwd.Level == 3)
                             {
                                 int id = Convert.ToInt32(nwd.Text.Substring(nwd.Text.IndexOf("(ID: ")).Substring(4).Trim(')'));
-                                toRemove.Add(id);
-                                removeNodes.Add(nwd);
+                                toRemove.Add(id); // Add them to the list of entries to remove.
+                                removeNodes.Add(nwd); // Add them to the list of nodes to remove.
                             }
                         }
-                        for(int i = 0; i < removeNodes.Count; i++) city.Nodes.Remove(removeNodes[i]);
+                        for(int i = 0; i < removeNodes.Count; i++) city.Nodes.Remove(removeNodes[i]); // Remove the items in the tree.
                     }
                 }
             }
@@ -93,12 +95,17 @@ namespace WeatherForecaster.Pages
                 }
             }
 
-            // EntryAddRemove_Load(null, null);
+            // EntryAddRemove_Load(null, null); // Refresh the tree (not required)
         }
 
+        /// <summary>
+        /// Checks all the child nodes of a node.
+        /// </summary>
+        /// <param name="node">The parent node.</param>
+        /// <param name="check">true = Checked, false = Unchecked</param>
         private void CheckChildNodes(TreeNode node, bool check)
         {
-            if(node.Nodes.Count >= 0)
+            if(node.Nodes.Count >= 0) //
             {
                 foreach(TreeNode tn in node.Nodes)
                 {
@@ -110,14 +117,18 @@ namespace WeatherForecaster.Pages
 
         private void viewer_AfterCheck(object sender, TreeViewEventArgs e)
         {
+            // When a parent node is checked, check all child nodes under it as well.
             CheckChildNodes(e.Node, e.Node.Checked);
         }
+
         private void EntryAddRemove_Load(object sender, EventArgs e)
         {
             timestampDateTimePicker.Format = DateTimePickerFormat.Custom;
             timestampDateTimePicker.CustomFormat = "MM/dd/yyyy hh:mm:ss";
 
             viewer.Nodes.Clear();
+
+            // Generate the tree:
             foreach (var continent in Global.Continents)
             {
                 TreeNode ncontinent = viewer.Nodes.Add($"{continent.Name} (ID: {continent.Id})");
@@ -161,6 +172,7 @@ namespace WeatherForecaster.Pages
                 return;
             }
 
+            // Create a Weather instance for the purpsoe of validation.
             Weather wd = new Weather(0, timestampDateTimePicker.Value, Convert.ToSingle(temperatureSpinEdit.Value), int.Parse(cloudTextEdit.Text), Convert.ToInt32(humidityNumericUpDown.Value), 
                 Convert.ToInt32(rainChanceNumericUpDown.Value), Convert.ToSingle(precipitationSpinEdit.Value), Convert.ToSingle(uVIndexSpinEdit.Value), Convert.ToSingle(windKPHSpinEdit.Value), conditionTextEdit.Text, Global.UserHandle);
 
@@ -169,7 +181,7 @@ namespace WeatherForecaster.Pages
             List<ValidationResult> validationResults = new List<ValidationResult>();
             bool valid = Validator.TryValidateObject(wd, context, validationResults, true);
             
-            validationResults.RemoveAll(a => a.MemberNames.Contains("Name"));
+            validationResults.RemoveAll(a => a.MemberNames.Contains("Name")); // Exclude Name from validation because a Weather Entry doesn't have a name.
             if (validationResults.Count == 0) valid = true;
 
             if (!valid)
@@ -184,10 +196,12 @@ namespace WeatherForecaster.Pages
                 return;
             }
 
-            string str = viewer.SelectedNode.Text.Substring(viewer.SelectedNode.Text.IndexOf("(ID: ")).Substring(4);
-            str = str.Substring(0, str.IndexOf(')'));
-            int parentId = Convert.ToInt32(str);
+            // Splice and get the ID from the currently selected node.
+            string str = viewer.SelectedNode.Text.Substring(viewer.SelectedNode.Text.IndexOf("(ID: ")).Substring(4); // Output: 4)
+            str = str.Substring(0, str.IndexOf(')')); // Output: 4
+            int parentId = Convert.ToInt32(str); // (int)4
 
+            // Do the same here.
             int continentId = Convert.ToInt32(viewer.SelectedNode.FullPath.Split('\\')[0].Substring(viewer.SelectedNode.FullPath.Split('\\')[0].IndexOf("(ID: ")).Substring(4).Trim(')'));
 
             try
@@ -206,6 +220,7 @@ namespace WeatherForecaster.Pages
 
                 ((City)Global.Continents.First(a => a.GetId() == continentId).GetChildOfChild(parentId)).AddWeather(wd);
 
+                // Add a node to the parent tree.
                 TreeNode nwd = viewer.SelectedNode.Nodes.Add($"{wd.GetTimestamp()} " +
                                $"{(Global.UserHandle.DisplayCelsius == true ? ($"{wd.GetTemperature()}°C") : ($"{Global.CelsiusToFahrenheit(wd.GetTemperature())}°F"))} " +
                                $"(ID: {wd.Id})");

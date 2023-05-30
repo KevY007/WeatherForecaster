@@ -25,6 +25,7 @@ namespace WeatherForecaster.Pages
 
         private void Home_Load(object sender, EventArgs e)
         {
+            // Prepare all weathers and cities in a list beforehand for use.
             var allCities = new List<City>();
             var allWeather = new List<Weather>();
 
@@ -56,19 +57,27 @@ namespace WeatherForecaster.Pages
                 return;
             }
 
+            // Random instance so we can get random hours for displaying.
             Random rand = new Random();
 
             List<Tuple<City, List<Weather>>> data = new List<Tuple<City, List<Weather>>>();
             
             int randHour = 0, attempts = 0;
 
-            while (data.Count == 0)
+
+            while (data.Count == 0) // Try to find a compatible weather in series.
             {
                 randHour = rand.Next(0, 21);
 
-                foreach (var a in allCities)
+                foreach (var a in allCities.OrderBy(_=> new Random().Next()).ToList()) // Shuffle all the cities.
                 {
-                    var b = allWeather.FindAll(x => x.GetParent() == a);
+                    var b = a.WeatherData.OrderBy(_ => new Random().Next()).ToList(); // Shuffle the weather data as well.
+
+                    
+                    /* The code below will now:
+                        - Try to find 3 weather entries of one of the following days: Yesterday, Today, Tomorrow
+                        - The entries should only be 2 hours apart from each other. (In positive direction)
+                    */
 
                     // Yesterday
                     if (b.Count(c => (c.GetTimestamp().Date == DateTime.Now.AddDays(-1).Date) && c.GetTimestamp().Hour == randHour) >= 1 &&
@@ -108,10 +117,10 @@ namespace WeatherForecaster.Pages
                 }
                 attempts++;
 
-                if (attempts >= 50) break;
+                if (attempts >= 50) break; // So we're not in an infinite loop.
             }
 
-            if (data.Count == 0)
+            if (data.Count == 0) // If it still could not find 3 weather entries 2 hours apart from each other in series.
             {
                 lblLocationName.Text = "Not enough data";
                 lblDay.Text = "Please fetch from settings";
@@ -128,9 +137,9 @@ namespace WeatherForecaster.Pages
                 return;
             }
 
-            var selected = data[new Random().Next(data.Count)];
+            var selected = data[new Random().Next(data.Count)]; // Get a random weather entry from the list.
 
-            lblLocationName.Text = selected.Item1.GetName();
+            lblLocationName.Text = selected.Item1.GetName(); // City Name
 
             if (selected.Item2[0].GetTimestamp().Date == DateTime.Now.AddDays(-1).Date) lblDay.Text = "Yesterday";
             else if (selected.Item2[0].GetTimestamp().Date == DateTime.Now.AddDays(1).Date) lblDay.Text = "Tomorrow (Predicted)";
@@ -193,6 +202,11 @@ namespace WeatherForecaster.Pages
             svgHr3.SvgImage = GetImageFromCondition(h3.GetCondition());
         }
 
+        /// <summary>
+        /// Gets the required DevExpress's SvgImage object corresponding to the specified condition.
+        /// </summary>
+        /// <param name="condition">The name of the condition (only a specific are added)</param>
+        /// <returns>A DevExpress SvgImage!</returns>
         public DevExpress.Utils.Svg.SvgImage GetImageFromCondition(string condition)
         {
             if (condition.ToLower().Contains("cloudy")) return weatherIconCollection[1];

@@ -12,14 +12,26 @@ namespace WeatherForecaster
 {
     public static partial class Global
     {
+        /// <summary>
+        /// List of all Users loaded in the memory.
+        /// </summary>
         public static List<User> Users = new List<User>();
+
+        /// <summary>
+        /// Handle of currently logged in User. null if logged out.
+        /// </summary>
         public static User UserHandle = null;
     }
 
+    /// <summary>
+    /// Account class.
+    /// </summary>
     public class User : Entity
     {
         private string _Email;
-
+        /// <summary>
+        /// Email address of the User.
+        /// </summary>
         [Required]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         [Display(Name = "Email")]
@@ -27,22 +39,28 @@ namespace WeatherForecaster
 
 
         private string _Password;
+        /// <summary>
+        /// The password of the User. Never loaded in the program. Only used for validation purposes.
+        /// Minimum length: 3
+        /// Maximum length: 32
+        /// </summary>
         [Required]
         [MinLength(3, ErrorMessage = "Password is too small")]
         [MaxLength(32, ErrorMessage = "Password is too long")]
         public string Password { get { return _Password; } set { _Password = value; } }
 
 
-        private PrivilegeLevels PrivilegeLevel;
-
         private bool Celsius;
-
+        /// <summary>
+        /// Boolean value. True: User is displayed values in Celsius, False: User is displayed values in Fahrenheit.
+        /// </summary>
         public bool DisplayCelsius
         {
             get { return Celsius; }
             set { 
                 Celsius = value;
 
+                // Update the field as we update DisplayCelsius.
                 string query = $"UPDATE Users SET Celsius = {Convert.ToInt32(Celsius)} WHERE ID = {GetId()};";
 
                 try
@@ -61,8 +79,11 @@ namespace WeatherForecaster
             }
         }
 
-        public string GetEmail() => Email;
 
+        private PrivilegeLevels PrivilegeLevel;
+        /// <summary>
+        /// The PrivilegeLevel / power of a User.
+        /// </summary>
         public PrivilegeLevels Privileges
         {
             get { return PrivilegeLevel; }
@@ -88,20 +109,47 @@ namespace WeatherForecaster
             }
         }
 
+        /// <summary>
+        /// Gets the email address of the user.
+        /// </summary>
+        /// <returns></returns>
+        public string GetEmail() => Email;
+
+        /// <summary>
+        /// Creates a User account.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <param name="name">Name of the user.</param>
+        /// <param name="email">Email address of the user.</param>
+        /// <param name="celsius">true: Temperature in Celsius, false: Temperature in Fahrenheit</param>
         public User(int id, string name, string email, bool celsius) : base(id, name)
         {
             Email = email;
             PrivilegeLevel = PrivilegeLevels.None;
-
-            Global.Users.Add(this);
             Celsius = celsius;
         }
 
+        /// <summary>
+        /// Creates a User account.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <param name="name">Name of the user.</param>
+        /// <param name="email">Email address of the user.</param>
+        /// <param name="celsius">true: Temperature in Celsius, false: Temperature in Fahrenheit</param>
+        /// <param name="privileges">What power the user possesses.</param>
         public User(int id, string name, string email, bool celsius, PrivilegeLevels privileges) : this(id, name, email, celsius)
         {
             PrivilegeLevel = privileges;
         }
 
+        /// <summary>
+        /// Creates a User account.
+        /// </summary>
+        /// <param name="id">The ID of the user.</param>
+        /// <param name="name">Name of the user.</param>
+        /// <param name="email">Email address of the user.</param>
+        /// <param name="celsius">true: Temperature in Celsius, false: Temperature in Fahrenheit</param>
+        /// <param name="privileges">What power the user possesses.</param>
         public User(int id, string name, string email, bool celsius, int privileges) : this(id, name, email, celsius, (PrivilegeLevels)privileges) { }
     }
 }

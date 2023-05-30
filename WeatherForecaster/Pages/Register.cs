@@ -32,12 +32,12 @@ namespace WeatherForecaster.Pages
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
+            // Create a user with all set values for using as validation context. (Directly binding to DataSource was glitching due to private fields)
             User user = new User(1, txtUsername.Text, txtEmail.Text, true);
             user.Password = txtPassword.Text;
 
             ValidationContext context = new ValidationContext(user, null, null);
 
-           
             List<ValidationResult> validationResults = new List<ValidationResult>();
             bool valid = Validator.TryValidateObject(user, context, validationResults, true);
             if (!valid || txtConfirmPass.Text != txtPassword.Text)
@@ -46,6 +46,9 @@ namespace WeatherForecaster.Pages
                 return;
             }
 
+            // Prepare a query to insert the User.
+            // Have the query OUTPUT the inserted User ID so we can use it as a reference later on.
+
             string query = $"INSERT INTO Users " +
                 $"(Username, Email, Password) OUTPUT INSERTED.ID " +
                 $"VALUES ('{user.Name}', '{user.Email}', '{user.Password}');";
@@ -53,12 +56,14 @@ namespace WeatherForecaster.Pages
             try { 
                 SqlCommand cmd = new SqlCommand(query, Global.Database);
 
+                // Cast it to (int) because the OUTPUT INSERTED.ID returns the inserted table's ID column rather than the num. of rows affected.
                 int aID = (int)cmd.ExecuteScalar();
 
+                // Use the ID to add a new User to the list and display it back. Then simulate a click to 'Go to Login' button.
                 MessageBox.Show($"Your account has been created!\nAccount ID: {aID}\nUsername: {user.Name}\nEmail: {user.Email}\n\nPlease proceed to login now!", "Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnGoLogin_Click(sender, e);
 
-                new User(aID, txtUsername.Text, txtEmail.Text, true);
+                Global.Users.Add(new User(aID, txtUsername.Text, txtEmail.Text, true));
             }
             catch (SqlException err) 
             {
@@ -72,9 +77,11 @@ namespace WeatherForecaster.Pages
 
         private void txtUsername_EditValueChanged(object sender, EventArgs e)
         {
+            // Reset the error and tick providers so they don't display anything.
             errorProvider.SetError(txtUsername, "");
             tickProvider.SetError(txtUsername, "");
 
+            // Create a user for validation with everything as per requirements except the current property we are changing.
             User user = new User(1, txtUsername.Text, "email@gmail.com", true);
             user.Password = "correctpassword";
             ValidationContext context = new ValidationContext(user, null, null);
@@ -89,6 +96,7 @@ namespace WeatherForecaster.Pages
                 }
             }
 
+            // If there were no errors set, then add a tick instead.
             if (errorProvider.GetError(txtUsername) == "") tickProvider.SetError(txtUsername, "Username is valid");
         }
 
@@ -150,12 +158,14 @@ namespace WeatherForecaster.Pages
 
         private void RegisterControl_Load(object sender, EventArgs e)
         {
+            // Pad the ticks and errors +10 to the right for all controls. (lazy)
             foreach (Control c in this.Controls)
             {
                 errorProvider.SetIconPadding(c, 10);
                 tickProvider.SetIconPadding(c, 10);
             }
 
+            // Trigger the edit event on all input fields so they can display errors by default.
             txtUsername_EditValueChanged(sender, e);
             txtEmail_EditValueChanged(sender, e);
             txtPassword_EditValueChanged(sender, e);
