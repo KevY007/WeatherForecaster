@@ -353,7 +353,7 @@ namespace WeatherForecaster
         /// <summary>
         /// Create a Country.
         /// </summary>
-        public Country(int _id, string _name, float lat = 0.0f, float lon = 0.0f) : base(_id, _name)
+        public Country(int _id, string _name) : base(_id, _name)
         {
         }
 
@@ -444,7 +444,7 @@ namespace WeatherForecaster
         /// The list of all Countries belong in this Continent.
         /// </summary>
         public List<Country> Countries = new List<Country>();
-        public Continent(int _id, string _name, float lat = 0.0f, float lon = 0.0f) : base(_id, _name) 
+        public Continent(int _id, string _name) : base(_id, _name) 
         {
         }
 
