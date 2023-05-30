@@ -127,6 +127,10 @@ namespace WeatherForecaster.Pages
                 SqlCommand cmd = new SqlCommand(query, Global.Database);
                 cmd.ExecuteNonQuery();
 
+                query = $"UPDATE WeatherData SET ContributorID = -1 WHERE ContributorID = {user.GetId()};";
+                cmd = new SqlCommand(query, Global.Database);
+                cmd.ExecuteNonQuery();
+
                 Global.Users.Remove(user);
 
                 MessageBox.Show("You have deleted the account from the database successfully.");
