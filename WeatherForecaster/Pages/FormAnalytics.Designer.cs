@@ -53,7 +53,6 @@
             this.ClientSize = new System.Drawing.Size(1832, 818);
             this.Controls.Add(this.chartControl1);
             this.FormBorderEffect = DevExpress.XtraEditors.FormBorderEffect.Shadow;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.IconOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("FormAnalytics.IconOptions.SvgImage")));
             this.Name = "FormAnalytics";
             this.Text = "Analytics";
