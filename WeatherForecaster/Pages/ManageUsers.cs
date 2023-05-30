@@ -60,19 +60,7 @@ namespace WeatherForecaster.Pages
             dispPriv.Enabled = true;
 
             // Find all entries by that specific user for displaying purposes.
-            int entries = 0;
-            foreach(var a in Global.Continents)
-            {
-                foreach(var b in a.Countries)
-                {
-                    foreach(var c in b.Cities)
-                    {
-                        entries += c.WeatherData.Count(w => w.GetContributor() == user);
-                    }
-                }
-            }
-
-            dispEntries.Text = $"{entries}";
+            dispEntries.Text = $"{user.GetEntries()}";
 
             // Change the current selected privilege level according to what they are.
             if (user.Privileges == PrivilegeLevels.Contributor)

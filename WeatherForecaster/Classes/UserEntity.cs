@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel.DataAnnotations;
+using static DevExpress.XtraEditors.Mask.MaskSettings;
 
 namespace WeatherForecaster
 {
@@ -114,6 +115,63 @@ namespace WeatherForecaster
         /// </summary>
         /// <returns></returns>
         public string GetEmail() => Email;
+
+        /// <summary>
+        /// Get number of entries by this User in all continents.
+        /// </summary>
+        /// <returns>int value determining how many entries this User has added.</returns>
+        public int GetEntries()
+        {
+            int numEntries = 0;
+
+            foreach (var a in Global.Continents)
+            {
+                numEntries += GetEntries(a);
+            }
+            return numEntries;
+        }
+
+        /// <summary>
+        /// Get number of entries by this User in a specific continent.
+        /// </summary>
+        /// <param name="continent">The continent to search in</param>
+        /// <returns>int value determining how many entries this User has added in this specific Continent.</returns>
+        public int GetEntries(Continent continent)
+        {
+            int numEntries = 0;
+
+            foreach (var b in continent.Countries)
+            {
+                numEntries += GetEntries(b);
+            }
+            return numEntries;
+        }
+
+        /// <summary>
+        /// Get number of entries by this User in a specific country.
+        /// </summary>
+        /// <param name="country">The country to search in</param>
+        /// <returns>int value determining how many entries this User has added in this specific Country.</returns>
+        public int GetEntries(Country country)
+        {
+            int numEntries = 0;
+
+            foreach (var b in country.Cities)
+            {
+                numEntries += GetEntries(b);
+            }
+            return numEntries;
+        }
+
+        /// <summary>
+        /// Get number of entries by this User in a specific city.
+        /// </summary>
+        /// <param name="continent">The city to search in</param>
+        /// <returns>int value determining how many entries this User has added in this specific City.</returns>
+        public int GetEntries(City city)
+        {
+            return city.WeatherData.Count(w => w.GetContributor() == this);
+        }
 
         /// <summary>
         /// Creates a User account.

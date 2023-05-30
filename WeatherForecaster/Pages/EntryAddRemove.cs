@@ -1,5 +1,6 @@
 ﻿using DevExpress.Charts.Native;
 using DevExpress.XtraEditors;
+using DevExpress.XtraRichEdit.Import.Html;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -105,7 +106,7 @@ namespace WeatherForecaster.Pages
         /// <param name="check">true = Checked, false = Unchecked</param>
         private void CheckChildNodes(TreeNode node, bool check)
         {
-            if(node.Nodes.Count >= 0) //
+            if(node.Nodes.Count >= 0)
             {
                 foreach(TreeNode tn in node.Nodes)
                 {
@@ -152,6 +153,10 @@ namespace WeatherForecaster.Pages
 
 
                             nwd.ToolTipText = $"Contributor: {(wd.GetContributor() != null ? wd.GetContributor().Name : "N/A")}" + Environment.NewLine + $"Humid: {wd.GetHumidity()}% | Rain: {wd.GetRainChance()}% | Wind: {wd.GetWindKPH()} KM/H" + Environment.NewLine + $"UV: {wd.GetUVIndex()} | Precipitation: {wd.GetPrecipitation()}mm | Cloud: {wd.GetCloud()}%";
+                            if(wd.GetContributor() != null)
+                            {
+                                nwd.ToolTipText = nwd.ToolTipText + Environment.NewLine + $"Contributor's entries in this: City: [{wd.GetContributor().GetEntries(city)}] Country: [{wd.GetContributor().GetEntries(country)}] Continent: [{wd.GetContributor().GetEntries(continent)}]";
+                            }
                         }
                     }
                 }
@@ -226,6 +231,10 @@ namespace WeatherForecaster.Pages
                                $"(ID: {wd.Id})");
 
                 nwd.ToolTipText = $"Contributor: {(wd.GetContributor() != null ? wd.GetContributor().Name : "N/A")}" + Environment.NewLine + $"Humid: {wd.GetHumidity()}% | Rain: {wd.GetRainChance()}% | Wind: {wd.GetWindKPH()} KM/H" + Environment.NewLine + $"UV: {wd.GetUVIndex()} | Precipitation: {wd.GetPrecipitation()}mm | Cloud: {wd.GetCloud()}%";
+                if (wd.GetContributor() != null)
+                {
+                    nwd.ToolTipText = nwd.ToolTipText + Environment.NewLine + $"Contributor's entries in this: City: [{wd.GetContributor().GetEntries(wd.GetParent())}] Country: [{wd.GetContributor().GetEntries(wd.GetParent().GetParent())}] Continent: [{wd.GetContributor().GetEntries(wd.GetParent().GetParent().GetParent())}]";
+                }
             }
             catch (SqlException err)
             {
