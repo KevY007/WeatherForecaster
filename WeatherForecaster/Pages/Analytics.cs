@@ -237,15 +237,11 @@ namespace WeatherForecaster.Pages
                 {
                     Instance.chartControl1.SeriesTemplate.SeriesDataMember = "Timestamp";
                     Instance.chartControl1.SeriesTemplate.ArgumentDataMember = "Series";
-                    Instance.chartControl1.SeriesTemplate.ArgumentScaleType = ScaleType.Auto;
                 }
                 else
                 {
                     Instance.chartControl1.SeriesTemplate.SeriesDataMember = "Series";
                     Instance.chartControl1.SeriesTemplate.ArgumentDataMember = "Timestamp";
-                    Instance.chartControl1.SeriesTemplate.ArgumentScaleType = ScaleType.DateTime;
-                    Instance.chartControl1.SeriesTemplate.TimeSpanSummaryOptions.MeasureUnit = TimeSpanMeasureUnit.Hour;
-                    Instance.chartControl1.SeriesTemplate.DateTimeSummaryOptions.MeasureUnit = DateTimeMeasureUnit.Hour;
                 }
             } catch { }
         }
