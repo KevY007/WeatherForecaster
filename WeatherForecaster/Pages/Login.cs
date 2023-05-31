@@ -91,8 +91,11 @@ namespace WeatherForecaster.Pages
 
                 Global.UserHandle = Global.Users.Find(u => u.GetName() == txtUsername.Text);
 
+                Global.UserHandle.Log("Logged into their account");
+
                 MessageBox.Show($"Logged in to account ID {Global.UserHandle.GetId()} successfully.", "Logged In", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                
                 Global.MainForm.OnSignupLogin();
             }
             catch (SqlException err)

@@ -225,6 +225,7 @@ namespace WeatherForecaster.Pages
 
                 ((City)Global.Continents.First(a => a.GetId() == continentId).GetChildOfChild(parentId)).AddWeather(wd);
 
+                Global.UserHandle.Log($"Added weather entry ID ({aID}) to City: {((City)Global.Continents.First(a => a.GetId() == continentId).GetChildOfChild(parentId)).GetName()}");
                 // Add a node to the parent tree.
                 TreeNode nwd = viewer.SelectedNode.Nodes.Add($"{wd.GetTimestamp()} " +
                                $"{(Global.UserHandle.DisplayCelsius == true ? ($"{wd.GetTemperature()}°C") : ($"{Global.CelsiusToFahrenheit(wd.GetTemperature())}°F"))} " +

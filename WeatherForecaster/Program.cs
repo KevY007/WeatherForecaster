@@ -198,7 +198,36 @@ namespace WeatherForecaster
             }
 
             //////////////////////////////////////////
-           
+
+            query = $"SELECT * FROM Logs";
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand(query, Global.Database);
+
+                var reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        User user = Global.Users.Find(c => c.Id == (int)reader["UserID"]);
+
+                        if (user != null) {
+                            DateTime time = DateTime.ParseExact((string)reader["Timestamp"], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                            Global.Logs.Add(new Log((int)reader["ID"], user, time, (string)reader["Action"]));
+                        }
+                    }
+                }
+                reader.Close();
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("The database is not set-up correctly! Please ensure all tables are created.");
+                return;
+            }
+
+            //////////////////////////////////////////
+
             // After everything has been loaded, display the MainForm.
             Application.Run(MainForm);
 

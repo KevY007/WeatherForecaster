@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel.DataAnnotations;
 using static DevExpress.XtraEditors.Mask.MaskSettings;
+using DevExpress.Xpo.DB.Helpers;
 
 namespace WeatherForecaster
 {
@@ -171,6 +172,27 @@ namespace WeatherForecaster
         public int GetEntries(City city)
         {
             return city.WeatherData.Count(w => w.GetContributor() == this);
+        }
+
+        /// <summary>
+        /// Logs the specified action in the maintenance log for the user.
+        /// </summary>
+        /// <param name="action">The summary of the action taken</param>
+        public void Log(string action)
+        {
+            string query = $"INSERT INTO Logs (UserID, Timestamp, Action) OUTPUT INSERTED.ID VALUES ({this.Id}, '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}', '{action}');";
+            try
+            {
+                SqlCommand cmd = new SqlCommand(query, Global.Database);
+
+                int aID = (int)cmd.ExecuteScalar();
+
+                Global.Logs.Add(new Log(aID, this, DateTime.Now, action));
+            }
+            catch (SqlException err)
+            { 
+                MessageBox.Show("A logging error occured with the database has occured, please contact a technician!\n\n" + err.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>

@@ -63,7 +63,9 @@ namespace WeatherForecaster.Pages
                 MessageBox.Show($"Your account has been created!\nAccount ID: {aID}\nUsername: {user.Name}\nEmail: {user.Email}\n\nPlease proceed to login now!", "Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnGoLogin_Click(sender, e);
 
-                Global.Users.Add(new User(aID, txtUsername.Text, txtEmail.Text, true));
+                User added = new User(aID, txtUsername.Text, txtEmail.Text, true);
+                Global.Users.Add(added);
+                added.Log("Registered their account");
             }
             catch (SqlException err) 
             {

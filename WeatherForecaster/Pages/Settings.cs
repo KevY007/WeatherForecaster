@@ -53,6 +53,7 @@ namespace WeatherForecaster.Pages
         {
             // This triggers a set {} on the concerned property. It has it's own code in the User class.
             Global.UserHandle.DisplayCelsius = centigradeSwitch.IsOn;
+            Global.UserHandle.Log($"Toggled their display mode: Celsius: {Global.UserHandle.DisplayCelsius.ToString()}");
         }
 
         private void weatherAPIKey_EditValueChanged(object sender, EventArgs e)
@@ -144,6 +145,8 @@ namespace WeatherForecaster.Pages
             {
                 fetchStr += $"{city.GetName()} ({city.GetParent().GetName()})\n";
             }
+
+            Global.UserHandle.Log($"Fetched {rows} weather entries from API");
             MessageBox.Show(fetchStr);
         }
     }

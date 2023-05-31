@@ -117,6 +117,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Logs.cs" />
     <Compile Include="Controls\RoundedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -140,6 +141,12 @@
     </Compile>
     <Compile Include="Pages\FormAnalytics.Designer.cs">
       <DependentUpon>FormAnalytics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FormViewLogs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pages\FormViewLogs.Designer.cs">
+      <DependentUpon>FormViewLogs.cs</DependentUpon>
     </Compile>
     <Compile Include="Pages\Home.cs">
       <SubType>UserControl</SubType>
@@ -201,6 +208,9 @@
     <EmbeddedResource Include="Pages\FormAnalytics.resx">
       <DependentUpon>FormAnalytics.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\FormViewLogs.resx">
+      <DependentUpon>FormViewLogs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
@@ -268,6 +278,7 @@
     <None Include="Resources\registerIco.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\Logs.sql" />
     <Content Include="Database\Cities.sql" />
     <Content Include="Database\Continents.sql" />
     <Content Include="Database\Countries.sql" />

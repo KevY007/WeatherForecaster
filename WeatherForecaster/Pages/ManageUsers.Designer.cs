@@ -33,6 +33,9 @@ namespace WeatherForecaster.Pages
             this.listUsers = new DevExpress.XtraEditors.ListBoxControl();
             this.lblUser = new System.Windows.Forms.Label();
             this.roundedPanel1 = new WeatherForecaster.Controls.RoundedPanel();
+            this.separatorControl4 = new DevExpress.XtraEditors.SeparatorControl();
+            this.dispEntries = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.btnUpdateUser = new DevExpress.XtraEditors.SimpleButton();
             this.separatorControl3 = new DevExpress.XtraEditors.SeparatorControl();
             this.separatorControl2 = new DevExpress.XtraEditors.SeparatorControl();
@@ -44,15 +47,13 @@ namespace WeatherForecaster.Pages
             this.lblPriv = new System.Windows.Forms.Label();
             this.lblEmail = new System.Windows.Forms.Label();
             this.lblId = new System.Windows.Forms.Label();
-            this.separatorControl4 = new DevExpress.XtraEditors.SeparatorControl();
-            this.dispEntries = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.btnViewLogs = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.listUsers)).BeginInit();
             this.roundedPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.separatorControl4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.separatorControl4)).BeginInit();
             this.SuspendLayout();
             // 
             // listUsers
@@ -85,6 +86,7 @@ namespace WeatherForecaster.Pages
             // 
             this.roundedPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(10)))), ((int)(((byte)(10)))));
             this.roundedPanel1.BorderColor = System.Drawing.Color.Transparent;
+            this.roundedPanel1.Controls.Add(this.btnViewLogs);
             this.roundedPanel1.Controls.Add(this.separatorControl4);
             this.roundedPanel1.Controls.Add(this.dispEntries);
             this.roundedPanel1.Controls.Add(this.label2);
@@ -107,6 +109,35 @@ namespace WeatherForecaster.Pages
             this.roundedPanel1.TabIndex = 2;
             this.roundedPanel1.Thickness = 10F;
             // 
+            // separatorControl4
+            // 
+            this.separatorControl4.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.separatorControl4.Location = new System.Drawing.Point(-4, 197);
+            this.separatorControl4.Name = "separatorControl4";
+            this.separatorControl4.Size = new System.Drawing.Size(651, 33);
+            this.separatorControl4.TabIndex = 18;
+            // 
+            // dispEntries
+            // 
+            this.dispEntries.AutoSize = true;
+            this.dispEntries.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.dispEntries.Location = new System.Drawing.Point(197, 165);
+            this.dispEntries.Name = "dispEntries";
+            this.dispEntries.Size = new System.Drawing.Size(22, 29);
+            this.dispEntries.TabIndex = 17;
+            this.dispEntries.Text = "-";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Gold;
+            this.label2.Location = new System.Drawing.Point(47, 165);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(93, 29);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Entries:";
+            // 
             // btnUpdateUser
             // 
             this.btnUpdateUser.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
@@ -117,9 +148,9 @@ namespace WeatherForecaster.Pages
             this.btnUpdateUser.AppearanceHovered.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.btnUpdateUser.AppearanceHovered.Options.UseBackColor = true;
             this.btnUpdateUser.AppearanceHovered.Options.UseForeColor = true;
-            this.btnUpdateUser.Location = new System.Drawing.Point(355, 313);
+            this.btnUpdateUser.Location = new System.Drawing.Point(247, 313);
             this.btnUpdateUser.Name = "btnUpdateUser";
-            this.btnUpdateUser.Size = new System.Drawing.Size(239, 48);
+            this.btnUpdateUser.Size = new System.Drawing.Size(169, 48);
             this.btnUpdateUser.TabIndex = 15;
             this.btnUpdateUser.Text = "Update Privileges";
             this.btnUpdateUser.Click += new System.EventHandler(this.btnUpdateUser_Click);
@@ -186,9 +217,9 @@ namespace WeatherForecaster.Pages
             this.btnDelete.AppearanceHovered.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
             this.btnDelete.AppearanceHovered.Options.UseBackColor = true;
             this.btnDelete.AppearanceHovered.Options.UseForeColor = true;
-            this.btnDelete.Location = new System.Drawing.Point(52, 313);
+            this.btnDelete.Location = new System.Drawing.Point(47, 313);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(239, 48);
+            this.btnDelete.Size = new System.Drawing.Size(167, 48);
             this.btnDelete.TabIndex = 8;
             this.btnDelete.Text = "Delete User";
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -226,34 +257,22 @@ namespace WeatherForecaster.Pages
             this.lblId.TabIndex = 0;
             this.lblId.Text = "ID:";
             // 
-            // separatorControl4
+            // btnViewLogs
             // 
-            this.separatorControl4.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.separatorControl4.Location = new System.Drawing.Point(-4, 197);
-            this.separatorControl4.Name = "separatorControl4";
-            this.separatorControl4.Size = new System.Drawing.Size(651, 33);
-            this.separatorControl4.TabIndex = 18;
-            // 
-            // dispEntries
-            // 
-            this.dispEntries.AutoSize = true;
-            this.dispEntries.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.dispEntries.Location = new System.Drawing.Point(197, 165);
-            this.dispEntries.Name = "dispEntries";
-            this.dispEntries.Size = new System.Drawing.Size(22, 29);
-            this.dispEntries.TabIndex = 17;
-            this.dispEntries.Text = "-";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Gold;
-            this.label2.Location = new System.Drawing.Point(47, 165);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(93, 29);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "Entries:";
+            this.btnViewLogs.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnViewLogs.Appearance.BorderColor = System.Drawing.Color.Transparent;
+            this.btnViewLogs.Appearance.Options.UseBackColor = true;
+            this.btnViewLogs.Appearance.Options.UseBorderColor = true;
+            this.btnViewLogs.AppearanceHovered.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnViewLogs.AppearanceHovered.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(15)))), ((int)(((byte)(15)))));
+            this.btnViewLogs.AppearanceHovered.Options.UseBackColor = true;
+            this.btnViewLogs.AppearanceHovered.Options.UseForeColor = true;
+            this.btnViewLogs.Location = new System.Drawing.Point(445, 313);
+            this.btnViewLogs.Name = "btnViewLogs";
+            this.btnViewLogs.Size = new System.Drawing.Size(169, 48);
+            this.btnViewLogs.TabIndex = 19;
+            this.btnViewLogs.Text = "View Activity Log";
+            this.btnViewLogs.Click += new System.EventHandler(this.btnViewLogs_Click);
             // 
             // ManageUsers
             // 
@@ -270,10 +289,10 @@ namespace WeatherForecaster.Pages
             ((System.ComponentModel.ISupportInitialize)(this.listUsers)).EndInit();
             this.roundedPanel1.ResumeLayout(false);
             this.roundedPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.separatorControl4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.separatorControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.separatorControl4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -298,5 +317,6 @@ namespace WeatherForecaster.Pages
         private DevExpress.XtraEditors.SeparatorControl separatorControl4;
         private Label dispEntries;
         private Label label2;
+        private DevExpress.XtraEditors.SimpleButton btnViewLogs;
     }
 }

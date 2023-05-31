@@ -41,6 +41,14 @@ namespace WeatherForecaster
                 Analytics.Instance = null;
             }
 
+            // Same with ManageUsers View Logs form.
+            if (ManageUsers.Instance != null)
+            {
+                ManageUsers.Instance.Hide();
+                ManageUsers.Instance.Dispose();
+                ManageUsers.Instance = null;
+            }
+
             // Remove all elements that don't belong to defaultControls list.
             foreach (Control c in this.Controls)
             {

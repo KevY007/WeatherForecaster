@@ -15,6 +15,7 @@ namespace WeatherForecaster.Pages
 {
     public partial class ManageUsers : DevExpress.XtraEditors.XtraUserControl
     {
+        public static FormViewLogs Instance { get; set; }
         public ManageUsers()
         {
             InitializeComponent();
@@ -22,6 +23,14 @@ namespace WeatherForecaster.Pages
 
         private void ManageUsers_Load(object sender, EventArgs e)
         {
+            // Reset/Remove View Logs tab.
+            if (Instance != null)
+            {
+                Instance.Hide();
+                Instance.Dispose();
+                Instance = null;
+            }
+
             // Assign it to an empty list because sometimes lists and comboboxes don't update without changing datasource twice.
             listUsers.DataSource = new List<User>();
 
@@ -90,16 +99,19 @@ namespace WeatherForecaster.Pages
             {
                 MessageBox.Show($"You have set {user.GetName()}'s privilege's to Level: Contributor", "Contributor added");
                 user.Privileges = PrivilegeLevels.Contributor;
+                Global.UserHandle.Log($"Set the account: {user.GetName()} privileges to: Contributor");
             }
             else if ((string)dispPriv.SelectedItem == "Admin")
             {
                 MessageBox.Show($"You have set {user.GetName()}'s privilege's to Level: Admin", "Permissions changed");
                 user.Privileges = PrivilegeLevels.Admin;
+                Global.UserHandle.Log($"Set the account: {user.GetName()} privileges to: Admin");
             }
             else if ((string)dispPriv.SelectedItem == "None")
             {
                 MessageBox.Show($"You have removed all privileges from {user.GetName()}.", "Permissions removed");
                 user.Privileges = PrivilegeLevels.None;
+                Global.UserHandle.Log($"Set the account: {user.GetName()} privileges to: None");
             }
         }
 
@@ -131,16 +143,50 @@ namespace WeatherForecaster.Pages
                 cmd = new SqlCommand(query, Global.Database);
                 cmd.ExecuteNonQuery();
 
+                Global.UserHandle.Log($"Deleted the account: {user.GetName()}");
                 Global.Users.Remove(user);
 
                 MessageBox.Show("You have deleted the account from the database successfully.");
-
+                
                 ManageUsers_Load(null, null);
             }
             catch (SqlException err)
             {
                 MessageBox.Show("An error with the database has occured, please contact a technician!\n\n" + err.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnViewLogs_Click(object sender, EventArgs e)
+        {
+            if (listUsers.SelectedValue == null || listUsers.SelectedItem == null)
+            {
+                return;
+            }
+
+            User user = (User)listUsers.SelectedItem;
+
+            if (Instance == null)
+            {
+                Instance = new FormViewLogs();
+                Instance.Show();
+            }
+
+            Global.UserHandle.Log($"Viewed logs for: {user.GetName()}");
+
+            DataTable table = new DataTable();
+            table.Columns.Add("Log ID", typeof(int));
+            table.Columns.Add("User Concerned", typeof(string));
+            table.Columns.Add("Record Time", typeof(DateTime));
+            table.Columns.Add("Action Logged", typeof(string));
+
+            foreach(var log in Global.Logs.Where(c => c.User == user).OrderBy(l => l.Timestamp).ToList())
+            {
+                table.Rows.Add(log.Id, log.User.Name, log.Timestamp.ToString("yyyy-MM-dd HH:mm:ss"), log.Action);
+            }
+            Instance.dataGridView1.DataSource = table;
+            Instance.dataGridView1.Refresh();
+            Instance.dataGridView1.AutoResizeColumns();
+            //Instance.dataGridView1.Columns[0].Width;
         }
     }
 }

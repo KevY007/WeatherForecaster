@@ -118,6 +118,7 @@ namespace WeatherForecaster.Pages
 
                         MessageBox.Show($"Continent {txtAddName.Text} added with ID {aID}!", "Continent Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         
+                        Global.UserHandle.Log($"Added Continent: {txtAddName.Text}");
                         Global.Continents.Add(new Continent(aID, txtAddName.Text));
                     }
                     catch (SqlException err)
@@ -146,7 +147,8 @@ namespace WeatherForecaster.Pages
                         int aID = (int)cmd.ExecuteScalar();
 
                         MessageBox.Show($"Country {txtAddName.Text} added with ID {aID}! Parent: {((Continent)cmbSetParent.SelectedItem).Name}", "Country Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                        
+                        Global.UserHandle.Log($"Added Country: {txtAddName.Text}");
                         ((Continent)cmbSetParent.SelectedItem).AddCountry(new Country(aID, txtAddName.Text));
                     }
                     catch (SqlException err)
@@ -175,6 +177,7 @@ namespace WeatherForecaster.Pages
 
                         MessageBox.Show($"City {txtAddName.Text} added with ID {aID}! Parent: {((Country)cmbSetParent.SelectedItem).Name}", "City Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                        Global.UserHandle.Log($"Added City: {txtAddName.Text}");
                         ((Country)cmbSetParent.SelectedItem).AddCity(new City(aID, txtAddName.Text));
                     }
                     catch (SqlException err)
@@ -231,6 +234,7 @@ namespace WeatherForecaster.Pages
 
                         names = names + "\n" + d.GetName();
 
+                        Global.UserHandle.Log($"Deleted Continent: {d.GetName()}");
                         Global.Continents.Remove(d);
                     }
                     catch (SqlException err)
@@ -261,6 +265,7 @@ namespace WeatherForecaster.Pages
 
                         names = names + "\n" + d.GetName();
 
+                        Global.UserHandle.Log($"Deleted Country: {d.GetName()}");
                         ((Country)d).GetParent().Countries.Remove(d);
                     }
                     catch (SqlException err)
@@ -286,6 +291,7 @@ namespace WeatherForecaster.Pages
 
                         names = names + "\n" + d.GetName();
 
+                        Global.UserHandle.Log($"Deleted City: {d.GetName()}");
                         ((City)d).GetParent().Cities.Remove(d);
                     }
                     catch (SqlException err)
